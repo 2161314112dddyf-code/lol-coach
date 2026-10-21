@@ -1,5 +1,20 @@
 # LoL Coach 赛后复盘数据基础
 
+当前入口（2026-10-21，INT-001）：统一离线分析已经接通。本局十人、50 个被动/技能来源、3 条匹配阵容的条件交互、2 张历史经验卡，以及已命名敌塔的可知生命，进入原有时刻快照。另可导出既有行动时间线、查询条件耗时和真实地图网格。四回放 9 次真实查询通过前缀检查，最终 **336 项软件测试通过**。完整背包、技能冷却、区域视野及条件完整刷野记录仍缺；[交付和反例](reports/analysis_integration_validation.md)。
+
+```powershell
+.venv/Scripts/python.exe scripts/analysis.py context --replay-id HN1-11360086609 --at 400 --team 100 --player 0x40000034 --output data/private/analysis/review-400.json
+.venv/Scripts/python.exe scripts/analysis.py timeline --output data/private/analysis/review-timeline.json
+.venv/Scripts/python.exe scripts/analysis.py travel --points '[[1636,3068],[2898,3590]]' --speed 575 --audit-map11 --output data/private/analysis/review-travel.json
+.venv/Scripts/python.exe scripts/build_analysis_example.py --snapshot data/private/analysis/review-400.json --output data/private/analysis/review-comparison.json
+```
+
+在本项目目录运行，输出需使用新文件名。需要本地已有回放导出与来源缓存；公开仓库不包含私人录像、回放或客户端资产。context 缺配套塔视野或短回放英雄身份未解时仍输出已知部分。历史验证与入口如下。
+
+当前入口（2026-10-21，MECH-001）：新增潘森 P/Q/W/E/R 五张来源卡、潘森与烬的配合案例、潘森面对莫甘娜黑盾的限制案例及离线三值条件查询。三份官方 16.20.1 缓存、13 处来源指针已核对；6 种合成情景实际运行；全套 **311 项测试通过**。这是有来源的条件推论，不是回放中技能/黑盾状态已解。运行方式与范围见 [机制报告](reports/pantheon_mechanisms_validation.md)。
+
+项目概览见 [阶段总结](docs/PROJECT_SUMMARY.md)，所需信息见 [分析清单](docs/ANALYSIS_INFORMATION_REQUIREMENTS.md)。以下保留历史入口与证据，不把历史缺口描述当作最新状态。
+
 当前入口（2026-10-20，RPL-005）：集中处理剩余解码。新增 **1,541 条背包槽位载荷、23,533 个英雄属性数值字段，以及已命名敌塔的 136 条视野消息和过滤查询**。实际 284 项测试通过。全部未解项与原因统一列在 [剩余矩阵](reports/remaining_decode_matrix.md)，文件、验收和反例见 [报告](reports/remaining_decode_validation.md)。
 
 ```powershell

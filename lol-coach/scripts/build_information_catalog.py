@@ -26,12 +26,17 @@ def main():
         ('inventory_operations','existing_partial_retrospective','data/private/replay_inventory','Operations, not complete slots'),
         ('inventory_sync','serialized_records_semantics_unresolved','data/private/inventory_sync','38 live serialized slot records; RPL-005 found cached/rollback-state conflicts in the same packet family; do not treat as current inventory'),
         ('world_objects','research_candidates','data/private/world_objects','Object names/team/map unresolved; no known-state eligibility'),
-        ('turret_state','bounded_retrospective_decoder','data/private/turret_state','Ten Map12-associated tower identities, sampled health and four destruction events; mode 2 and nonhero visibility unresolved'),
+        ('turret_state','bounded_retrospective_decoder','data/private/turret_state','Ten Map12-associated tower identities; named enemy tower visibility can now filter live health; encoding mode 2 and other world identities unresolved'),
         ('structure_evidence','research_candidates','data/private/structure_evidence','Group-4 structural samples and inhibitor-like state event chain; exact identity, team, lane and visibility unresolved; not decision eligible'),
         ('remaining_decode','bounded_raw_extraction','data/private/remaining_decode','1541 serialized slot records including empty slots and 23533 numeric hero-attribute fields; six attribute candidates; inventory effective time unresolved'),
         ('enemy_tower_visibility','bounded_inferred_filter','data/private/tower_vision','136 strictly alternating messages on named enemy towers; source-linked live HP filtering; not region fog or ward coverage'),
         ('human_experience','historical_conditional_source','data/knowledge/human_decision_cases.json','Two sourced cards; no unconditional recommendation'),
-        ('time_t_snapshot','existing_filtered_structure','data/private/macro_snapshots','New retrospective and candidate outputs not automatically merged')]
+        ('pantheon_mechanisms','source_backed_conditional_reference','data/knowledge/pantheon_mechanisms/Pantheon.mechanisms.json','Five source cards and Pantheon/Jhin ally plus Pantheon/Morgana counter scenarios; not observed cooldowns, live shield state or verified combat prediction'),
+        ('time_t_snapshot','existing_filtered_structure','data/private/macro_snapshots','Core time/visibility-filtered structure; optional source-checked additions in integrated_analysis'),
+        ('integrated_analysis','bounded_source_join','data/private/analysis','Same macro-snapshot/v1 with named enemy tower observations, lineup static references, three applicable conditional rules and two historical cards; not a complete tactical oracle'),
+        ('movement_timeline','retrospective_evidence','data/private/analysis/movement-timeline.json','Nine packet plans/candidates and one existing video duration interval; no arrival inference'),
+        ('inventory_time_hypotheses','unresolved_research','data/private/integration/inventory_time-v2.json','Five lag hypotheses, common-slot comparisons and counterexamples; timestamps unchanged'),
+        ('clear_source_candidates','incomplete_source_conditions','data/knowledge/clear_candidates_int001-v2.json','No accepted complete measured record; public video HTML is not a viewed measurement')]
     items=[]
     for key,status,relative,boundary in entries:
         path=ROOT/relative
@@ -46,7 +51,7 @@ def main():
             'Runtime map/mode ID, minion/inhibitor/nexus identity and remaining objective state; tower identity subset decoded',
             'Minion/ward/region visibility and special invisibility semantics; named enemy tower channel now filtered',
             'Condition-complete measured clear/action durations and final state',
-            'Source-backed ally/opponent mechanism interactions and applicability'],
+            'Broader source-backed ally/opponent interactions and runtime conditions beyond five qualitative scenarios'],
         user_action_required_now=False)
     target=ROOT/'data/knowledge/macro_information_catalog.json'
     target.write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf8')

@@ -1,0 +1,93 @@
+{
+  "schema": "champion-mechanism-spec/v1",
+  "patch": "16.20.1",
+  "champion": "Pantheon",
+  "sources": {
+    "Pantheon": {"url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Pantheon.json", "sha256": "cd6b77c20fc056c675c3c300c812a444e955885b68c3be4fb12af1eb98c99ce8"},
+    "Jhin": {"url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Jhin.json", "sha256": "7e9a93cf95183dee279b0c4d6678142ad38f2e046b0212f7cf4e96e50545d49e"},
+    "Morgana": {"url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Morgana.json", "sha256": "346d7db6a34ac16ea002ea952b3cee0a7eb817dabddbf7ed2bf02f65783439bc"}
+  },
+  "cards": [
+    {
+      "slot": "P",
+      "summary_zh": "若干次攻击或技能后，下一技能获得强化。强化后的效果需按具体技能读取。",
+      "evidence": [{"source": "Pantheon", "pointer": "/data/Pantheon/passive/description"}],
+      "ally_context": ["队友能否等到强化就绪再接战", "需要强化输出还是保护撤退"],
+      "opponent_context": ["准备强化期间是否会受到压制", "对方是否能避开强化技能"],
+      "unknowns": ["本描述没有精确叠层门槛及全部特殊叠层规则", "本局当前层数和强化就绪状态"],
+      "analysis_zh": "把强化状态列为行动条件，不能仅凭英雄身份视为已经强化。"
+    },
+    {
+      "slot": "Q",
+      "summary_zh": "点按突刺并返还部分冷却；长按投掷，对后续目标伤害降低。低生命目标和被动强化分别影响伤害。",
+      "evidence": [{"source": "Pantheon", "pointer": "/data/Pantheon/spells/0/tooltip"}],
+      "ally_context": ["队友是否能提供命中窗口", "是否需要保留资源给后续配合"],
+      "opponent_context": ["目标位置与投掷路径上其他单位", "目标当前生命及反制状态"],
+      "unknowns": ["模板中的伤害、生命阈值和返还比例未求值", "不能把低生命增伤当成必定击杀"],
+      "analysis_zh": "点按与投掷分开比较，不能用同一距离、伤害和冷却假设评价。"
+    },
+    {
+      "slot": "W",
+      "summary_zh": "跃向目标，造成物理伤害并施加眩晕；强化状态会改变下一次攻击。",
+      "evidence": [{"source": "Pantheon", "pointer": "/data/Pantheon/spells/1/description"}, {"source": "Pantheon", "pointer": "/data/Pantheon/spells/1/tooltip"}],
+      "ally_context": ["队友能否及时到位并接上控制或伤害"],
+      "opponent_context": ["目标是否合法、是否在作用范围", "目标作用时是否免疫控制或受黑盾保护"],
+      "unknowns": ["模板中的眩晕时长、强化攻击次数及伤害未求值", "本局施法可用性、打断及命中状态"],
+      "analysis_zh": "跳向敌人会改变自身位置；队友跟进与对手反制应同时作为进场条件。"
+    },
+    {
+      "slot": "E",
+      "summary_zh": "朝指定方向举盾，免疫来自该方向的非防御塔伤害并攻击，结束时盾击；强化盾击后获得临时抗性和移动速度。",
+      "evidence": [{"source": "Pantheon", "pointer": "/data/Pantheon/spells/2/description"}, {"source": "Pantheon", "pointer": "/data/Pantheon/spells/2/tooltip"}],
+      "ally_context": ["队友位置是否允许同向撤退或接应"],
+      "opponent_context": ["伤害来源方向", "是否为塔伤", "敌方能否绕侧后或施加控制"],
+      "unknowns": ["具体方向判定、控制免疫及其他特殊伤害交互未验证", "持续时间、抗性与移速参数未求值"],
+      "analysis_zh": "详细说明限定非塔伤，不能把简述的正面免伤扩展成挡塔伤、全向无敌或免控。"
+    },
+    {
+      "slot": "R",
+      "summary_zh": "被动提供护甲穿透；主动先投矛造成物理伤害和减速，再落地造成区域魔法伤害，并使被动强化就绪。",
+      "evidence": [{"source": "Pantheon", "pointer": "/data/Pantheon/spells/3/tooltip"}],
+      "ally_context": ["落地时队友是否仍能参与", "落点是否衔接队友控制或撤退"],
+      "opponent_context": ["敌人能否离开落区", "落点和撤退方向是否有反制威胁"],
+      "unknowns": ["引导、飞行与到场时间未测量", "各阶段模板数值及本局可用性未求值", "不能由 range 数组推算实际到场时间"],
+      "analysis_zh": "分开评价投矛、落地和落地后的行动，不能把远程支援视为瞬时抵达。"
+    }
+  ],
+  "interactions": [
+    {
+      "id": "pantheon_jhin_followup",
+      "relationship": "ally",
+      "participants": ["Pantheon", "Jhin"],
+      "summary_zh": "潘森 W 造成伤害可为队友烬 W 的控制条件提供来源；仍需及时命中、技能可用与目标能受禁锢。",
+      "evidence": [{"source": "Pantheon", "pointer": "/data/Pantheon/spells/1/tooltip"}, {"source": "Jhin", "pointer": "/data/Jhin/spells/1/description"}, {"source": "Jhin", "pointer": "/data/Jhin/spells/1/tooltip"}],
+      "requires": {
+        "pantheon_w_available": true,
+        "pantheon_w_target_legal_in_range": true,
+        "pantheon_w_deals_damage": true,
+        "jhin_w_available": true,
+        "jhin_w_target_in_range": true,
+        "target_is_first_champion_hit": true,
+        "allied_damage_mark_active_at_jhin_w_impact": true,
+        "target_can_be_rooted_at_jhin_w_impact": true
+      },
+      "when_met": {"status": "conditional_followup", "explanation_zh": "在所给条件成立时，潘森伤害衔接烬 W 禁锢的机制路径可用；未预测实际命中、击杀或本次进场收益。"},
+      "when_unmet": {"status": "route_conditions_not_met", "explanation_zh": "该条潘森 W 接烬 W 路径条件不满足；不代表烬无法通过其他伤害或陷阱来源触发控制。"},
+      "unknowns": ["友方伤害标记的精确持续时间仍是模板参数", "本局这些条件未由回放自动填充", "禁锢时长、命中率和伤害未计算"]
+    },
+    {
+      "id": "pantheon_morgana_black_shield",
+      "relationship": "opponent",
+      "participants": ["Pantheon", "Morgana"],
+      "summary_zh": "若潘森 W 作用于黑盾仍有效的目标，黑盾的控制防护限制 W 眩晕收益；W 物理伤害不能按魔法盾吸收来计算。",
+      "evidence": [{"source": "Pantheon", "pointer": "/data/Pantheon/spells/1/tooltip"}, {"source": "Morgana", "pointer": "/data/Morgana/spells/2/description"}, {"source": "Morgana", "pointer": "/data/Morgana/spells/2/tooltip"}],
+      "requires": {"pantheon_w_connects": true, "black_shield_active_on_target_at_w_impact": true},
+      "when_met": {"status": "stun_blocked_by_black_shield", "explanation_zh": "按所引机制，在 W 作用时黑盾有效的条件下不能计入 W 眩晕；物理伤害与护盾的魔法吸收分开，实际伤害仍未计算。"},
+      "when_unmet": {"status": "this_counter_not_established", "explanation_zh": "该黑盾反制条件未成立；不能反推 W 必定命中或眩晕，其他免控、目标合法性和时序仍需判断。"},
+      "unknowns": ["本局黑盾是否仍在以及确切作用顺序", "其他魔法伤害先破盾的时序", "该跨英雄推论未进行独立实局交互测试"]
+    }
+  ],
+  "scope": "Source-backed qualitative mechanisms and conditional project inferences; not a combat simulator",
+  "exact_client_compatibility": "not_independently_verified",
+  "independent_interaction_test": null
+}

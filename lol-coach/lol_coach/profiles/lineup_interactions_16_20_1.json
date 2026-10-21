@@ -1,0 +1,49 @@
+{
+  "schema": "lineup-interaction-extension/v1",
+  "patch": "16.20.1",
+  "sources": {
+    "Ryze": {"url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ryze.json", "sha256": "7c0a4029b890e1cd0f529ba97c018592037cbd9535b7ee830ab98f737c520d83"},
+    "MasterYi": {"url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/MasterYi.json", "sha256": "57aacd9bdc1fc4a18ef3411071fe20777530e452c79d923104a9f7482141385c"},
+    "Zyra": {"url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zyra.json", "sha256": "49d2695512015dc315b8f1d58d371e223be2b9e79fcc044c1454ad721ffd4e35"},
+    "Veigar": {"url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Veigar.json", "sha256": "a48efa5dce9bbdf57b691ee9f4f756b1b2df154f1fb675c9b8e2058344329751"}
+  },
+  "interactions": [
+    {
+      "id": "ryze_jhin_followup", "relationship": "ally", "participants": ["Ryze", "Jhin"],
+      "summary_zh": "瑞兹伤害可提供烬 W 的友军伤害条件；瑞兹 W 仅在目标有涌动时由减速改为禁锢。",
+      "evidence": [
+        {"source": "Ryze", "pointer": "/data/Ryze/spells/1/tooltip"},
+        {"source": "Ryze", "pointer": "/data/Ryze/spells/2/tooltip"},
+        {"source": "Jhin", "pointer": "/data/Jhin/spells/1/tooltip"}
+      ],
+      "requires": {"ryze_w_available": true, "ryze_w_target_legal_in_range": true, "flux_active_at_ryze_w_impact": true, "ryze_w_deals_damage": true, "target_can_be_rooted_by_ryze": true, "jhin_w_available": true, "jhin_w_target_in_range": true, "target_is_first_champion_hit": true, "allied_damage_mark_active_at_jhin_w_impact": true, "target_can_be_rooted_at_jhin_w_impact": true},
+      "when_met": {"status": "conditional_followup", "explanation_zh": "所列条件下瑞兹强化 W 与烬 W 的控制衔接具备机制依据；命中、衔接间隔、伤害和收益仍未预测。"},
+      "when_unmet": {"status": "route_conditions_not_met", "explanation_zh": "这条强化 W 接烬 W 路径的条件不全；不排除其他友军伤害触发烬 W。"},
+      "unknowns": ["涌动、友军伤害标记与控制持续时间仍含模板变量", "当前技能状态与命中时刻未解", "没有独立交互实测"]
+    },
+    {
+      "id": "zyra_masteryi_slow_immunity", "relationship": "opponent", "participants": ["Zyra", "MasterYi"],
+      "summary_zh": "剑圣大招明确免疫减速，因此不能把婕拉藤蔓鞭击者的减速计入其追击阻力；婕拉 E 的禁锢须另判。",
+      "evidence": [
+        {"source": "Zyra", "pointer": "/data/Zyra/spells/2/tooltip"},
+        {"source": "MasterYi", "pointer": "/data/MasterYi/spells/3/tooltip"}
+      ],
+      "requires": {"vine_lasher_attack_attempts_slow_on_masteryi": true, "highlander_active_at_slow_application": true},
+      "when_met": {"status": "plant_slow_blocked_root_unresolved", "explanation_zh": "不能指望该次植物减速限制开大的剑圣；减速免疫不提供禁锢免疫证据，也不能据此保证婕拉 E 命中或生效。"},
+      "when_unmet": {"status": "this_counter_not_established", "explanation_zh": "该次减速免疫反制未成立；其他状态、命中与植物攻击条件仍需单独判断。"},
+      "unknowns": ["剑圣大招实际起止时刻", "植物身份、攻击目标和施加减速时刻", "禁锢是否命中及其他免控状态"]
+    },
+    {
+      "id": "veigar_zyra_control_followup", "relationship": "ally", "participants": ["Veigar", "Zyra"],
+      "summary_zh": "小法 E 需要敌人触碰笼边才造成晕眩；婕拉 E 可以在命中且目标可受控时补充禁锢，不能仅因站在笼内就假定已晕。",
+      "evidence": [
+        {"source": "Veigar", "pointer": "/data/Veigar/spells/2/tooltip"},
+        {"source": "Zyra", "pointer": "/data/Zyra/spells/2/tooltip"}
+      ],
+      "requires": {"veigar_cage_active": true, "target_crosses_cage_edge": true, "target_can_be_stunned": true, "zyra_e_available": true, "zyra_e_intersects_target": true, "target_can_be_rooted_at_zyra_e_impact": true},
+      "when_met": {"status": "conditional_followup", "explanation_zh": "具备笼边晕眩接藤蔓禁锢的机制路径；控制重叠或断档、到场和击杀收益没有确定。"},
+      "when_unmet": {"status": "route_conditions_not_met", "explanation_zh": "这条晕眩接禁锢路径未满足；笼内站位本身不证明目标已被晕眩。"},
+      "unknowns": ["笼边与目标实际碰撞", "施法和命中时刻", "控制时长、韧性和净化类效果"]
+    }
+  ]
+}
