@@ -1,0 +1,349 @@
+{
+  "version": "16.20.824.8524",
+  "source_sha256": "c08c6f1a4a87f1670a6156c6badfca15a21aa13c74eaa18dff5efdc26b94e7e0",
+  "catalog_version": "16.20.1",
+  "catalog_sha256": "bcd7100b7f6c336f585fccaa28324b9d676bf1b2932ae3bb79ee56b5775c47d6",
+  "catalog_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/item.json",
+  "swap_b": {
+    "08": 3,
+    "0e": 4
+  },
+  "items": {
+    "21d9": {
+      "item_id": 3802,
+      "name": "Lost Chapter",
+      "total_price": 1200
+    },
+    "7159": {
+      "item_id": 2031,
+      "name": "Refillable Potion",
+      "total_price": 150
+    },
+    "c084": {
+      "item_id": 1026,
+      "name": "Blasting Wand",
+      "total_price": 850
+    },
+    "764a": {
+      "item_id": 3070,
+      "name": "Tear of the Goddess",
+      "total_price": 400
+    },
+    "6d84": {
+      "item_id": 1037,
+      "name": "Pickaxe",
+      "total_price": 875
+    },
+    "3284": {
+      "item_id": 1036,
+      "name": "Long Sword",
+      "total_price": 350
+    },
+    "d07c": {
+      "item_id": 3184,
+      "name": "Guardian's Hammer",
+      "total_price": 950
+    },
+    "a47c": {
+      "item_id": 3177,
+      "name": "Guardian's Blade",
+      "total_price": 950
+    },
+    "9159": {
+      "item_id": 2022,
+      "name": "Glowing Mote",
+      "total_price": 250
+    },
+    "c384": {
+      "item_id": 1028,
+      "name": "Ruby Crystal",
+      "total_price": 400
+    },
+    "6884": {
+      "item_id": 1027,
+      "name": "Sapphire Crystal",
+      "total_price": 300
+    },
+    "24d9": {
+      "item_id": 3801,
+      "name": "Crystalline Bracer",
+      "total_price": 800
+    },
+    "4b84": {
+      "item_id": 1052,
+      "name": "Amplifying Tome",
+      "total_price": 400
+    },
+    "2eec": {
+      "item_id": 1011,
+      "name": "Giant's Belt",
+      "total_price": 900
+    },
+    "137c": {
+      "item_id": 3134,
+      "name": "Serrated Dirk",
+      "total_price": 1000
+    },
+    "86ec": {
+      "item_id": 1018,
+      "name": "Cloak of Agility",
+      "total_price": 600
+    },
+    "a4ec": {
+      "item_id": 1001,
+      "name": "Boots",
+      "total_price": 300
+    },
+    "a77c": {
+      "item_id": 3118,
+      "name": "Malignance",
+      "total_price": 2700
+    },
+    "46fe": {
+      "item_id": 6657,
+      "name": "Rod of Ages",
+      "total_price": 2600
+    },
+    "85d9": {
+      "item_id": 3803,
+      "name": "Catalyst of Aeons",
+      "total_price": 1300
+    },
+    "e0fd": {
+      "item_id": 2503,
+      "name": "Blackfire Torch",
+      "total_price": 2800
+    },
+    "dc62": {
+      "item_id": 6655,
+      "name": "Luden's Echo",
+      "total_price": 2750
+    },
+    "3efe": {
+      "item_id": 6676,
+      "name": "The Collector",
+      "total_price": 3000
+    },
+    "6f7c": {
+      "item_id": 3111,
+      "name": "Mercury's Treads",
+      "total_price": 1250
+    },
+    "327c": {
+      "item_id": 3084,
+      "name": "Heartsteel",
+      "total_price": 3000
+    },
+    "6a7c": {
+      "item_id": 3108,
+      "name": "Fiendish Codex",
+      "total_price": 850
+    },
+    "bf84": {
+      "item_id": 1033,
+      "name": "Null-Magic Mantle",
+      "total_price": 400
+    },
+    "2784": {
+      "item_id": 1058,
+      "name": "Needlessly Large Rod",
+      "total_price": 1200
+    },
+    "d84a": {
+      "item_id": 3020,
+      "name": "Sorcerer's Shoes",
+      "total_price": 1100
+    },
+    "5184": {
+      "item_id": 1043,
+      "name": "Recurve Bow",
+      "total_price": 700
+    },
+    "5284": {
+      "item_id": 1038,
+      "name": "B. F. Sword",
+      "total_price": 1300
+    },
+    "787c": {
+      "item_id": 3145,
+      "name": "Hextech Alternator",
+      "total_price": 1100
+    },
+    "117c": {
+      "item_id": 3115,
+      "name": "Nashor's Tooth",
+      "total_price": 2900
+    },
+    "c3fe": {
+      "item_id": 6660,
+      "name": "Bami's Cinder",
+      "total_price": 900
+    },
+    "9c7c": {
+      "item_id": 3158,
+      "name": "Ionian Boots of Lucidity",
+      "total_price": 900
+    },
+    "cc4a": {
+      "item_id": 3031,
+      "name": "Infinity Edge",
+      "total_price": 3500
+    },
+    "f07c": {
+      "item_id": 3116,
+      "name": "Rylai's Crystal Scepter",
+      "total_price": 2600
+    },
+    "1854": {
+      "item_id": 3211,
+      "name": "Spectre's Cowl",
+      "total_price": 1250
+    },
+    "0736": {
+      "item_id": 4645,
+      "name": "Shadowflame",
+      "total_price": 3200
+    },
+    "6584": {
+      "item_id": 1053,
+      "name": "Vampiric Scepter",
+      "total_price": 900
+    },
+    "d8fd": {
+      "item_id": 2508,
+      "name": "Fated Ashes",
+      "total_price": 900
+    },
+    "ee4a": {
+      "item_id": 3008,
+      "name": "Gluttonous Greaves",
+      "total_price": 1000
+    },
+    "617c": {
+      "item_id": 3153,
+      "name": "Blade of The Ruined King",
+      "total_price": 3200
+    },
+    "187c": {
+      "item_id": 3083,
+      "name": "Warmog's Armor",
+      "total_price": 3100
+    },
+    "0aec": {
+      "item_id": 1006,
+      "name": "Rejuvenation Bead",
+      "total_price": 300
+    },
+    "21fd": {
+      "item_id": 2522,
+      "name": "Actualizer",
+      "total_price": 2800
+    },
+    "937c": {
+      "item_id": 3147,
+      "name": "Haunting Guise",
+      "total_price": 1300
+    },
+    "25fe": {
+      "item_id": 6664,
+      "name": "Hollow Radiance",
+      "total_price": 2800
+    },
+    "9a84": {
+      "item_id": 1031,
+      "name": "Chain Vest",
+      "total_price": 800
+    },
+    "d77c": {
+      "item_id": 3113,
+      "name": "Aether Wisp",
+      "total_price": 900
+    },
+    "b284": {
+      "item_id": 1057,
+      "name": "Negatron Cloak",
+      "total_price": 850
+    },
+    "d236": {
+      "item_id": 4646,
+      "name": "Stormsurge",
+      "total_price": 2800
+    },
+    "8762": {
+      "item_id": 6653,
+      "name": "Liandry's Torment",
+      "total_price": 3000
+    },
+    "d5fd": {
+      "item_id": 2504,
+      "name": "Kaenic Rookern",
+      "total_price": 2900
+    },
+    "704a": {
+      "item_id": 3067,
+      "name": "Kindlegem",
+      "total_price": 800
+    },
+    "ff7c": {
+      "item_id": 3140,
+      "name": "Quicksilver Sash",
+      "total_price": 1300
+    },
+    "527c": {
+      "item_id": 3086,
+      "name": "Zeal",
+      "total_price": 1200
+    },
+    "c584": {
+      "item_id": 1042,
+      "name": "Dagger",
+      "total_price": 250
+    },
+    "d57c": {
+      "item_id": 3144,
+      "name": "Scout's Slingshot",
+      "total_price": 600
+    },
+    "1fc2": {
+      "item_id": 8020,
+      "name": "Abyssal Mask",
+      "total_price": 2650
+    },
+    "2bfd": {
+      "item_id": 2502,
+      "name": "Unending Despair",
+      "total_price": 2800
+    },
+    "887c": {
+      "item_id": 3094,
+      "name": "Rapid Firecannon",
+      "total_price": 2650
+    },
+    "c3f5": {
+      "item_id": 2052,
+      "name": "Poro-Snax",
+      "total_price": 0
+    },
+    "174a": {
+      "item_id": 3040,
+      "name": "Seraph's Embrace",
+      "total_price": 2900
+    },
+    "434a": {
+      "item_id": 3003,
+      "name": "Archangel's Staff",
+      "total_price": 2900
+    }
+  },
+  "evidence": {
+    "data\\research\\inventory_recipes.json": "383b4383300dffa8624d7a8475b1705989cf763eb3c9d148f1adcf88ea7cc4d4",
+    "data\\research\\inventory_calibration.json": "bdbb2dd95bb7fb7a42fa0e88c6ce9743756a816905d384907c6cce100b50fdec",
+    "data\\research\\inventory_constraints.json": "00fe4658b0fa59ca46720f98dea06f93f89ee078cc02c5ae2d740c71eebb0c52"
+  },
+  "calibration": "Final slots label item IDs and two swap bytes; recipes constrain ambiguous components. Gold is a separate cross-check.",
+  "limitations": [
+    "Observed wire IDs only; no general byte transform for new items.",
+    "Consumption and undo incomplete. No complete inventory-state claim.",
+    "Count values are candidates. Gold bytes in operation payload remain opaque."
+  ]
+}

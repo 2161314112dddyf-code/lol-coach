@@ -1,0 +1,160 @@
+{
+  "schema_version": "0.1",
+  "prepared_on": "2026-10-11",
+  "note": "Inherited research leads from this conversation. Not reverified while preparing this package. Priority is a proposed implementation order, not a quality guarantee.",
+  "sources": [
+    {
+      "id": "riot-docs",
+      "url": "https://developer.riotgames.com/docs/lol",
+      "category": "official_docs",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "ddragon-versions",
+      "url": "https://ddragon.leagueoflegends.com/api/versions.json",
+      "category": "official_static_data",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "cdragon",
+      "url": "https://raw.communitydragon.org/",
+      "category": "community_assets",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "ngrid",
+      "url": "https://github.com/FrankTheBoxMonster/LoL-NGRID-converter",
+      "category": "community_parser",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "meraki",
+      "url": "https://github.com/meraki-analytics/lolstaticdata",
+      "category": "community_mechanics",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "meraki-ivern",
+      "url": "https://cdn.merakianalytics.com/riot/lol/resources/latest/en-US/champions/Ivern.json",
+      "category": "community_sample",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "rofl",
+      "url": "https://github.com/Mowokuma/ROFL",
+      "category": "replay_parser_candidate",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "clears",
+      "url": "https://www.reddit.com/r/Jungle_Mains/comments/1ac12do/a_spreadsheet_for_optimal_jungle_clears_in_s14/",
+      "category": "human_measurement_lead",
+      "priority": "P0",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "cdtb",
+      "url": "https://github.com/CommunityDragon/CDTB",
+      "category": "asset_tool",
+      "priority": "P1",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "meta-wiki",
+      "url": "https://github.com/LeagueToolkit/lol-meta-wiki",
+      "category": "schema_docs",
+      "priority": "P1",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "meta-api",
+      "url": "https://meta-api.leaguetoolkit.dev/v1",
+      "category": "schema_api_candidate",
+      "priority": "P1",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "live-sample",
+      "url": "https://static.developer.riotgames.com/docs/lol/liveclientdata_sample.json",
+      "category": "official_example_not_actual_match",
+      "priority": "P1",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "replay",
+      "url": "https://github.com/riotgames/leaguedirector",
+      "category": "official_replay_tool",
+      "priority": "P1",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "lolpt",
+      "url": "https://lolpt.gg/",
+      "category": "third_party_site_no_confirmed_api",
+      "priority": "P2",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "jungler",
+      "url": "https://jungler.gg/",
+      "category": "guide_and_statistics_candidate",
+      "priority": "P2",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "ivern-guide",
+      "url": "https://dignitas.gg/articles/a-guide-to-ivern-with-dig-exyu",
+      "category": "human_experience_candidate",
+      "priority": "P2",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    },
+    {
+      "id": "lolalytics",
+      "url": "https://lolalytics.com/",
+      "category": "statistics_candidate",
+      "priority": "P2",
+      "verification_status": "candidate_unverified_this_run",
+      "content_version": null,
+      "license_review_status": "not_reviewed_this_run"
+    }
+  ]
+}

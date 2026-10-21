@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.test-tmp*/
+*.pyc
+.env
+.env.*
+!.env.example
+cache/
+data/raw/
+data/private/
+data/maps/
+*.rofl
+*.mp4
+*.mkv
+*.mp3
+*.wav

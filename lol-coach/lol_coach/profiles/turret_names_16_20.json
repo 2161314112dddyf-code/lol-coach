@@ -1,0 +1,789 @@
+{
+  "schema": "turret-name-profile/v1",
+  "version": "16.20.824.8524",
+  "opcode": 216,
+  "name_format": "Turret_T%s_L%u_P%u_%u_%u",
+  "format_source": {
+    "path": "D:\\1\\yxlm\\lol-coach\\data\\research\\client_16.20.824.8524_mac\\LeagueofLegends",
+    "sha256": "f0ff0944c204e51cce8df8493f8d769c82e0b0f70bae63fe90e074c30a973671"
+  },
+  "reference": {
+    "path": "D:\\1\\yxlm\\lol-coach\\data\\research\\object_sources\\raw\\240de083663f446ffbb9a35ec44849df773522b5d936acecaf9e1d97412b8830.bin",
+    "sha256": "240de083663f446ffbb9a35ec44849df773522b5d936acecaf9e1d97412b8830"
+  },
+  "decoder_dependencies": {
+    "probe_packets.py": {
+      "path": "D:\\1\\yxlm\\probe_packets.py",
+      "sha256": "a8cdd4230912cc9adfb9c2d085357f8441aee12cc04fb4140cf9f6139abc0116"
+    },
+    "decode_movement_1620.py": {
+      "path": "D:\\1\\yxlm\\decode_movement_1620.py",
+      "sha256": "807546189d11b158d0d7d6e7cb032ffee760a7d3b3bc3071c5a514081f1a7923"
+    },
+    "controlled-byte-synthesis.json": {
+      "path": "D:\\1\\yxlm\\controlled-byte-synthesis.json",
+      "sha256": "c4e2f5bac8bb6706626dd8a7197c9a4e84511d782f807c3e31ec7c9e3f1693f2"
+    }
+  },
+  "calibration_replay": {
+    "path": "C:\\Users\\21613\\Documents\\League of Legends\\Replays\\HN1-11360086609.rofl",
+    "sha256": "c08c6f1a4a87f1670a6156c6badfca15a21aa13c74eaa18dff5efdc26b94e7e0"
+  },
+  "byte_tables": {
+    "0": {
+      "48": 217,
+      "49": 219,
+      "50": 153,
+      "51": 155,
+      "52": 209,
+      "53": 211,
+      "54": 145,
+      "55": 147,
+      "56": 216,
+      "57": 218,
+      "67": 63,
+      "76": 116,
+      "79": 54,
+      "80": 93,
+      "84": 85,
+      "95": 22,
+      "97": 123,
+      "100": 113,
+      "101": 115,
+      "104": 120,
+      "111": 50,
+      "114": 25,
+      "115": 27,
+      "116": 81,
+      "117": 83
+    },
+    "1": {
+      "48": 35,
+      "49": 118,
+      "50": 104,
+      "51": 243,
+      "52": 79,
+      "53": 168,
+      "54": 67,
+      "55": 176,
+      "56": 86,
+      "57": 101,
+      "67": 180,
+      "76": 15,
+      "79": 128,
+      "80": 11,
+      "84": 87,
+      "95": 56,
+      "97": 27,
+      "100": 58,
+      "101": 133,
+      "104": 206,
+      "111": 150,
+      "114": 183,
+      "115": 250,
+      "116": 25,
+      "117": 208
+    }
+  },
+  "length_tables": {
+    "0": {
+      "150": 31,
+      "249": 32
+    },
+    "1": {
+      "75": 32,
+      "224": 31
+    }
+  },
+  "anchors": [
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x40000024",
+      "mode": 0,
+      "payload_hex": "78b2fe4cf9d916d3d8d89393db9391999916d15d16db741619737119365516517319195355aca5192f6ba7f680e5446d",
+      "offset": 80045,
+      "chunk": 1,
+      "name": "Turret_TOrder_L1_P4_2267177885_0"
+    },
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x40000027",
+      "mode": 1,
+      "payload_hex": "7590fe4ce02338f3a82368567668564338230b38760f38fa961bceb457381985b7b7d0574d6d",
+      "offset": 80105,
+      "chunk": 1,
+      "name": "Turret_TChaos_L1_P0_682182053_0"
+    },
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x40000029",
+      "mode": 0,
+      "payload_hex": "6cd4f94c96d916d19b9bd8d99b93d8d316d15d16db74161b327b783f5516517319195355db5b494d7780fae0e4ef6d",
+      "offset": 80150,
+      "chunk": 1,
+      "name": "Turret_TChaos_L1_P4_587308334_0"
+    },
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x4000002a",
+      "mode": 1,
+      "payload_hex": "69b6fe4c4b23387665a84365f3b0b04f7638a80b38760f38b7853ab78057381985b7b7d057dc5fc26616189873104e6d",
+      "offset": 80204,
+      "chunk": 1,
+      "name": "Turret_TOrder_L1_P5_1477396591_0"
+    },
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x4000002c",
+      "mode": 1,
+      "payload_hex": "7592ff4ce02338766576764f43b0f34338a80b38760f38fa961bceb457381985b7b7d057aca5192f6ba7f680e5486d",
+      "offset": 80259,
+      "chunk": 1,
+      "name": "Turret_TChaos_L1_P5_637641191_0"
+    },
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x4000002d",
+      "mode": 1,
+      "payload_hex": "75d6ff4ce0233868b0a8f3435623684338680b38760f38fa961bceb457381985b7b7d057855f56664e18a40adff1a5e9df436d",
+      "offset": 80313,
+      "chunk": 1,
+      "name": "Turret_TChaos_L1_P2_620863572_0"
+    },
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x4000002e",
+      "mode": 1,
+      "payload_hex": "6d74f1cd4b233843436823234f23a8686838f30b38760f38b7853ab78057381985b7b7d057db5b494d75e0e280ee4a6d",
+      "offset": 80371,
+      "chunk": 1,
+      "name": "Turret_TOrder_L1_P3_2250400266_0"
+    },
+    {
+      "time_seconds": 0.0,
+      "entity_id": "0x40000030",
+      "mode": 0,
+      "payload_hex": "6cb2f6cd96d916da99d191dadbdb9391169b5d16db74161b327b783f5516517319195355aca54b2fe5a768836b606d",
+      "offset": 80426,
+      "chunk": 1,
+      "name": "Turret_TChaos_L1_P3_671196429_0"
+    },
+    {
+      "time_seconds": 120.04399108886719,
+      "entity_id": "0x40000031",
+      "mode": 1,
+      "payload_hex": "6970fe4ce02338764fb043a86856564338230b38760f38b7853ab78057381985b7b7d057676d",
+      "offset": 69140,
+      "chunk": 3,
+      "name": "Turret_TOrder_L1_P0_688256741_0"
+    }
+  ],
+  "static_candidates": [
+    {
+      "name": "Turret_TOrder_L1_P0_671196429_0",
+      "team": 100,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P1_671196429_0",
+      "team": 100,
+      "lane": 1,
+      "position": 1,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P2_671196429_0",
+      "team": 100,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P3_671196429_0",
+      "team": 100,
+      "lane": 1,
+      "position": 3,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P4_671196429_0",
+      "team": 100,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P5_671196429_0",
+      "team": 100,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P0_671196429_0",
+      "team": 200,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P1_671196429_0",
+      "team": 200,
+      "lane": 1,
+      "position": 1,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P2_671196429_0",
+      "team": 200,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P3_671196429_0",
+      "team": 200,
+      "lane": 1,
+      "position": 3,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P4_671196429_0",
+      "team": 200,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P5_671196429_0",
+      "team": 200,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{2801a50d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        7885.13818359375,
+        -159.0,
+        7773.90185546875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P4_587308334_0",
+      "team": 100,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{23019d2e}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        10337.76953125,
+        -177.0,
+        10574.2421875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P4_587308334_0",
+      "team": 200,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{23019d2e}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        10337.76953125,
+        -177.0,
+        10574.2421875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TOrder_L1_P5_637641191_0",
+      "team": 100,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{2601a1e7}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        10784.1904296875,
+        -169.0,
+        10109.6357421875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P5_637641191_0",
+      "team": 200,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{2601a1e7}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        10784.1904296875,
+        -169.0,
+        10109.6357421875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TOrder_L1_P2_620863572_0",
+      "team": 100,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{2501a054}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Inhibitor",
+      "map_reference_position": [
+        9002.62890625,
+        -161.0,
+        8850.94921875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P2_620863572_0",
+      "team": 200,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{2501a054}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Inhibitor",
+      "map_reference_position": [
+        9002.62890625,
+        -161.0,
+        8850.94921875
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TOrder_L1_P4_2267177885_0",
+      "team": 100,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{8722639d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        2506.403564453125,
+        -182.0,
+        2110.884765625
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P4_2267177885_0",
+      "team": 200,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{8722639d}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        2506.403564453125,
+        -182.0,
+        2110.884765625
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TOrder_L1_P0_2250400266_0",
+      "team": 100,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P1_2250400266_0",
+      "team": 100,
+      "lane": 1,
+      "position": 1,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P2_2250400266_0",
+      "team": 100,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P3_2250400266_0",
+      "team": 100,
+      "lane": 1,
+      "position": 3,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P4_2250400266_0",
+      "team": 100,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P5_2250400266_0",
+      "team": 100,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P0_2250400266_0",
+      "team": 200,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P1_2250400266_0",
+      "team": 200,
+      "lane": 1,
+      "position": 1,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P2_2250400266_0",
+      "team": 200,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P3_2250400266_0",
+      "team": 200,
+      "lane": 1,
+      "position": 3,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P4_2250400266_0",
+      "team": 200,
+      "lane": 1,
+      "position": 4,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TChaos_L1_P5_2250400266_0",
+      "team": 200,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{8622620a}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Outer",
+      "map_reference_position": [
+        4943.0,
+        -159.0,
+        4929.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": true
+    },
+    {
+      "name": "Turret_TOrder_L1_P2_2032291219_0",
+      "team": 100,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{79224d93}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Inhibitor",
+      "map_reference_position": [
+        3827.27734375,
+        -155.0,
+        3841.04345703125
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P2_2032291219_0",
+      "team": 200,
+      "lane": 1,
+      "position": 2,
+      "static_name": "{79224d93}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Inhibitor",
+      "map_reference_position": [
+        3827.27734375,
+        -155.0,
+        3841.04345703125
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TOrder_L1_P5_1477396591_0",
+      "team": 100,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{580f486f}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        2061.634521484375,
+        -179.0,
+        2575.791015625
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P5_1477396591_0",
+      "team": 200,
+      "lane": 1,
+      "position": 5,
+      "static_name": "{580f486f}",
+      "character_record": "Characters/Turret/CharacterRecords/HA_Nexus",
+      "map_reference_position": [
+        2061.634521484375,
+        -179.0,
+        2575.791015625
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TOrder_L1_P0_688256741_0",
+      "team": 100,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{2905f6e5}",
+      "character_record": "Characters/HA_AP_OrderShrineTurret/CharacterRecords/Root",
+      "map_reference_position": [
+        648.0,
+        -150.0,
+        764.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P0_688256741_0",
+      "team": 200,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{2905f6e5}",
+      "character_record": "Characters/HA_AP_OrderShrineTurret/CharacterRecords/Root",
+      "map_reference_position": [
+        648.0,
+        -150.0,
+        764.0
+      ],
+      "explicit_reference_team": null,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TOrder_L1_P0_682182053_0",
+      "team": 100,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{28a945a5}",
+      "character_record": "Characters/HA_AP_ChaosTurretShrine/CharacterRecords/Root",
+      "map_reference_position": [
+        12183.0,
+        27.0,
+        11844.0
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    },
+    {
+      "name": "Turret_TChaos_L1_P0_682182053_0",
+      "team": 200,
+      "lane": 1,
+      "position": 0,
+      "static_name": "{28a945a5}",
+      "character_record": "Characters/HA_AP_ChaosTurretShrine/CharacterRecords/Root",
+      "map_reference_position": [
+        12183.0,
+        27.0,
+        11844.0
+      ],
+      "explicit_reference_team": 200,
+      "position_default_in_reference": false
+    }
+  ],
+  "limitations": [
+    "Only modes 0 and 1; mode 2 remains opaque",
+    "Static map position is not a decoded runtime coordinate",
+    "Map12 reference association is not a decoded map ID, mode or skin",
+    "No nonhero visibility or full objective state claimed"
+  ]
+}

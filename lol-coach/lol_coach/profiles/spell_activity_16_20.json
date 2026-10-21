@@ -1,0 +1,1241 @@
+{
+  "schema": "spell-activity-profile/v1",
+  "version": "16.20.824.8524",
+  "encoding_pairs": {
+    "209": 75,
+    "169": 189,
+    "187": 121,
+    "45": 170,
+    "215": 98,
+    "197": 84,
+    "135": 14,
+    "202": 66,
+    "92": 25,
+    "214": 162,
+    "219": 54,
+    "59": 97,
+    "245": 214,
+    "142": 12,
+    "70": 13,
+    "224": 16,
+    "195": 107,
+    "3": 219,
+    "144": 33,
+    "136": 204,
+    "4": 173,
+    "149": 243,
+    "137": 234,
+    "65": 9,
+    "146": 46,
+    "138": 85,
+    "121": 109,
+    "210": 40,
+    "153": 139,
+    "171": 150,
+    "50": 212,
+    "254": 144,
+    "193": 17,
+    "19": 5,
+    "223": 1,
+    "194": 185,
+    "93": 131,
+    "164": 198,
+    "180": 221,
+    "199": 167,
+    "221": 177,
+    "118": 24,
+    "168": 254,
+    "165": 182,
+    "158": 174,
+    "217": 22,
+    "49": 181,
+    "178": 117,
+    "109": 78,
+    "229": 196,
+    "133": 124,
+    "14": 8,
+    "228": 253,
+    "56": 104,
+    "244": 241,
+    "73": 49,
+    "161": 26,
+    "232": 246,
+    "204": 197,
+    "8": 86,
+    "181": 7,
+    "130": 32,
+    "145": 223,
+    "241": 183,
+    "236": 151,
+    "58": 106,
+    "213": 145,
+    "115": 163,
+    "249": 208,
+    "39": 92,
+    "129": 113,
+    "2": 175,
+    "160": 252,
+    "227": 94,
+    "16": 140,
+    "157": 70,
+    "9": 134,
+    "174": 180,
+    "107": 171,
+    "167": 55,
+    "240": 65,
+    "61": 52,
+    "248": 205,
+    "40": 156,
+    "184": 36,
+    "196": 148,
+    "31": 89,
+    "104": 226,
+    "226": 213,
+    "242": 211,
+    "143": 47,
+    "148": 222,
+    "231": 186,
+    "252": 128,
+    "22": 118,
+    "189": 184,
+    "95": 138,
+    "151": 172,
+    "152": 250,
+    "83": 61,
+    "203": 130,
+    "162": 187,
+    "124": 152,
+    "177": 116,
+    "7": 38,
+    "255": 87,
+    "101": 147,
+    "132": 53,
+    "179": 127,
+    "225": 249,
+    "147": 19,
+    "17": 56,
+    "238": 41,
+    "119": 161,
+    "154": 48,
+    "131": 96
+  },
+  "vocabulary": {
+    "PantheonQ": {
+      "wire": "4bbd79aa",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Pantheon/Spells/PantheonQAbility/PantheonQ",
+        "has_cast_data": true,
+        "sha256": "59ec052a00ccb5d62404541abbec57133cc3875b8f72b59b4dab1572e1e88400",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/pantheon/pantheon.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "PantheonW": {
+      "wire": "62bd79aa",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Pantheon/Spells/PantheonWAbility/PantheonW",
+        "has_cast_data": true,
+        "sha256": "59ec052a00ccb5d62404541abbec57133cc3875b8f72b59b4dab1572e1e88400",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/pantheon/pantheon.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "PantheonE": {
+      "wire": "54bd79aa",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Pantheon/Spells/PantheonEAbility/PantheonE",
+        "has_cast_data": true,
+        "sha256": "59ec052a00ccb5d62404541abbec57133cc3875b8f72b59b4dab1572e1e88400",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/pantheon/pantheon.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancW": {
+      "wire": "0e0e4219",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancWAbility/LeblancW",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "VeigarBalefulStrike": {
+      "wire": "54a23661",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Veigar/Spells/VeigarBalefulStrikeAbility/VeigarBalefulStrike",
+        "has_cast_data": true,
+        "sha256": "3082953876ebf65c238241caaea7eabb174e98bf1e389e305b9b717dc7aa14e4",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/veigar/veigar.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "AlphaStrike": {
+      "wire": "d6d60c0d",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/MasterYi/Spells/AlphaStrikeAbility/AlphaStrike",
+        "has_cast_data": true,
+        "sha256": "608805545760707f74727d0c6b9223a62a8ae5bcaaa3d85c183cefb31158e47b",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/masteryi/masteryi.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "JhinQ": {
+      "wire": "4b106bdb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Jhin/Spells/JhinQAbility/JhinQ",
+        "has_cast_data": true,
+        "sha256": "85ae67d7de00031e48f6a9f6d9a99248082d3e0f57627a125a4b9fe7e00013eb",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/jhin/jhin.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "JhinW": {
+      "wire": "62106bdb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Jhin/Spells/JhinWAbility/JhinW",
+        "has_cast_data": true,
+        "sha256": "85ae67d7de00031e48f6a9f6d9a99248082d3e0f57627a125a4b9fe7e00013eb",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/jhin/jhin.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ZyraE": {
+      "wire": "d621ccad",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Zyra/Spells/ZyraEAbility/ZyraE",
+        "has_cast_data": true,
+        "sha256": "3701520a220ffe78e9b681e6c5d1bb45e39e88461b6e0c077e1d3e6dee00456d",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/zyra/zyra.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KarthusDefile": {
+      "wire": "f36bea09",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusDefileAbility/KarthusDefile",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "Highlander": {
+      "wire": "2e42556d",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/MasterYi/Spells/HighlanderAbility/Highlander",
+        "has_cast_data": true,
+        "sha256": "608805545760707f74727d0c6b9223a62a8ae5bcaaa3d85c183cefb31158e47b",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/masteryi/masteryi.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "JhinR": {
+      "wire": "28106bdb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Jhin/Spells/JhinRAbility/JhinR",
+        "has_cast_data": true,
+        "sha256": "85ae67d7de00031e48f6a9f6d9a99248082d3e0f57627a125a4b9fe7e00013eb",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/jhin/jhin.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "SummonerHaste": {
+      "wire": "f38b96d4",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "source_id": "summoner-16.20.1",
+        "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "final_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "retrieved_at_utc": "2026-10-19T08:38:14.422111+00:00",
+        "http_status": 200,
+        "content_type": "application/json",
+        "sha256": "faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc",
+        "content_version": "16.20.1",
+        "status": "json_parsed_fields_unverified",
+        "evidence_path": "raw/faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc.bin",
+        "limitations": [],
+        "cache_hit": false,
+        "attempts": [
+          {
+            "attempt": 1,
+            "status": 200
+          }
+        ],
+        "license_review_status": "not_reviewed",
+        "target_client_version_status": "unverified"
+      },
+      "observed_in_calibration": true
+    },
+    "VeigarEventHorizon": {
+      "wire": "90281105",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Veigar/Spells/VeigarEventHorizonAbility/VeigarEventHorizon",
+        "has_cast_data": true,
+        "sha256": "3082953876ebf65c238241caaea7eabb174e98bf1e389e305b9b717dc7aa14e4",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/veigar/veigar.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "Meditate": {
+      "wire": "f301b983",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/MasterYi/Spells/MeditateAbility/Meditate",
+        "has_cast_data": true,
+        "sha256": "608805545760707f74727d0c6b9223a62a8ae5bcaaa3d85c183cefb31158e47b",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/masteryi/masteryi.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "FizzR": {
+      "wire": "2ec6dddb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzRAbility/FizzR",
+        "has_cast_data": true,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosW": {
+      "wire": "a7b15518",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosWAbility/ApheliosW",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosR": {
+      "wire": "b9b15518",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosRAbility/ApheliosR",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "SummonerFlash": {
+      "wire": "feb1b6d4",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "source_id": "summoner-16.20.1",
+        "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "final_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "retrieved_at_utc": "2026-10-19T08:38:14.422111+00:00",
+        "http_status": 200,
+        "content_type": "application/json",
+        "sha256": "faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc",
+        "content_version": "16.20.1",
+        "status": "json_parsed_fields_unverified",
+        "evidence_path": "raw/faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc.bin",
+        "limitations": [],
+        "cache_hit": false,
+        "attempts": [
+          {
+            "attempt": 1,
+            "status": 200
+          }
+        ],
+        "license_review_status": "not_reviewed",
+        "target_client_version_status": "unverified"
+      },
+      "observed_in_calibration": true
+    },
+    "SummonerDot": {
+      "wire": "c6ae16b5",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "source_id": "summoner-16.20.1",
+        "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "final_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "retrieved_at_utc": "2026-10-19T08:38:14.422111+00:00",
+        "http_status": 200,
+        "content_type": "application/json",
+        "sha256": "faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc",
+        "content_version": "16.20.1",
+        "status": "json_parsed_fields_unverified",
+        "evidence_path": "raw/faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc.bin",
+        "limitations": [],
+        "cache_hit": false,
+        "attempts": [
+          {
+            "attempt": 1,
+            "status": 200
+          }
+        ],
+        "license_review_status": "not_reviewed",
+        "target_client_version_status": "unverified"
+      },
+      "observed_in_calibration": true
+    },
+    "VeigarDarkMatter": {
+      "wire": "b975014e",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Veigar/Spells/VeigarDarkMatterAbility/VeigarDarkMatter",
+        "has_cast_data": true,
+        "sha256": "3082953876ebf65c238241caaea7eabb174e98bf1e389e305b9b717dc7aa14e4",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/veigar/veigar.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "WujuStyle": {
+      "wire": "c47c9608",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/MasterYi/Spells/WujuStyleAbility/WujuStyle",
+        "has_cast_data": true,
+        "sha256": "608805545760707f74727d0c6b9223a62a8ae5bcaaa3d85c183cefb31158e47b",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/masteryi/masteryi.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KayleQ": {
+      "wire": "117cfd68",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Kayle/Spells/KayleQAbility/KayleQ",
+        "has_cast_data": true,
+        "sha256": "9ed0ad909795f27331e292e7742ee00ff0b6e34c87879a6cb6987344229ae831",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/kayle/kayle.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KayleR": {
+      "wire": "b97cfd68",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Kayle/Spells/KayleRAbility/KayleR",
+        "has_cast_data": true,
+        "sha256": "9ed0ad909795f27331e292e7742ee00ff0b6e34c87879a6cb6987344229ae831",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/kayle/kayle.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "RyzeQWrapper": {
+      "wire": "b9f1b631",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeQWrapperAbility/RyzeQWrapper",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "RyzeR": {
+      "wire": "b91af6db",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeRAbility/RyzeR",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "SummonerSnowball": {
+      "wire": "c5a77956",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "source_id": "summoner-16.20.1",
+        "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "final_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/summoner.json",
+        "retrieved_at_utc": "2026-10-19T08:38:14.422111+00:00",
+        "http_status": 200,
+        "content_type": "application/json",
+        "sha256": "faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc",
+        "content_version": "16.20.1",
+        "status": "json_parsed_fields_unverified",
+        "evidence_path": "raw/faf271429f8cda1fbdae1e8dc9e2354032c3dc878cfa40a2a19188290fcbaabc.bin",
+        "limitations": [],
+        "cache_hit": false,
+        "attempts": [
+          {
+            "attempt": 1,
+            "status": 200
+          }
+        ],
+        "license_review_status": "not_reviewed",
+        "target_client_version_status": "unverified"
+      },
+      "observed_in_calibration": true
+    },
+    "KayleW": {
+      "wire": "a77cfd68",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Kayle/Spells/KayleWAbility/KayleW",
+        "has_cast_data": true,
+        "sha256": "9ed0ad909795f27331e292e7742ee00ff0b6e34c87879a6cb6987344229ae831",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/kayle/kayle.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KayleE": {
+      "wire": "077cfd68",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Kayle/Spells/KayleEAbility/KayleE",
+        "has_cast_data": true,
+        "sha256": "9ed0ad909795f27331e292e7742ee00ff0b6e34c87879a6cb6987344229ae831",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/kayle/kayle.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "RyzeW": {
+      "wire": "a71af6db",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeWAbility/RyzeW",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "RyzeE": {
+      "wire": "071af6db",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeEAbility/RyzeE",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "FizzE": {
+      "wire": "7cc6dddb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzEAbility/FizzE",
+        "has_cast_data": true,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancE": {
+      "wire": "070e4219",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancEAbility/LeblancE",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ZyraR": {
+      "wire": "20dfccad",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Zyra/Spells/ZyraRAbility/ZyraR",
+        "has_cast_data": true,
+        "sha256": "3701520a220ffe78e9b681e6c5d1bb45e39e88461b6e0c077e1d3e6dee00456d",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/zyra/zyra.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosCrescendumQ": {
+      "wire": "b7976b6a",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCrescendumQAbility/ApheliosCrescendumQ",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosInfernumQ": {
+      "wire": "1191aea3",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosInfernumQAbility/ApheliosInfernumQ",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosCrescendumLineAttack": {
+      "wire": "36d0965c",
+      "role_hint": "weapon_attack",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCrescendumLineAttack",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosCalibrumQ": {
+      "wire": "7136b1af",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCalibrumQAbility/ApheliosCalibrumQ",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosCalibrumAttackOverride": {
+      "wire": "54fc5e8c",
+      "role_hint": "weapon_attack",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCalibrumAttackOverride",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosInfernumLineAttack": {
+      "wire": "96364686",
+      "role_hint": "weapon_attack",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosInfernumLineAttack",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosCalibrumLineAttack": {
+      "wire": "968bb4ab",
+      "role_hint": "weapon_attack",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCalibrumLineAttack",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ZyraW": {
+      "wire": "0edfccad",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Zyra/Spells/ZyraWAbility/ZyraW",
+        "has_cast_data": true,
+        "sha256": "3701520a220ffe78e9b681e6c5d1bb45e39e88461b6e0c077e1d3e6dee00456d",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/zyra/zyra.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancRW": {
+      "wire": "3741fc31",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancRWAbility/LeblancRW",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancRWReturn": {
+      "wire": "b4ea2e34",
+      "role_hint": "return_stage",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancRWAbility/LeblancRWReturn",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancWReturn": {
+      "wire": "0c90cd9c",
+      "role_hint": "return_stage",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancWAbility/LeblancWReturn",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancWReturnSFX": {
+      "wire": "24219459",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancWReturnSFX",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancRQ": {
+      "wire": "1a41fc31",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancRQAbility/LeblancRQ",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KarthusFallenOne2": {
+      "wire": "2ea2f1e2",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusFallenOneAbility/KarthusFallenOne2",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KarthusDefileSoundDummy2": {
+      "wire": "2ef3d559",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusDefileAbility/KarthusDefileSoundDummy2",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KarthusWallOfPain2": {
+      "wire": "d32f0ca3",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusWallOfPainAbility/KarthusWallOfPain2",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "JhinE": {
+      "wire": "54106bdb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Jhin/Spells/JhinEAbility/JhinE",
+        "has_cast_data": true,
+        "sha256": "85ae67d7de00031e48f6a9f6d9a99248082d3e0f57627a125a4b9fe7e00013eb",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/jhin/jhin.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "JhinRShot": {
+      "wire": "de01baaf",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Jhin/Spells/JhinRAbility/JhinRShot",
+        "has_cast_data": true,
+        "sha256": "85ae67d7de00031e48f6a9f6d9a99248082d3e0f57627a125a4b9fe7e00013eb",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/jhin/jhin.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KayleWHeal": {
+      "wire": "80fd9676",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Kayle/Spells/KayleWAbility/KayleWHeal",
+        "has_cast_data": true,
+        "sha256": "9ed0ad909795f27331e292e7742ee00ff0b6e34c87879a6cb6987344229ae831",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/kayle/kayle.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "RyzeQ": {
+      "wire": "111af6db",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeQWrapperAbility/RyzeQ",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "FizzEBuffer": {
+      "wire": "b9b8368a",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzEAbility/FizzEBuffer",
+        "has_cast_data": true,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "FizzW": {
+      "wire": "acc6dddb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzWAbility/FizzW",
+        "has_cast_data": true,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "FizzQ": {
+      "wire": "dfc6dddb",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzQAbility/FizzQ",
+        "has_cast_data": true,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosGravitumQ": {
+      "wire": "71fad03d",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosGravitumQAbility/ApheliosGravitumQ",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosCalibrumAttack": {
+      "wire": "82bb7998",
+      "role_hint": "weapon_attack",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCalibrumAttack",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosSeverumQ": {
+      "wire": "74418b26",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosSeverumQAbility/ApheliosSeverumQ",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ZyraQ": {
+      "wire": "71dfccad",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Zyra/Spells/ZyraQAbility/ZyraQ",
+        "has_cast_data": true,
+        "sha256": "3701520a220ffe78e9b681e6c5d1bb45e39e88461b6e0c077e1d3e6dee00456d",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/zyra/zyra.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "LeblancQ": {
+      "wire": "710e4219",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancQAbility/LeblancQ",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "VeigarR": {
+      "wire": "d5745793",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Veigar/Spells/VeigarRAbility/VeigarR",
+        "has_cast_data": true,
+        "sha256": "3082953876ebf65c238241caaea7eabb174e98bf1e389e305b9b717dc7aa14e4",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/veigar/veigar.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "VeigarDarkMatterCastLockout": {
+      "wire": "355e7f68",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Veigar/Spells/VeigarDarkMatterCastLockout",
+        "has_cast_data": true,
+        "sha256": "3082953876ebf65c238241caaea7eabb174e98bf1e389e305b9b717dc7aa14e4",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/veigar/veigar.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KarthusLayWasteA1": {
+      "wire": "f913c538",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusLayWasteA1Ability/KarthusLayWasteA1",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "KarthusWallOfPain": {
+      "wire": "2941faa1",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusWallOfPainAbility/KarthusWallOfPain",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "FizzETwo": {
+      "wire": "2f306086",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzEAbility/FizzETwo",
+        "has_cast_data": true,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": true
+    },
+    "ApheliosOffHandOrbitMissile": {
+      "wire": "912f7405",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosPAbility/ApheliosOffHandOrbitMissile",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "ApheliosCrescendumOrbitManager": {
+      "wire": "2e94ba05",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCrescendumOrbitManager",
+        "has_cast_data": false,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "ApheliosE": {
+      "wire": "d6b15518",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosEAbility/ApheliosE",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "ApheliosCalibrumAttackMis": {
+      "wire": "5ed062e2",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Aphelios/Spells/ApheliosCalibrumAttackMis",
+        "has_cast_data": true,
+        "sha256": "1c6c629c1af168cb9c88886bfebbc440b4cb09a5fb826c6997f3c88c914735bd",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/aphelios/aphelios.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "LeblancRE": {
+      "wire": "0741fc31",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancREAbility/LeblancRE",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "LeblancRWMove": {
+      "wire": "d6b1de09",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancRWMove",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "LeblancR": {
+      "wire": "200e4219",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Leblanc/Spells/LeblancRAbility/LeblancR",
+        "has_cast_data": true,
+        "sha256": "c701b73e304bf408747f7feee6f019b1ba5817498cc9700e36791aade2fca44a",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/leblanc/leblanc.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "KarthusLayWasteA3": {
+      "wire": "5e13c538",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusLayWasteA1Ability/KarthusLayWasteA3",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "KarthusLayWasteA2": {
+      "wire": "d513c538",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusLayWasteA1Ability/KarthusLayWasteA2",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "KarthusLayWasteExtra": {
+      "wire": "747436ad",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusLayWasteA1Ability/KarthusLayWasteExtra",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "KarthusFallenOneExtra2": {
+      "wire": "d391d08c",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusFallenOneAbility/KarthusFallenOneExtra2",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "KarthusDefile2": {
+      "wire": "2075fa38",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusDefileAbility/KarthusDefile2",
+        "has_cast_data": true,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "Wall_of_Pain": {
+      "wire": "ae96d005",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Karthus/Spells/KarthusWallOfPainAbility/Wall_of_Pain",
+        "has_cast_data": false,
+        "sha256": "aaa4365039bcd5af695c594884974102e402ab6ebaf0c2ca0502de540dd982d1",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/karthus/karthus.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "MasterYiBasicAttack2": {
+      "wire": "754b1098",
+      "role_hint": "weapon_attack",
+      "name_source": {
+        "object_key": "Characters/MasterYi/Spells/MasterYiBasicAttack2",
+        "has_cast_data": true,
+        "sha256": "608805545760707f74727d0c6b9223a62a8ae5bcaaa3d85c183cefb31158e47b",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/masteryi/masteryi.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "HighlanderSpellPassive": {
+      "wire": "c4df61",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/MasterYi/Spells/HighlanderAbility/HighlanderSpellPassive",
+        "has_cast_data": false,
+        "sha256": "608805545760707f74727d0c6b9223a62a8ae5bcaaa3d85c183cefb31158e47b",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/masteryi/masteryi.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "JhinETrap": {
+      "wire": "41217faf",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Jhin/Spells/JhinEAbility/JhinETrap",
+        "has_cast_data": true,
+        "sha256": "85ae67d7de00031e48f6a9f6d9a99248082d3e0f57627a125a4b9fe7e00013eb",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/jhin/jhin.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "JhinRSlow": {
+      "wire": "acbabaaf",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Jhin/Spells/JhinRAbility/JhinRSlow",
+        "has_cast_data": false,
+        "sha256": "85ae67d7de00031e48f6a9f6d9a99248082d3e0f57627a125a4b9fe7e00013eb",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/jhin/jhin.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "KayleVsAatroxKayleStart": {
+      "wire": "fd740768",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "{db14c72c}",
+        "has_cast_data": false,
+        "sha256": "9ed0ad909795f27331e292e7742ee00ff0b6e34c87879a6cb6987344229ae831",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/kayle/kayle.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "RyzeWShield": {
+      "wire": "fd1613a1",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeWAbility/RyzeWShield",
+        "has_cast_data": false,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "RyzeQMissile": {
+      "wire": "b6bdb4aa",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeQWrapperAbility/RyzeQMissile",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "RyzeR2": {
+      "wire": "28fa3534",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeRAbility/RyzeR2",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "RyzeEMissile": {
+      "wire": "c496b4aa",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Ryze/Spells/RyzeEAbility/RyzeEMissile",
+        "has_cast_data": true,
+        "sha256": "5016862b0b9c7c9ffc5000762ed41aa1ad295523fca4a4410335ee091cf44fb6",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ryze/ryze.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "FizzEOne": {
+      "wire": "f3ea6086",
+      "role_hint": "followup_or_alternate_stage",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzEAbility/FizzEOne",
+        "has_cast_data": true,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "FizzWDOT": {
+      "wire": "dd790e86",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzWAbility/FizzWDOT",
+        "has_cast_data": false,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "FizzWActive": {
+      "wire": "917c01e2",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Fizz/Spells/FizzWAbility/FizzWActive",
+        "has_cast_data": false,
+        "sha256": "7c1dc9f12bb637c53976e52efcf969ab311c70cadcfe1d0975fc101860e121dc",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/fizz/fizz.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "PantheonRMissile2": {
+      "wire": "bbcdf1a3",
+      "role_hint": "helper_or_effect",
+      "name_source": {
+        "object_key": "Characters/Pantheon/Spells/PantheonRAbility/PantheonRMissile2",
+        "has_cast_data": true,
+        "sha256": "59ec052a00ccb5d62404541abbec57133cc3875b8f72b59b4dab1572e1e88400",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/pantheon/pantheon.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "PantheonR": {
+      "wire": "28bd79aa",
+      "role_hint": "ability_or_summoner_name",
+      "name_source": {
+        "object_key": "Characters/Pantheon/Spells/PantheonRAbility/PantheonR",
+        "has_cast_data": true,
+        "sha256": "59ec052a00ccb5d62404541abbec57133cc3875b8f72b59b4dab1572e1e88400",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/pantheon/pantheon.bin.json"
+      },
+      "observed_in_calibration": false
+    },
+    "HA_ChaosMinionRangedBasicAttack2": {
+      "wire": "bb55c50d",
+      "role_hint": "weapon_attack",
+      "name_source": {
+        "object_key": "Characters/HA_ChaosMinionRanged/Spells/HA_ChaosMinionRangedBasicAttack2",
+        "has_cast_data": true,
+        "sha256": "20c4741ab9d3c88860a0400847f367171b6a8a15def1da04d4195b30462ff41c",
+        "url": "https://raw.communitydragon.org/16.20/game/data/characters/ha_chaosminionranged/ha_chaosminionranged.bin.json"
+      },
+      "observed_in_calibration": false
+    }
+  },
+  "calibration": {
+    "path": "data\\research\\runtime_spell_hashes.json",
+    "sha256": "9d9402e6a01fee13f8fa43e3e8f4364efb53d8b253a74dcec2456ffda023d061",
+    "method": "Lowercase ELF hash -> unsigned LEB128 -> observed byte substitution",
+    "seeds": "Pantheon Q/W/E resource-cost associations; Zyra R/P distinguished by seven -100 resource transitions; then unique constrained source names",
+    "limitation": "Calibration is not an independent test; no generic packet grammar or cooldown decode"
+  },
+  "role_policy": "Source script names distinguish phases; no row is automatically counted as a new cast"
+}

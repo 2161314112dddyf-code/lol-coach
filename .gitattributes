@@ -1,0 +1,3 @@
+# Reviewed decoder dependencies are checked by byte-for-byte SHA256.
+# Preserve original bytes on every platform, including CRLF files.
+* -text

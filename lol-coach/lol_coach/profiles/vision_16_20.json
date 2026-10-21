@@ -1,0 +1,22 @@
+{
+  "version": "16.20.824.8524",
+  "opcodes": {
+    "0x3cd": "leave",
+    "0x484": "enter"
+  },
+  "observer_codes": {
+    "a0f5": 200,
+    "a0c5": 100
+  },
+  "evidence_path": "data\\research\\vision_pairs.json",
+  "evidence_sha256": "78462527bc1c6e852fb4eebde200fedf96a0e6cd246dfe972cf0123d575502f6",
+  "scope": "Opposing-team hero visibility transitions in four supplied replays; packet time and observed byte forms only.",
+  "limitations": [
+    "Labels are binary inferences cross-checked against team, spawn, respawn and position; no independent game-UI verification.",
+    "Numeric observer-team labels are semantically inferred; no general enum byte transform.",
+    "Initial visibility remains unknown until the first transition; allied-team visibility not modeled.",
+    "Nonhero objects, map-region fog, wards, stealth/true sight and individual camera knowledge are not reconstructed.",
+    "Death/respawn does not automatically change visibility; keep the actual transition, including the 842.528-second exception.",
+    "Filtered health/resource/level samples are last observed values, never hidden-state predictions. Enemy economy and planned paths remain excluded."
+  ]
+}

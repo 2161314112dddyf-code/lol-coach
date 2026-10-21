@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1",
+  "data_kind": "empty_observation_template_not_evidence",
+  "game_id": "11363093470",
+  "video": {"local_path": null, "sha256": null, "resolution": null, "playback_speed": null},
+  "session_observation": {"map": null, "mode": null, "champion": null, "team": null, "evidence_video_seconds": null},
+  "observations": [],
+  "observation_fields": {
+    "video_seconds": null,
+    "game_seconds": null,
+    "event_observed": null,
+    "landmark_description": null,
+    "minimap_bounds_pixels_xywh": null,
+    "champion_icon_center_pixels_xy": null,
+    "position_uncertainty_pixels": null,
+    "timing_uncertainty_seconds": null,
+    "independent_world_coordinates_xz": null,
+    "world_coordinate_source": null,
+    "used_for_fit_or_holdout": null,
+    "review_status": "not_observed"
+  },
+  "coordinate_calibration_status": "not_started",
+  "collision_calibration_status": "not_started"
+}

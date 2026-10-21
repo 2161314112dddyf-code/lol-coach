@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lol-coach"
+version = "0.1.0"
+description = "Versioned public static-data evidence for LoL review"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+map = ["xxhash==3.6.0", "zstandard==0.25.0"]
+
+[tool.setuptools.packages.find]
+include = ["lol_coach*"]
+
+[tool.setuptools.package-data]
+lol_coach = ["profiles/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

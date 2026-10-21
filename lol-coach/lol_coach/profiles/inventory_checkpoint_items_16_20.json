@@ -1,0 +1,639 @@
+{
+  "version": "16.20.824.8524",
+  "encoding_pairs": {
+    "218": 33,
+    "29": 217,
+    "239": 113,
+    "15": 89,
+    "130": 192,
+    "8": 132,
+    "254": 118,
+    "23": 74,
+    "141": 109,
+    "140": 50,
+    "240": 208,
+    "24": 124,
+    "233": 164,
+    "230": 145,
+    "132": 195,
+    "131": 104,
+    "217": 36,
+    "156": 75,
+    "243": 46,
+    "7": 236,
+    "190": 19,
+    "250": 134,
+    "174": 167,
+    "129": 70,
+    "52": 254,
+    "219": 133,
+    "199": 224,
+    "19": 253,
+    "255": 220,
+    "51": 98,
+    "148": 62,
+    "167": 111,
+    "164": 106,
+    "137": 191,
+    "162": 39,
+    "204": 216,
+    "147": 81,
+    "142": 82,
+    "201": 120,
+    "171": 17,
+    "214": 156,
+    "215": 204,
+    "172": 240,
+    "139": 24,
+    "25": 84,
+    "165": 7,
+    "36": 54,
+    "157": 101,
+    "192": 238,
+    "209": 97,
+    "238": 10,
+    "203": 147,
+    "136": 37,
+    "135": 154,
+    "169": 215,
+    "161": 178,
+    "166": 210,
+    "253": 135,
+    "200": 213,
+    "251": 112,
+    "196": 255,
+    "146": 197,
+    "212": 31,
+    "62": 194,
+    "198": 43,
+    "150": 136,
+    "16": 245,
+    "224": 23,
+    "187": 67
+  },
+  "items": {
+    "a4ec": {
+      "item_id": 1001,
+      "name": "Boots"
+    },
+    "0aec": {
+      "item_id": 1006,
+      "name": "Rejuvenation Bead"
+    },
+    "2eec": {
+      "item_id": 1011,
+      "name": "Giant's Belt"
+    },
+    "86ec": {
+      "item_id": 1018,
+      "name": "Cloak of Agility"
+    },
+    "c084": {
+      "item_id": 1026,
+      "name": "Blasting Wand"
+    },
+    "6884": {
+      "item_id": 1027,
+      "name": "Sapphire Crystal"
+    },
+    "c384": {
+      "item_id": 1028,
+      "name": "Ruby Crystal"
+    },
+    "9a84": {
+      "item_id": 1031,
+      "name": "Chain Vest"
+    },
+    "bf84": {
+      "item_id": 1033,
+      "name": "Null-Magic Mantle"
+    },
+    "1884": {
+      "item_id": 1035,
+      "name": "Emberknife"
+    },
+    "3284": {
+      "item_id": 1036,
+      "name": "Long Sword"
+    },
+    "6d84": {
+      "item_id": 1037,
+      "name": "Pickaxe"
+    },
+    "5284": {
+      "item_id": 1038,
+      "name": "B. F. Sword"
+    },
+    "c584": {
+      "item_id": 1042,
+      "name": "Dagger"
+    },
+    "5184": {
+      "item_id": 1043,
+      "name": "Recurve Bow"
+    },
+    "4b84": {
+      "item_id": 1052,
+      "name": "Amplifying Tome"
+    },
+    "6584": {
+      "item_id": 1053,
+      "name": "Vampiric Scepter"
+    },
+    "b284": {
+      "item_id": 1057,
+      "name": "Negatron Cloak"
+    },
+    "2784": {
+      "item_id": 1058,
+      "name": "Needlessly Large Rod"
+    },
+    "4384": {
+      "item_id": 1083,
+      "name": "Cull"
+    },
+    "1384": {
+      "item_id": 1086,
+      "name": "Doran's Bow"
+    },
+    "ff84": {
+      "item_id": 1092,
+      "name": "Quest: Bot"
+    },
+    "2b84": {
+      "item_id": 1094,
+      "name": "Quest: Jungle"
+    },
+    "6184": {
+      "item_id": 1105,
+      "name": "Mosstomper Seedling"
+    },
+    "cc84": {
+      "item_id": 1111,
+      "name": "Jarvan I's"
+    },
+    "1784": {
+      "item_id": 1120,
+      "name": "Doran's Helm"
+    },
+    "6159": {
+      "item_id": 2001,
+      "name": "Recall"
+    },
+    "cc59": {
+      "item_id": 2007,
+      "name": "Disabled Recall"
+    },
+    "2159": {
+      "item_id": 2010,
+      "name": "Total Biscuit of Everlasting Will"
+    },
+    "9159": {
+      "item_id": 2022,
+      "name": "Glowing Mote"
+    },
+    "7159": {
+      "item_id": 2031,
+      "name": "Refillable Potion"
+    },
+    "46f5": {
+      "item_id": 2049,
+      "name": "Guardian's Amulet"
+    },
+    "c0f5": {
+      "item_id": 2050,
+      "name": "Guardian's Shroud"
+    },
+    "68f5": {
+      "item_id": 2051,
+      "name": "Guardian's Horn"
+    },
+    "c3f5": {
+      "item_id": 2052,
+      "name": "Poro-Snax"
+    },
+    "9af5": {
+      "item_id": 2055,
+      "name": "Control Ward"
+    },
+    "25f5": {
+      "item_id": 2056,
+      "name": "Stealth Ward"
+    },
+    "21f5": {
+      "item_id": 2138,
+      "name": "Elixir of Iron"
+    },
+    "85f5": {
+      "item_id": 2139,
+      "name": "Elixir of Sorcery"
+    },
+    "17f5": {
+      "item_id": 2144,
+      "name": "Juice of Haste"
+    },
+    "91f5": {
+      "item_id": 2150,
+      "name": "Elixir of Skill"
+    },
+    "2ef5": {
+      "item_id": 2163,
+      "name": "Bandle Juice of Haste"
+    },
+    "2bfd": {
+      "item_id": 2502,
+      "name": "Unending Despair"
+    },
+    "e0fd": {
+      "item_id": 2503,
+      "name": "Blackfire Torch"
+    },
+    "d5fd": {
+      "item_id": 2504,
+      "name": "Kaenic Rookern"
+    },
+    "d8fd": {
+      "item_id": 2508,
+      "name": "Fated Ashes"
+    },
+    "21fd": {
+      "item_id": 2522,
+      "name": "Actualizer"
+    },
+    "85fd": {
+      "item_id": 2523,
+      "name": "Hexoptics C44"
+    },
+    "434a": {
+      "item_id": 3003,
+      "name": "Archangel's Staff"
+    },
+    "134a": {
+      "item_id": 3006,
+      "name": "Berserker's Greaves"
+    },
+    "ee4a": {
+      "item_id": 3008,
+      "name": "Gluttonous Greaves"
+    },
+    "ff4a": {
+      "item_id": 3012,
+      "name": "Chalice of Blessing"
+    },
+    "d84a": {
+      "item_id": 3020,
+      "name": "Sorcerer's Shoes"
+    },
+    "cc4a": {
+      "item_id": 3031,
+      "name": "Infinity Edge"
+    },
+    "244a": {
+      "item_id": 3033,
+      "name": "Mortal Reminder"
+    },
+    "854a": {
+      "item_id": 3035,
+      "name": "Last Whisper"
+    },
+    "174a": {
+      "item_id": 3040,
+      "name": "Seraph's Embrace"
+    },
+    "914a": {
+      "item_id": 3046,
+      "name": "Phantom Dancer"
+    },
+    "864a": {
+      "item_id": 3066,
+      "name": "Winged Moonplate"
+    },
+    "704a": {
+      "item_id": 3067,
+      "name": "Kindlegem"
+    },
+    "764a": {
+      "item_id": 3070,
+      "name": "Tear of the Goddess"
+    },
+    "dc4a": {
+      "item_id": 3071,
+      "name": "Black Cleaver"
+    },
+    "467c": {
+      "item_id": 3073,
+      "name": "Experimental Hexplate"
+    },
+    "c07c": {
+      "item_id": 3074,
+      "name": "Ravenous Hydra"
+    },
+    "687c": {
+      "item_id": 3075,
+      "name": "Thornmail"
+    },
+    "c37c": {
+      "item_id": 3076,
+      "name": "Bramble Vest"
+    },
+    "187c": {
+      "item_id": 3083,
+      "name": "Warmog's Armor"
+    },
+    "327c": {
+      "item_id": 3084,
+      "name": "Heartsteel"
+    },
+    "6d7c": {
+      "item_id": 3085,
+      "name": "Runaan's Hurricane"
+    },
+    "527c": {
+      "item_id": 3086,
+      "name": "Zeal"
+    },
+    "517c": {
+      "item_id": 3091,
+      "name": "Wit's End"
+    },
+    "887c": {
+      "item_id": 3094,
+      "name": "Rapid Firecannon"
+    },
+    "4b7c": {
+      "item_id": 3100,
+      "name": "Lich Bane"
+    },
+    "b27c": {
+      "item_id": 3105,
+      "name": "Aegis of the Legion"
+    },
+    "6a7c": {
+      "item_id": 3108,
+      "name": "Fiendish Codex"
+    },
+    "077c": {
+      "item_id": 3109,
+      "name": "Knight's Vow"
+    },
+    "d27c": {
+      "item_id": 3110,
+      "name": "Frozen Heart"
+    },
+    "6f7c": {
+      "item_id": 3111,
+      "name": "Mercury's Treads"
+    },
+    "d77c": {
+      "item_id": 3113,
+      "name": "Aether Wisp"
+    },
+    "117c": {
+      "item_id": 3115,
+      "name": "Nashor's Tooth"
+    },
+    "f07c": {
+      "item_id": 3116,
+      "name": "Rylai's Crystal Scepter"
+    },
+    "a77c": {
+      "item_id": 3118,
+      "name": "Malignance"
+    },
+    "437c": {
+      "item_id": 3131,
+      "name": "Sword of the Divine"
+    },
+    "137c": {
+      "item_id": 3134,
+      "name": "Serrated Dirk"
+    },
+    "ff7c": {
+      "item_id": 3140,
+      "name": "Quicksilver Sash"
+    },
+    "2b7c": {
+      "item_id": 3142,
+      "name": "Youmuu's Ghostblade"
+    },
+    "e07c": {
+      "item_id": 3143,
+      "name": "Randuin's Omen"
+    },
+    "d57c": {
+      "item_id": 3144,
+      "name": "Scout's Slingshot"
+    },
+    "787c": {
+      "item_id": 3145,
+      "name": "Hextech Alternator"
+    },
+    "937c": {
+      "item_id": 3147,
+      "name": "Haunting Guise"
+    },
+    "617c": {
+      "item_id": 3153,
+      "name": "Blade of The Ruined King"
+    },
+    "1f7c": {
+      "item_id": 3156,
+      "name": "Maw of Malmortius"
+    },
+    "9c7c": {
+      "item_id": 3158,
+      "name": "Ionian Boots of Lucidity"
+    },
+    "247c": {
+      "item_id": 3161,
+      "name": "Spear of Shojin"
+    },
+    "177c": {
+      "item_id": 3168,
+      "name": "Immortal Path"
+    },
+    "917c": {
+      "item_id": 3174,
+      "name": "Armored Advance"
+    },
+    "a47c": {
+      "item_id": 3177,
+      "name": "Guardian's Blade"
+    },
+    "d07c": {
+      "item_id": 3184,
+      "name": "Guardian's Hammer"
+    },
+    "1854": {
+      "item_id": 3211,
+      "name": "Spectre's Cowl"
+    },
+    "8854": {
+      "item_id": 3222,
+      "name": "Mikael's Blessing"
+    },
+    "9154": {
+      "item_id": 3302,
+      "name": "Terminus"
+    },
+    "6ad9": {
+      "item_id": 3748,
+      "name": "Titanic Hydra"
+    },
+    "24d9": {
+      "item_id": 3801,
+      "name": "Crystalline Bracer"
+    },
+    "21d9": {
+      "item_id": 3802,
+      "name": "Lost Chapter"
+    },
+    "85d9": {
+      "item_id": 3803,
+      "name": "Catalyst of Aeons"
+    },
+    "91d9": {
+      "item_id": 3814,
+      "name": "Edge of Night"
+    },
+    "3e36": {
+      "item_id": 4628,
+      "name": "Horizon Focus"
+    },
+    "8836": {
+      "item_id": 4630,
+      "name": "Blighting Jewel"
+    },
+    "4b36": {
+      "item_id": 4636,
+      "name": "Night Harvester"
+    },
+    "6536": {
+      "item_id": 4637,
+      "name": "Demonic Embrace"
+    },
+    "b236": {
+      "item_id": 4641,
+      "name": "Stirring Wardstone"
+    },
+    "2736": {
+      "item_id": 4642,
+      "name": "Bandleglass Mirror"
+    },
+    "6a36": {
+      "item_id": 4644,
+      "name": "Crown of the Shattered Queen"
+    },
+    "0736": {
+      "item_id": 4645,
+      "name": "Shadowflame"
+    },
+    "d236": {
+      "item_id": 4646,
+      "name": "Stormsurge"
+    },
+    "6162": {
+      "item_id": 6609,
+      "name": "Chempunk Chainsword"
+    },
+    "2462": {
+      "item_id": 6617,
+      "name": "Moonstone Renewer"
+    },
+    "9162": {
+      "item_id": 6630,
+      "name": "Goredrinker"
+    },
+    "8762": {
+      "item_id": 6653,
+      "name": "Liandry's Torment"
+    },
+    "dc62": {
+      "item_id": 6655,
+      "name": "Luden's Echo"
+    },
+    "46fe": {
+      "item_id": 6657,
+      "name": "Rod of Ages"
+    },
+    "c3fe": {
+      "item_id": 6660,
+      "name": "Bami's Cinder"
+    },
+    "25fe": {
+      "item_id": 6664,
+      "name": "Hollow Radiance"
+    },
+    "bffe": {
+      "item_id": 6665,
+      "name": "Jak'Sho, The Protean"
+    },
+    "18fe": {
+      "item_id": 6667,
+      "name": "Radiant Virtue"
+    },
+    "52fe": {
+      "item_id": 6670,
+      "name": "Noonquiver"
+    },
+    "51fe": {
+      "item_id": 6675,
+      "name": "Navori Flickerblade"
+    },
+    "3efe": {
+      "item_id": 6676,
+      "name": "The Collector"
+    },
+    "27fe": {
+      "item_id": 6690,
+      "name": "Rectrix"
+    },
+    "6afe": {
+      "item_id": 6692,
+      "name": "Eclipse"
+    },
+    "07fe": {
+      "item_id": 6693,
+      "name": "Prowler's Claw"
+    },
+    "d2fe": {
+      "item_id": 6694,
+      "name": "Serylda's Grudge"
+    },
+    "6ffe": {
+      "item_id": 6695,
+      "name": "Serpent's Fang"
+    },
+    "d7fe": {
+      "item_id": 6697,
+      "name": "Hubris"
+    },
+    "11fe": {
+      "item_id": 6699,
+      "name": "Voltaic Cyclosword"
+    },
+    "f0fe": {
+      "item_id": 6700,
+      "name": "Shield of the Rakkor"
+    },
+    "a7fe": {
+      "item_id": 6702,
+      "name": "Scouting Ahead"
+    },
+    "1fc2": {
+      "item_id": 8020,
+      "name": "Abyssal Mask"
+    }
+  },
+  "method": "Only bytes already established by accepted inventory item labels; no new byte inference",
+  "sources": [
+    {
+      "path": "lol_coach/profiles/inventory_16_20.json",
+      "sha256": "98f5ec5d063d1de795a6b878ef524a196ebde285bb1fa7fe709982a9255ef606"
+    },
+    {
+      "path": "data/research/inventory_sources/raw/bcd7100b7f6c336f585fccaa28324b9d676bf1b2932ae3bb79ee56b5775c47d6.bin",
+      "sha256": "bcd7100b7f6c336f585fccaa28324b9d676bf1b2932ae3bb79ee56b5775c47d6"
+    }
+  ]
+}
