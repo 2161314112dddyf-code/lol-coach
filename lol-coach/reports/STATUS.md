@@ -6,7 +6,7 @@
 
 - PUB-1 PASS：首批 189 个公开文件约 0.96 MB，源码/规则/测试/文档为主；回放、媒体、客户端、第三方缓存、data、完整 JSON 报告及历史备份均不进入提交。模式扫描未发现 GitHub token、私钥或微信目录标识；不把扫描视为完整安全审计。
 - PUB-2 PASS：仅从暂存文件构造的干净副本实际 284 passed in 1.24s；三个冻结依赖 SHA256 校验及 CLI help 通过。首次 pytest 因系统临时目录权限错误得到 267 passed / 17 errors，随后使用工作区内全新 basetemp 成功；未改解码业务逻辑。
-- GitHub 已创建 public 仓库 https://github.com/2161314112dddyf-code/lol-coach 。PUB-3 提交推送与远端一致性尚待本轮最终检查。
+- PUB-3 PASS：GitHub 已创建公开仓库 https://github.com/2161314112dddyf-code/lol-coach ，API 返回 visibility=PUBLIC、isPrivate=false。源码提交 775db5df5ec4f91e2a6def3f0c65d738534c2525 已推送，远端 main 与本地 SHA 完全一致；随后补记本条发布结果和临时目录运行说明。
 - GitHub 直连超时，经本机现有代理恢复；未更改系统代理。历史研究中的本机路径/私有证据链接保留其记录属性，全新克隆只能直接运行公开测试与公开数据入口，完整回放研究仍需原素材及缓存。
 
 以下为原研究状态；本轮仓库发布不增加任何游戏字段已解码声明。开发自检，独立复核和人工签署未执行。

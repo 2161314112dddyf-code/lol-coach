@@ -18,6 +18,8 @@ python -m venv .venv
 
 Linux/macOS 将 `.venv/Scripts/python.exe` 替换为 `.venv/bin/python`。首次安装依赖需要网络；单元与回归测试不需要游戏、密钥或私人回放。测试通过只证明测试覆盖的代码行为，不代表全部游戏字段已经正确解码。
 
+如果 Windows 的系统临时目录报权限错误，可加 `--basetemp=.test-tmp-public-fresh`，该目录必须尚不存在。本次公开副本按此方式实际得到 **284 passed in 1.24s**。
+
 ## 公开数据与自有回放
 
 首次获取公开静态数据需要网络，例如：
