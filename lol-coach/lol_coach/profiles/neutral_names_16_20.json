@@ -1,0 +1,146 @@
+{
+  "version": "16.20.824.8524",
+  "header_mode_bit": 12,
+  "modes": {
+    "0": {
+      "byte_pairs": {
+        "83": 220,
+        "82": 236,
+        "85": 135,
+        "95": 226,
+        "97": 116,
+        "122": 142,
+        "111": 87,
+        "114": 74,
+        "98": 237,
+        "101": 230,
+        "107": 177,
+        "100": 106,
+        "66": 218,
+        "108": 172,
+        "117": 7,
+        "77": 51,
+        "105": 127,
+        "110": 217,
+        "119": 157,
+        "102": 231,
+        "72": 159,
+        "65": 152,
+        "80": 4,
+        "116": 25,
+        "104": 11,
+        "99": 150
+      },
+      "length_pairs": {
+        "119": 7,
+        "205": 8,
+        "50": 13,
+        "190": 17,
+        "250": 16,
+        "208": 12
+      },
+      "order": 0
+    },
+    "2": {
+      "byte_pairs": {
+        "83": 227,
+        "82": 79,
+        "85": 73,
+        "95": 235,
+        "97": 161,
+        "122": 107,
+        "111": 64,
+        "114": 213,
+        "98": 88,
+        "101": 217,
+        "107": 83,
+        "77": 231,
+        "105": 137,
+        "110": 40,
+        "100": 148,
+        "117": 117,
+        "119": 29,
+        "108": 246,
+        "102": 216,
+        "72": 116,
+        "65": 166,
+        "80": 54,
+        "116": 86,
+        "104": 138,
+        "99": 155
+      },
+      "length_pairs": {
+        "193": 7,
+        "50": 17,
+        "194": 12,
+        "144": 16
+      },
+      "order": 2
+    },
+    "3": {
+      "byte_pairs": {
+        "83": 175,
+        "82": 127,
+        "85": 129,
+        "95": 10,
+        "97": 41,
+        "122": 18,
+        "111": 109,
+        "114": 12,
+        "98": 125,
+        "101": 232,
+        "107": 202,
+        "77": 191,
+        "105": 19,
+        "110": 217,
+        "66": 50,
+        "108": 31,
+        "117": 81,
+        "119": 214,
+        "102": 27,
+        "100": 199,
+        "72": 144,
+        "65": 190,
+        "80": 213,
+        "116": 54,
+        "104": 172,
+        "99": 142
+      },
+      "length_pairs": {
+        "84": 8,
+        "52": 17,
+        "104": 13,
+        "231": 12,
+        "33": 16,
+        "210": 7
+      },
+      "order": 2
+    }
+  },
+  "model_names": [
+    "HA_AP_HealthRelic",
+    "SRU_Blue",
+    "SRU_Murkwolf",
+    "SRU_MurkwolfMini",
+    "SRU_Razorbeak",
+    "SRU_RazorbeakMini",
+    "SRU_Red"
+  ],
+  "calibration_scope": "22 live neutral creations plus 4 repeated-entity keyframes from HN1-11363093470; remaining 18 keyframes and other replay withheld",
+  "character_reference": "data/raw/68aec4f56ef93e8f35b49b2ab4ea345d838945a13dc549090a673bb3c7528317.bin",
+  "unresolved": [
+    "Entity instance-name field",
+    "Other encoding modes",
+    "Unobserved neutral model letters"
+  ],
+  "character_records": {
+    "HA_AP_HealthRelic": "Characters/HA_AP_HealthRelic",
+    "SRU_Blue": "Characters/SRU_Blue/CharacterRecords/Root",
+    "SRU_Murkwolf": "Characters/SRU_Murkwolf/CharacterRecords/Root",
+    "SRU_MurkwolfMini": "Characters/SRU_MurkwolfMini/CharacterRecords/Root",
+    "SRU_Razorbeak": "Characters/SRU_Razorbeak/CharacterRecords/Root",
+    "SRU_RazorbeakMini": "Characters/SRU_RazorbeakMini/CharacterRecords/Root",
+    "SRU_Red": "Characters/SRU_Red/CharacterRecords/Root"
+  },
+  "relic_calibration_scope": "First 3 Map12 observations, one per supported mode; remaining relic observations withheld"
+}

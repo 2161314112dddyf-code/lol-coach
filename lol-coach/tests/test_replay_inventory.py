@@ -37,9 +37,14 @@ def test_special_prefix_kept_opaque():
     assert result['item_id']==3003 and result['opaque_prefix_hex']=='d07f'
 
 
-def test_unknown_stack_count_not_invented():
+def test_new_observed_stack_count_three():
     result=decode_payload(0x25f,bytes.fromhex('36f9df8051695c34c3f51bdc'))
-    assert result['count_candidate'] is None and result['count_wire']=='1b'
+    assert result['count_candidate']==3 and result['count_wire']=='1b'
+
+
+def test_unknown_stack_count_not_invented():
+    result=decode_payload(0x25f,bytes.fromhex('36f9df8051695c34c3f51cdc'))
+    assert result['count_candidate'] is None and result['count_wire']=='1c'
 
 
 @pytest.mark.parametrize('opcode,wire',[(0x25f,'373eb9231b8b6d34163220b5876246'),(0x132,'8c1d336ed1235e'),(0x66,'844608')])

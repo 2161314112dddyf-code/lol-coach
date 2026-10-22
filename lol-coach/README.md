@@ -1,5 +1,13 @@
 # LoL Coach 赛后复盘数据基础
 
+当前任务（2026-10-22，RPL-008）：继续逆向四项剩余信息。新增实时七槽背包身份和使用结果、548 个兵线实体、26 个野怪与 27 个治疗圣物、855 条通用对象创建名称和坐标。实际软件回归 430 passed；**精确施法/冷却、完整物品计数和区域视野仍未完成**，详见 [当前证据与缺口](reports/replay_completion_progress.md)。
+
+```powershell
+.venv/Scripts/python.exe scripts/run_replay_completion.py
+```
+
+需要本地既有四份 ROFL、world_objects 导出及同版本静态缓存；输出在 data/private/replay_completion。公开仓库不含这些原始素材。以下为历史入口，最新状态以 reports/STATUS.md 为准。
+
 当前入口（2026-10-21，INT-001）：统一离线分析已经接通。本局十人、50 个被动/技能来源、3 条匹配阵容的条件交互、2 张历史经验卡，以及已命名敌塔的可知生命，进入原有时刻快照。另可导出既有行动时间线、查询条件耗时和真实地图网格。四回放 9 次真实查询通过前缀检查，最终 **336 项软件测试通过**。完整背包、技能冷却、区域视野及条件完整刷野记录仍缺；[交付和反例](reports/analysis_integration_validation.md)。
 
 ```powershell

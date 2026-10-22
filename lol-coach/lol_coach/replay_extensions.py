@@ -11,7 +11,7 @@ WRAPPERS = frozenset(bytes.fromhex(x) for x in (
     'c4ffd5e8', 'c5ffd5e8', 'c4efd5e8', 'c5efd5e8',
     'c4ff25e8', 'c4ff8de9', 'c4ffade9', 'c4ff6de8', 'c4ffa5e8',
     'c4ff85e8', 'c4ff85e9', 'c4ffade8', 'c4ff65e8', 'c4ff8de8',
-    'c4ff25e9', 'c4ff45e8'))
+    'c4ff25e9', 'c4ff45e8', 'c4ff4de8'))
 BOUNDARY = re.compile(rb'[\xc4\xc5][\xef\xff].[\xe8\xe9]', re.S)
 # No claim that the other fields in these layouts have been named.
 ATTRIBUTE_NAMES = {3: 'base_attack_damage_candidate', 7: 'armor_candidate',

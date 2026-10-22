@@ -7,6 +7,9 @@ PROFILE = Path(__file__).with_name('profiles') / 'inventory_16_20.json'
 
 SLOTS = {0xf0:3, 0x46:4, 0x33:5, 0xdc:6, 0x0a:7, 0xfb:8, 0xe1:9}
 SLOT_CONSTANTS = {0:1, 1:0, 6:2, 7:255}
+# Two observed Poro stack codes, crosschecked with grants/use results and the
+# final compound counter. This is not a general byte transform.
+STACK_BYTES = {0x1b:3, 0xb5:4}
 
 
 def take(data, pos, size):
@@ -59,6 +62,7 @@ def item(data, pos):
     if count_selector in (1,2,6,7):
         value,pos = take(data,pos,1)
         count_wire = value.hex()
+        count = STACK_BYTES.get(value[0])
     elif count_selector not in (0,3,4,5):
         raise ValueError('Unsupported count selector')
     index,pos = slot(data,pos,(header >> 11)&7)
