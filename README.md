@@ -1,48 +1,58 @@
-# LoL Coach：英雄联盟赛后复盘数据基础
+# LoL Coach：英雄联盟 AI 赛后回合复盘
 
-用于建立可核验的地图、英雄机制、行动耗时和回放状态，再组织某个时刻、某个队伍可知的信息，支持大局观复盘。当前是 Python 数据与研究工具，尚未完成完整自动复盘；没有前端或微调模型。
+先建立可核验的地图空间、英雄机制、行动耗时和真人经验，再组织当时可知的局势，让通用模型比较行动、说明依据与换计划条件。英雄判断必须结合队友和对手。当前是 Python 数据与分析工具，没有前端或微调模型，完整自动赛后复盘尚未完成。
 
-项目主体在 [`lol-coach/`](lol-coach/)。保留父目录中已冻结的分包器、移动解码器和字节映射，以满足原有 SHA256 依赖校验。不要单独移动 `lol-coach` 后再运行回放导出。
+## 从这里接手
 
-## 安装与离线测试
+1. [当前任务](lol-coach/docs/CURRENT_TASK.md)：本轮交付及下一切片。
+2. **[后续推进指南](lol-coach/docs/DEVELOPMENT_GUIDE.md)**：实际链路、依赖、任务顺序、输入输出、验收和停止条件。
+3. [项目现状总结](lol-coach/docs/PROJECT_SUMMARY.md)：已完成、尚未解出、已导出未接入的区别。
+4. [项目宪法](lol-coach/docs/PROJECT_CONSTITUTION.md)与[落实约定](lol-coach/docs/WORKFLOW.md)：版本、证据、检查与责任。
 
-需要 Python 3.11 或更新版本；开发环境使用 Python 3.13.7。在仓库根目录运行：
+项目主体在`lol-coach/`；根目录的分包器、移动解码器和冻结字节映射仍是依赖，不要单独移动子目录。`FIRST_TASK.md`与初始交接原文仅为历史需求，不要重复初始化项目。
+
+## 当前能力（2026-10-28整理）
+
+- 有固定版本静态资料、地图基础、限定回放的移动/生命/经济/身份等导出，以及按时刻和队伍过滤的快照。
+- 四份研究回放的**兵线与营地身份分类限定通过**；连续兵线状态、实际施法/冷却、完整连续背包、区域视野仍不完整。详见[四项逆向边界](lol-coach/reports/replay_completion_progress.md)。
+- 已实现冻结决策帧、按需资料查询、结构化答案检查、有限修订和中文卡。14个模拟场景用于迭代；同一真实回放的三个时刻完成实际Codex分析。一次超时保留失败后恢复，最终3份结构与引用通过，**不是战术准确率**。[模拟结果](lol-coach/docs/回合复盘方案_v0.1/SIMULATION_RESULTS.md)、[真实试跑](lol-coach/docs/回合复盘方案_v0.1/REAL_REPLAY_RESULTS.md)。
+- 2026-10-26完整回归实际599项通过。本次公开源码副本验证以[同步报告](lol-coach/reports/github_sync_20261028.md)为准，不沿用旧284项作为当前结果。
+
+下一项是把已有兵线/单位导出通过可用时刻、可见性与来源检查接入决策帧，再串联相邻回合计划；当前不要求用户重新开游戏或补录。未来模型/训练步骤见推进指南，不用新增机制案例绕开当前主线。
+
+## 安装与公开离线检查
+
+Python 3.11+；原开发环境Python 3.13.7。仓库根目录执行：
 
 ```powershell
 cd lol-coach
 python -m venv .venv
 .venv/Scripts/python.exe -m pip install -r requirements-dev.txt -r requirements-map.txt
-.venv/Scripts/python.exe -m pytest -q
+.venv/Scripts/python.exe -m pytest -q --basetemp .test-tmp-public-new
 .venv/Scripts/python.exe -m lol_coach --help
+.venv/Scripts/python.exe scripts/reasoning.py --help
+.venv/Scripts/python.exe scripts/simulate_reasoning.py --help
+.venv/Scripts/python.exe scripts/run_reasoning_session.py --help
 ```
 
-Linux/macOS 将 `.venv/Scripts/python.exe` 替换为 `.venv/bin/python`。首次安装依赖需要网络；单元与回归测试不需要游戏、密钥或私人回放。测试通过只证明测试覆盖的代码行为，不代表全部游戏字段已经正确解码。
+Linux/macOS用`.venv/bin/python`。安装依赖需要网络；上述测试/帮助不需要游戏、密钥或私人回放。重跑须换一个新的临时目录以保留旧证据。Python 3.11+是声明支持范围，实际验证环境另记，不代表逐版本测试过。
 
-如果 Windows 的系统临时目录报权限错误，可加 `--basetemp=.test-tmp-public-fresh`，该目录必须尚不存在。本次公开副本按此方式实际得到 **284 passed in 1.24s**。
+## 真实局势与模型怎么运行
 
-## 公开数据与自有回放
+有本地兼容回放及配套导出、缓存后，运行`reasoning.py prepare`冻结指定时刻；通过`get_reference`查询机制，再用`run_reasoning_session.py`接收宿主模型响应，生成检查结果和中文卡。[模型框架与命令](lol-coach/docs/回合复盘方案_v0.1/REASONING_FRAMEWORK.md)、[文件会话协议](lol-coach/reports/real_reasoning_validation.md)。文件会话CLI会等待响应端，**不会自行调用模型API**。
 
-首次获取公开静态数据需要网络，例如：
+首次获取官方静态英雄数据需要网络，例如：
 
 ```powershell
 .venv/Scripts/python.exe -m lol_coach fetch-champion --patch 16.20.1 --champion Ivern
 ```
 
-已有合法取得的、兼容构建的回放时，可指定自己的路径：
+示例英雄不限定产品范围。解码器限定研究构建`16.20.824.8524`，不保证其他版本。`research_*`、部分`verify_*`和批量重建脚本依赖原样本、客户端/工具和缓存，不能把它们当作公开克隆的通用启动命令。
 
-```powershell
-.venv/Scripts/python.exe scripts/export_replay_ten.py --replay 'D:/Replays/example.rofl' --output data/private/example.json
-```
+## 证据与公开范围
 
-解码规则限定研究构建 **16.20.824.8524**，不承诺其他版本兼容。部分历史批量研究脚本仍绑定原样本路径、缓存及本地第三方工具，不能在全新克隆上直接重现全部真实回放实验。历史文档中的本机路径是原执行记录，不是新机器的运行要求。
+公开源码、版本规则、测试、来源索引和Markdown报告；私人回放、录像、客户端、缓存、派生数据与完整运行记录留在本地。历史文档中的`data/private/`和未收录JSON是本地证据定位，不是GitHub可下载资产。报告摘要可公开阅读，但公开读者不能仅凭摘要独立复核全部真实样本结论。
 
-## 当前边界与证据
+[状态与历史](lol-coach/reports/STATUS.md)记录完成声明、反例与缺口。软件测试通过不等于字段全部正确；模型格式通过不等于最佳策略；自动复核不代替人工签署。本次用户授权同步GitHub，不等于产品或战术验收。
 
-- [项目要求](lol-coach/docs/PROJECT_BRIEF.md)、[工程约定](lol-coach/AGENTS.md)、[项目宪法](lol-coach/docs/PROJECT_CONSTITUTION.md)。
-- [当前状态](lol-coach/reports/STATUS.md)、[剩余解码矩阵](lol-coach/reports/remaining_decode_matrix.md)、[最近一轮研究报告](lol-coach/reports/remaining_decode_validation.md)。
-- [时刻分析结构](lol-coach/docs/MACRO_SNAPSHOT.md)：未知保持未知；不把未来或隐藏敌方信息当成当时已知。
-- 背包同步载荷存在时间语义冲突，尚不能当作当前背包；部分属性标签仍是候选；敌塔可见性不等于完整地图视野。
-
-本仓库公开源码、版本规则、测试、任务文档和 Markdown 研究报告。原始回放、录像、客户端、第三方研究缓存、私有派生数据、历史备份和机器生成的完整报告留在本地。报告中对这些文件的引用因此不一定在 GitHub 可打开。测试包含少量用于字段回归的包片段，不包含完整回放或玩家账户资料。
-
-公开可见不等于已经授予开源许可；当前未新增许可证，也未改变第三方资料的权利归属。
+公开可见不等于授予开源许可；目前没有新增许可证，第三方资料权利归属不变。

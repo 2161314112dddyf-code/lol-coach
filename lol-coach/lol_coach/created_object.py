@@ -1,7 +1,7 @@
 """Exact-build 0x1f3 model names and bounded creation coordinates.
 
-This does not assert that every created object grants vision. Runtime team,
-owner, lifetime and sight radius remain separate fields.
+This does not assert that every created object grants vision. A serialized
+reference is not necessarily an owner; lifetime and sight remain separate.
 """
 import json,math,struct
 from pathlib import Path
@@ -10,6 +10,36 @@ from .replay_inventory import VERSION
 
 def load_profile():
     return json.loads((Path(__file__).with_name('profiles')/'created_objects_16_20.json').read_text())
+
+
+def decode_affiliation(payload, position_offset, *, version=VERSION):
+    """Observed team labels/reference bytes, without inferred ownership."""
+    profile=json.loads((Path(__file__).with_name('profiles')/'created_affiliation_16_20.json').read_text())
+    if version!=VERSION or profile['version']!=version:raise ValueError('Unsupported affiliation version')
+    off=position_offset
+    if off<8 or off+12>=len(payload):raise ValueError('Affiliation boundary outside payload')
+    label=profile['team_byte_labels'].get(str(payload[off+12]))
+    value=dict(team_id=label if isinstance(label,int)else None,team_label=label,
+        team_byte_offset=off+12,team_wire_hex=payload[off+12:off+13].hex(),
+        reference_entity_id=None,reference_byte_range=[7,off-1],reference_error=None,
+        affiliation_evidence='cross_checked_binary_inference')
+    if payload[off-1]!=0x43:
+        value['reference_error']='Unknown vector prefix';return value
+    raw=payload[7:off-1]
+    if not raw:
+        value['reference_error']='Omitted reference semantics unknown';return value
+    inverse={v:int(k)for k,v in profile['reference_byte_pairs'].items()}
+    number=0
+    for index,byte in enumerate(raw):
+        if byte not in inverse:
+            value['reference_error']='Unobserved reference byte';return value
+        b=inverse[byte];number|=(b&127)<<(index*7)
+        if index>=5 or (index==len(raw)-1)==bool(b&128) or index==len(raw)-1 and index and b==0:
+            value['reference_error']='Noncanonical reference';return value
+    if number>=0x40000000:
+        value['reference_error']='Reference outside observed dynamic ID range';return value
+    value['reference_entity_id']=hex(0x40000000|number)
+    return value
 
 
 def decode_creation(payload,*,version=VERSION,profile=None):
@@ -39,6 +69,7 @@ def decode_creation(payload,*,version=VERSION,profile=None):
     gap=profile['position_gap_selector'].get(str(selector))
     if gap is None:value['position_error']='Unknown position-gap selector';return value
     off=start-gap;inv={v:int(k)for k,v in profile['position_byte_pairs'].items()}
+    value.update(decode_affiliation(payload,off,version=version))
     try:
         x,z=(struct.unpack('<f',bytes(inv[b]for b in payload[p:p+4][::-1]))[0]for p in (off,off+8))
     except KeyError:value['position_error']='Unobserved position byte';return value

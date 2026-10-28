@@ -1,0 +1,10 @@
+{
+  "schema": "reasoning-principles/v1",
+  "cards": [
+    {"id":"J01","title":"阵容决定能力分工","reading_level":"author_description","url":"https://www.bilibili.com/list/1728922202?bvid=BV1xG411a7Fr&oid=409765279","source_date":"2023-12-16","champions":[],"principle":"不要由野核或节奏型单标签决定路线，结合对位和线上英雄能够提供的能力。","conditions":["检查双方当前状态与队友承接"],"counterexample":"有后期成长能力，不排除当前存在可兑现的抓人机会。"},
+    {"id":"E03","title":"准备、补给与实际战力","reading_level":"primary_text","url":"https://m.wanplus.cn/article/312883.html","source_date":"2020-09-08","champions":[],"principle":"比较行动前检查兵线、回补与已购买装备，复盘问题可向前追到准备节点。","conditions":["区分现金与已购买装备","核实准备机会确实存在"],"counterexample":"经济领先但没有补装，不能据总金币直接认定能接团。"},
+    {"id":"L02","title":"个人回合与协同窗口","reading_level":"primary_text","url":"https://www.bilibili.com/opus/1070207456794116113","source_date":"2025-05-23","champions":[],"principle":"结合队友的补给、发育与技能窗口安排联合行动；尝试失败后重新评估剩余状态。","conditions":["队友有各自的兵线和补给成本","根据可观察行动判断配合"],"counterexample":"辅助有游走机会，不意味着ADC能够无代价独处。"},
+    {"id":"E04","title":"操作与执行条件","reading_level":"primary_text","url":"https://m.wanplus.cn/article/292456.html","source_date":"2020-04-21","champions":[],"principle":"高手示范需结合目标玩家的操作要求、对线环境和失败成本使用。","conditions":["熟练度未知时不虚构能力评估"],"counterexample":"主播使用某装备获胜，不证明相同选择适合本局或当前版本。"},
+    {"id":"L03","title":"薇古丝的先手与输出职责","reading_level":"primary_text","url":"https://www.bilibili.com/opus/909355412530135056","source_date":"2025-09-22 edited; discusses 14.5","champions":["Vex"],"principle":"是否先手应结合队友承接和自身在团队中的伤害职责。","conditions":["核对进场后谁能承接","目标版本机制另查"],"counterexample":"自己承担主要输出而队友无法跟进时，大招可用不足以支持直接进场。"}
+  ]
+}

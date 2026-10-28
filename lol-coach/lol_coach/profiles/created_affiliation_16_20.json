@@ -1,0 +1,43 @@
+{
+  "version": "16.20.824.8524",
+  "reference_byte_pairs": {
+    "53": 182,
+    "177": 101,
+    "3": 253,
+    "241": 106,
+    "33": 150,
+    "221": 122,
+    "57": 221,
+    "58": 206,
+    "61": 27,
+    "205": 207,
+    "79": 211,
+    "52": 36,
+    "187": 76,
+    "103": 190,
+    "148": 151,
+    "142": 54,
+    "1": 83,
+    "254": 26,
+    "165": 104,
+    "146": 146,
+    "189": 29,
+    "191": 79,
+    "224": 62,
+    "240": 109,
+    "244": 139,
+    "180": 247,
+    "156": 53,
+    "2": 177,
+    "149": 156,
+    "183": 248,
+    "207": 199
+  },
+  "team_byte_labels": {
+    "27": 100,
+    "71": 200,
+    "163": "neutral"
+  },
+  "reference_basis": "318 unique hero-specific summons or same-time/same-position parent-child anchors; reference is not ownership",
+  "team_basis": "Same byte offset across 855 messages; 100/200 checked against unique hero-specific summons; neutral is a label, not a decoded numeric team ID"
+}

@@ -1,6 +1,18 @@
+# 最新入口（2026-10-28）
+
+先读[后续推进指南](docs/DEVELOPMENT_GUIDE.md)、[当前任务](docs/CURRENT_TASK.md)和[现状总结](docs/PROJECT_SUMMARY.md)。安装与公开离线测试见[根README](../README.md)。
+
+已实现单时刻模型分析闭环：14个模拟场景与同一真实回放3个时刻；3份实局答案最终通过结构引用检查，一次超时及恢复保留。2026-10-26回归599项通过，不能据此声称战术正确率。[真实结果](docs/回合复盘方案_v0.1/REAL_REPLAY_RESULTS.md)、[本次同步与公开副本验证](reports/github_sync_20261028.md)。
+
+下一项ROUND-006-JOIN接入已有兵线/单位身份导出：先处理可用时间和队伍可见性，再串联回合计划。实际施法/冷却、完整连续背包和区域视野仍未全部解决；身份已解不等于这些状态已解。无需用户重新开游戏或补录。
+
+以下保留历史入口；其中“当前任务”指各自日期，不能覆盖上面的推进指南。`data/private`及未公开JSON仅为本地证据，不随GitHub分发。
+
+---
+
 # LoL Coach 赛后复盘数据基础
 
-当前任务（2026-10-22，RPL-008）：继续逆向四项剩余信息。新增实时七槽背包身份和使用结果、548 个兵线实体、26 个野怪与 27 个治疗圣物、855 条通用对象创建名称和坐标。实际软件回归 430 passed；**精确施法/冷却、完整物品计数和区域视野仍未完成**，详见 [当前证据与缺口](reports/replay_completion_progress.md)。
+当前任务（2026-10-23，RPL-008）：现有四回放的兵线与营地身份限定覆盖已通过；新增实时背包计数/附加属性和创建对象阵营/引用。实际软件回归 449 passed。**实际施法/冷却、完整连续背包和区域视野尚未完成**，详见 [证据与缺口](reports/replay_completion_progress.md)。
 
 ```powershell
 .venv/Scripts/python.exe scripts/run_replay_completion.py

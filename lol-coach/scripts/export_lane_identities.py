@@ -6,6 +6,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from lol_coach.lane_identity import decode_spawn
+from lol_coach.lane_attributes import super_crosscheck
 from lol_coach.replay_fields import read_metadata
 from export_replay_ten import load_reviewed, reference
 from export_skill_ranks import STEMS
@@ -38,7 +39,14 @@ def main():
             if prior is not None:checks.append(dict(entity_id=actor,stable=prior==signature,source=row['source']))
             identities[actor]=signature
             witness=births.get(actor)
+            corroboration=None
+            if identity['kind']=='super_candidate' and witness:
+                corroboration=super_crosscheck(witness)
+                if corroboration['matched']:
+                    identity.update(kind='super',classification_basis='retrospective_attribute_crosscheck',
+                        classification_available_at=corroboration['witnessed_at'])
             events.append(dict(**row,identity=identity,
+                class_crosscheck=corroboration,
                 first_health_witness=witness,first_path_witness=paths.get(actor),
                 witness_policy='retrospective crosscheck; future witnesses are not decision inputs'))
         if reference(source)!=ref:raise ValueError('Replay changed')
@@ -51,7 +59,7 @@ def main():
             rejected=rejected,identity_checks=checks,summary=summary,
             decision_input_eligible=False,complete_world_identity=False,
             limitations=['Three common types crosschecked with wave order, static reference and health',
-                'Super label has one live example and remains a candidate',
+                'Super classification uses a later four-attribute witness; not a decoded character string',
                 'Team/lane labels use spawn/path geometry; runtime map ID is not decoded',
                 'No jungle-monster, ward or summoned-unit identity is claimed'])
         (ROOT/'data/private/replay_completion'/(stem+'-lane-identities.json')).write_text(json.dumps(bundle,indent=2),encoding='utf8')

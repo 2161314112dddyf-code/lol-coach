@@ -26,12 +26,15 @@ def main():
         if reference(source)!=ref:raise ValueError('Replay changed')
         summary=dict(replay=stem,records=len(events),entities=len(by),rejected=len(rejected),
             positions=sum(e['identity']['position_xz']is not None for e in events),
+            affiliated=sum(e['identity'].get('team_label')is not None for e in events),
+            referenced_entities=sum(e['identity'].get('reference_entity_id')is not None for e in events),
             repeated_names=len(checks),name_conflicts=sum(not c['name_stable']for c in checks),
             models=dict(Counter(by.values())))
         bundle=dict(schema='created-objects/v1',source=ref,version=version,dependencies=deps,events=events,
             rejected=rejected,checks=checks,summary=summary,region_visibility_complete=False,
             limitations=['Positions are creation/sync observations, not current moving-object tracks',
-                'Owner/team and vision-source status unknown; no radius inferred from model name'])
+                'Team labels and bounded references are inferred; references do not imply ownership',
+                'Lifetime and vision-source status unknown; no radius inferred from model name'])
         (ROOT/'data/private/replay_completion'/(stem+'-created-objects.json')).write_text(json.dumps(bundle,indent=2))
         summaries.append(summary)
     (ROOT/'data/private/replay_completion/created_objects_run.json').write_text(json.dumps(summaries,indent=2))

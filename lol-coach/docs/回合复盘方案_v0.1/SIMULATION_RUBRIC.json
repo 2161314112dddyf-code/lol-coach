@@ -1,0 +1,169 @@
+{
+  "schema": "simulation-rubric/v1",
+  "evidence_level": "synthetic_stipulated",
+  "tactical_review": "requires_developer_reading_not_automated_keyword_score",
+  "cases": {
+    "C1A": {
+      "required_fact_refs": [
+        "ally_action",
+        "lane_cost"
+      ],
+      "expected": "解释开始移动与仍在清线的配合差异；到达和未来响应仍需条件，考虑离线成本；不强制首选一定翻转。",
+      "forbidden": [
+        "把已移动写成已抵达或承诺",
+        "用生命值/身份证明队友已跟进"
+      ]
+    },
+    "C1B": {
+      "required_fact_refs": [
+        "ally_action",
+        "lane_cost"
+      ],
+      "expected": "解释开始移动与仍在清线的配合差异；到达和未来响应仍需条件，考虑离线成本；不强制首选一定翻转。",
+      "forbidden": [
+        "把已移动写成已抵达或承诺",
+        "用生命值/身份证明队友已跟进"
+      ]
+    },
+    "C2A": {
+      "required_fact_refs": [
+        "capital_state",
+        "capital_definition"
+      ],
+      "expected": "区别装备能力已兑现与现金未花；讨论补装及回场机会成本，不能保证补装后赶得上。",
+      "forbidden": [
+        "等累计收入当成等当前战力",
+        "虚构补装或到达精确秒数"
+      ]
+    },
+    "C2B": {
+      "required_fact_refs": [
+        "capital_state",
+        "capital_definition"
+      ],
+      "expected": "区别装备能力已兑现与现金未花；讨论补装及回场机会成本，不能保证补装后赶得上。",
+      "forbidden": [
+        "等累计收入当成等当前战力",
+        "虚构补装或到达精确秒数"
+      ]
+    },
+    "C3A": {
+      "required_fact_refs": [
+        "damage_owner",
+        "engage_tradeoff"
+      ],
+      "expected": "根据主要输出职责调整自身先手成本和队友承接；保持敌方反制约束。",
+      "forbidden": [
+        "只因本人能先手就必须先手",
+        "把队友能力写成承诺执行"
+      ]
+    },
+    "C3B": {
+      "required_fact_refs": [
+        "damage_owner",
+        "engage_tradeoff"
+      ],
+      "expected": "根据主要输出职责调整自身先手成本和队友承接；保持敌方反制约束。",
+      "forbidden": [
+        "只因本人能先手就必须先手",
+        "把队友能力写成承诺执行"
+      ]
+    },
+    "C4A": {
+      "required_fact_refs": [
+        "enemy_last_seen",
+        "entry_visibility"
+      ],
+      "expected": "两个相同可知输入都不应使用全知敌人位置；历史位置不保证当前入口安全。允许随机措辞差异。",
+      "forbidden": [
+        "使用审计中的全知位置",
+        "历史位置升级为当前坐标或保证安全"
+      ]
+    },
+    "C4B": {
+      "required_fact_refs": [
+        "enemy_last_seen",
+        "entry_visibility"
+      ],
+      "expected": "两个相同可知输入都不应使用全知敌人位置；历史位置不保证当前入口安全。允许随机措辞差异。",
+      "forbidden": [
+        "使用审计中的全知位置",
+        "历史位置升级为当前坐标或保证安全"
+      ]
+    },
+    "C5A": {
+      "required_fact_refs": [
+        "duo_matchup",
+        "jungle_matchup",
+        "jungle_definitions"
+      ],
+      "expected": "从不变2v2局势重新比较3v3控制和中断关系；有利控制只支持候选，不证明必赢。",
+      "forbidden": [
+        "2v2不利直接判3v3必败",
+        "能力优势直接判稳赢"
+      ]
+    },
+    "C5B": {
+      "required_fact_refs": [
+        "duo_matchup",
+        "jungle_matchup",
+        "jungle_definitions"
+      ],
+      "expected": "从不变2v2局势重新比较3v3控制和中断关系；有利控制只支持候选，不证明必赢。",
+      "forbidden": [
+        "2v2不利直接判3v3必败",
+        "能力优势直接判稳赢"
+      ]
+    },
+    "C6A": {
+      "required_fact_refs": [
+        "ally_action",
+        "lane_cost"
+      ],
+      "expected": "资料地区标签变化不改变当前事实；说明经验适用限制，不能用国服/韩服刻板印象反转建议。",
+      "forbidden": [
+        "由地区标签推断队友真实配合",
+        "把组排经验当本局已沟通证据"
+      ]
+    },
+    "C6B": {
+      "required_fact_refs": [
+        "ally_action",
+        "lane_cost"
+      ],
+      "expected": "资料地区标签变化不改变当前事实；说明经验适用限制，不能用国服/韩服刻板印象反转建议。",
+      "forbidden": [
+        "由地区标签推断队友真实配合",
+        "把组排经验当本局已沟通证据"
+      ]
+    },
+    "C7A": {
+      "required_fact_refs": [
+        "solo_capability",
+        "solo_definitions",
+        "limited_scope",
+        "ally_action"
+      ],
+      "expected": "A清楚比较并允许当前可独立完成的有限入口行动，不因队友仍清线而机械等待；B识别必要承接未满足并等待或后撤。两者都保持有限目标与环境变更中止条件。",
+      "forbidden": [
+        "把无关队友缺口升级为A的必需条件",
+        "忽略B的必要承接",
+        "把有限安全条件扩成无限前压或稳赢"
+      ]
+    },
+    "C7B": {
+      "required_fact_refs": [
+        "solo_capability",
+        "solo_definitions",
+        "limited_scope",
+        "ally_action"
+      ],
+      "expected": "A清楚比较并允许当前可独立完成的有限入口行动，不因队友仍清线而机械等待；B识别必要承接未满足并等待或后撤。两者都保持有限目标与环境变更中止条件。",
+      "forbidden": [
+        "把无关队友缺口升级为A的必需条件",
+        "忽略B的必要承接",
+        "把有限安全条件扩成无限前压或稳赢"
+      ]
+    }
+  }
+}

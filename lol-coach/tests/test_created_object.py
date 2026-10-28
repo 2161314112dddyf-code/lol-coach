@@ -13,6 +13,8 @@ def test_creation_position_matches_independent_compound_anchor():
     assert result['position_xz']==[4811.,4417.]
     assert result['position_byte_offsets']==[9,17]
     assert result['owner_entity_id']is None and result['grants_vision']is None
+    assert result['team_id']==100
+    assert result['reference_entity_id']=='0x40000035'
 
 
 def test_longer_plant_name_not_seed_prefix():
@@ -41,3 +43,17 @@ def test_unrecognized_name_rejected(data):
 
 def test_version_mismatch_rejected():
     with pytest.raises(ValueError):decode_creation(SEED,version='16.21')
+
+
+def test_unknown_affiliation_keeps_model_and_coordinates():
+    raw=bytearray(SEED);raw[21]=0;raw[7]=0
+    result=decode_creation(bytes(raw))
+    assert result['position_xz']==[4811.,4417.]
+    assert result['team_id']is None and result['reference_entity_id']is None
+    assert result['reference_error']=='Unobserved reference byte'
+
+
+def test_reference_does_not_assign_ownership_or_vision():
+    result=decode_creation(PLANT)
+    assert result['reference_entity_id']=='0x40000035'
+    assert result['owner_entity_id']is None and result['vision_radius']is None

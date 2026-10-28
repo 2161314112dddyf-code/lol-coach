@@ -35,7 +35,7 @@ def main():
         result=dict(schema='live-inventory-events/v1',version=version,source=ref,dependencies=deps,
             events=rows,rejected=rejected,summary=summary,complete_inventory_state=False,
             limitations=['One item-use slot code remains unresolved in the supplied full game',
-                'Variable item charge counters and active-item cooldowns remain unknown',
+                'Observed snapshot counters are decoded; active-item cooldowns remain unknown',
                 'Use events require prior inventory state to identify the item',
                 'Never apply live-list absence semantics to other inventory opcodes'])
         (ROOT/'data/private/replay_completion'/(stem+'-live-inventory.json')).write_text(json.dumps(result,indent=2),encoding='utf8')

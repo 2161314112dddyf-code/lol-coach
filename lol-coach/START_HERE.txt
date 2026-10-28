@@ -1,3 +1,16 @@
+当前接手入口（2026-10-28）
+
+项目已实现多轮数据、回放解析和单决策点模型闭环。不要重新执行首轮初始化。
+先读 AGENTS.md、docs/WORKFLOW.md、docs/CURRENT_TASK.md、docs/DEVELOPMENT_GUIDE.md、reports/STATUS.md。
+项目现状见 docs/PROJECT_SUMMARY.md；真实三时刻模型试跑见 docs/回合复盘方案_v0.1/REAL_REPLAY_RESULTS.md。
+
+下一工程切片是 ROUND-006-JOIN：把已有兵线/单位身份导出按证据可用时间与队伍可知范围接入决策帧。具体输入输出、GWT、停止条件在推进指南。其后串联相邻回合计划；不把已有身份分类误当连续兵线状态，也不反复要求补录移动。
+公开克隆先按根README运行离线测试/CLI帮助；实局命令依赖本地兼容回放和缓存。文件模型会话需要宿主响应，不会自动调用API。
+沿用项目宪法，不编造字段、实测、通过、准确率或人工签署；保留原始证据和失败。暂不做前端、微调、付费或游戏操作。
+
+以下为最初交接原文，仅作历史需求保存；其中“本轮只执行 FIRST_TASK.md”不再是当前任务。
+------------------------------------------------------------------------
+
 请接手这个英雄联盟 AI 赛后复盘项目，并在当前项目目录实际开始实现。
 
 先阅读 AGENTS.md、docs/PROJECT_BRIEF.md、docs/FIRST_TASK.md、docs/SOURCES.md 和 reports/STATUS.md。

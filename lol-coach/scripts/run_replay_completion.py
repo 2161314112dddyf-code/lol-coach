@@ -7,7 +7,8 @@ ROOT=Path(__file__).resolve().parents[1]
 def main():
     (ROOT/'data/private/replay_completion').mkdir(parents=True,exist_ok=True)
     for script in ('research_compound_inventory.py','export_inventory_live_events.py',
-                   'export_lane_identities.py','export_neutral_identities.py','export_created_objects.py'):
+                   'export_lane_identities.py','export_neutral_identities.py','export_created_objects.py',
+                   'verify_inventory_counters.py','verify_observed_unit_identities.py'):
         subprocess.run([sys.executable,str(ROOT/'scripts'/script)],cwd=ROOT,check=True)
 
 

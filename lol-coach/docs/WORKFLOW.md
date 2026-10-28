@@ -4,6 +4,10 @@
 
 ## 已有工件与今后的最小循环
 
+2026-10-28接管约定：`PROJECT_SUMMARY.md`说明当前能力，`DEVELOPMENT_GUIDE.md`登记下一切片及依赖/GWT，`CURRENT_TASK.md`记录正在执行的任务，`reports/STATUS.md`只追加实际交付历史。旧FIRST_TASK、旧总结与旧矩阵均保留日期和历史身份，不覆盖新任务。具体运行入口仍在README；不复制多份相互冲突的当前计划。
+
+本次用户明确要求更新GitHub，因此GOV-002-SYNC可以提交和推送已审查的公开源码/文档，不再以“未获发布授权”阻断。授权范围不包含私人素材上传、付费模型或战术效果代签。正式人工验收仍按下文真实签署规则处理。
+
 沿用 PROJECT_BRIEF.md 作为 Intent，SOURCES.md 作为来源索引，CURRENT_TASK.md 记录当前 Spec/GWT/Plan，源码与 tests 不迁移。reports 保存 Run、原始检查输出、Finding、ADR 和证据索引；README 保存启动与复现命令。data 保留来源、规范化数据及私有素材边界。不为凑课程目录复制六套文档。
 
 每个小切片执行：确定输入输出与验收 → 留存修改前恢复点 → 最小实现 → 实际检查并记录失败 → 按验收解释证据 → 更新状态及接管信息。规格、数据、实现、检查结果各自关联版本。没有 Git 的切片用文件清单/SHA256 和备份标识，不伪造 commit。

@@ -21,6 +21,9 @@
 !/lol-coach/reports/
 /lol-coach/reports/*
 !/lol-coach/reports/*.md
+!/lol-coach/reports/templates/
+/lol-coach/reports/templates/*
+!/lol-coach/reports/templates/controlled_experiment_log.csv
 __pycache__/
 *.pyc
 .env
