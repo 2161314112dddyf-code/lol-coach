@@ -1,6 +1,6 @@
 # 当前接管点：GOV-002-SYNC交付；下一切片ROUND-006-JOIN
 
-2026-10-28用户要求更新GitHub并补充能指导推进的MD。当前源码与文档已整理，公开源码副本实际599 passed in 8.36s，4个CLI帮助入口通过；提交/远端核对结果见[同步报告](../reports/github_sync_20261028.md)。本轮任务范围与G1—G4见[同步任务卡](GITHUB_SYNC_TASK.md)。没有新实局解码、模型作答或训练。
+2026-10-28用户要求更新GitHub并补充能指导推进的MD。内容提交`4ad43af`已同步公开仓库main并核对远端SHA；公开源码副本实际599 passed in 8.36s，4个CLI帮助入口通过。[同步报告](../reports/github_sync_20261028.md)记录网络失败、恢复与回执，本轮任务范围与G1—G4见[同步任务卡](GITHUB_SYNC_TASK.md)。没有新实局解码、模型作答或训练。
 
 **下次直接执行[推进指南](DEVELOPMENT_GUIDE.md)的ROUND-006-JOIN。** 输入为现有兵线/单位导出与冻结快照；先逐字段核对来源、发生/可用时间和观察方权限，再进入analysis_context与reasoning_frame。特别保留classification_available_at与decision_input_eligible=False的含义；当前身份分类不证明当时可见、仍存活或可推塔。L1—L5验收、改动范围、失败处理和后继ROUND-007-CHAIN已写在指南，不重新初始化项目或反复移动校准。
 
