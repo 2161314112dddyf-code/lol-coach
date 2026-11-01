@@ -39,18 +39,28 @@ def checked_human_cards(inputs):
     return cards
 
 
-def context(replay_id,at,team,player=None,window=30):
+def context(replay_id,at,team,player=None,window=30,lane_evidence_path=None,lane_combat_path=None):
     bundles,inputs=load_inputs(replay_id)
     t=ROOT/'data/private/turret_state'/f'{replay_id}.json'
     v=ROOT/'data/private/tower_vision'/f'{replay_id}.json'
     paired=t.exists() and v.exists()
     towers=load(t,inputs) if paired else None
     vision=load(v,inputs) if paired else None
+    if lane_evidence_path is None:
+        candidates=[ROOT/'data/private/lane_dynamics'/replay_id/'evidence.json',
+                    ROOT/'data/private/lane_dynamics_run_20261028'/replay_id/'evidence.json']
+        lane_evidence_path=next((p for p in candidates if p.exists()),None)
+    lane=load(Path(lane_evidence_path),inputs) if lane_evidence_path is not None else None
+    if lane is not None and lane_combat_path is None:
+        candidates=[ROOT/'data/private/lane_combat'/replay_id/'evidence.json',
+                    ROOT/'data/private/lane_combat_attempt_20261028/analysis'/replay_id/'evidence.json']
+        lane_combat_path=next((p for p in candidates if p.exists()),None)
+    lane_combat=load(Path(lane_combat_path),inputs) if lane_combat_path is not None else None
     cache=ROOT/'data/research/champion_catalog'
     cards=checked_human_cards(inputs)
     mechanics=build_lineup_bundle(cache)
     data=build_context(bundles,at=at,team=team,player=player,window=window,cache_root=cache,
-        human_cards=cards,mechanisms=mechanics,towers=towers,tower_vision=vision)
+        human_cards=cards,mechanisms=mechanics,towers=towers,tower_vision=vision,lane_evidence=lane,lane_combat=lane_combat)
     return data,render_context(data),inputs
 
 
@@ -58,6 +68,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
     c=sub.add_parser('context');c.add_argument('--replay-id',required=True);c.add_argument('--at',type=float,required=True)
     c.add_argument('--team',type=int,choices=(100,200),required=True);c.add_argument('--player');c.add_argument('--window',type=float,default=30)
+    c.add_argument('--lane-evidence',type=Path,help='Explicit source-bound lane evidence; otherwise use the available local export')
+    c.add_argument('--lane-combat',type=Path,help='Optional source-bound health-loss component evidence')
     sub.add_parser('timeline')
     c=sub.add_parser('travel');c.add_argument('--points',required=True,help='JSON array of [x,z] game coordinates')
     c.add_argument('--speed',type=float,required=True);c.add_argument('--audit-map11',action='store_true',help='Audit against cached Map11 base grid; not a match-map binding')
@@ -68,7 +80,7 @@ def main():
     outputs=[target,target.with_suffix('.md'),target.with_suffix('.manifest.json')]
     if any(f.exists() for f in outputs):raise ValueError('Choose new output files; existing evidence is never overwritten')
     inputs=[]
-    if a.command=='context':data,md,inputs=context(a.replay_id,a.at,a.team,a.player,a.window)
+    if a.command=='context':data,md,inputs=context(a.replay_id,a.at,a.team,a.player,a.window,a.lane_evidence,a.lane_combat)
     elif a.command=='timeline':
         report=load(ROOT/'reports/movement_video_validation.json',inputs)
         for field,pathkey in [('replay','path'),('video','source')]:
@@ -94,7 +106,9 @@ def main():
              'lol_coach/macro_snapshot.py','lol_coach/tower_vision.py','lol_coach/replay_vision.py',
              'lol_coach/mechanism_rules.py','scripts/collect_human_cases.py','lol_coach/lineup_rules.py',
              'lol_coach/profiles/lineup_interactions_16_20_1.json','lol_coach/profiles/pantheon_mechanisms_16_20_1.json',
-             'lol_coach/ngrid.py','lol_coach/path_audit.py']
+             'lol_coach/ngrid.py','lol_coach/path_audit.py','lol_coach/lane_wave.py',
+             'lol_coach/lane_current_state.py','lol_coach/lane_dynamics.py','lol_coach/lane_tracking.py',
+             'lol_coach/profiles/lane_tracking_16_20.json','lol_coach/lane_combat.py','lol_coach/profiles/lane_combat_16_20.json']
     manifest=dict(schema='offline-analysis-artifacts/v1',inputs=inputs,
         implementation={m:hashlib.sha256((ROOT/m).read_bytes()).hexdigest() for m in modules},
         outputs={str(f):hashlib.sha256(f.read_bytes()).hexdigest() for f in outputs[:2]},network_used=False)

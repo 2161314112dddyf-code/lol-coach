@@ -193,6 +193,20 @@ def compile_frame(snapshot, *, max_chars=60000, max_principles=4):
                     unit='health_points', source={'source': {k: v for k, v in row.get('source', {}).items()
                         if k in ('stream', 'chunk', 'offset', 'decompressed_offset', 'opcode')}}))
 
+    lane_ids = []
+    lane_view = snapshot.get('world', {}).get('lane_waves')
+    if lane_view is not None:
+        from .lane_wave import model_view
+        lane_model = model_view(lane_view, at=at, team=team)
+        overview = {k: v for k, v in lane_model.items() if k != 'lanes'}
+        lane_ids.append(add('lane:overview', 'lane_observation_scope', overview, at,
+            'observer_limited_reconstructed_state', source={'basis': 'bounded_lane_adapter',
+            'map_binding': lane_view.get('audit', {}).get('map_binding')}))
+        for lane in lane_model['lanes']:
+            lane_ids.append(add('lane:'+lane['lane'], 'lane_current_units_and_groups', lane, at,
+                'replicated_lifecycle_health_and_forward_position_estimates',
+                source={'basis': 'bounded_lane_adapter', 'unit_evidence': lane_view.get('audit', {}).get('units', {})}))
+
     names = {h['champion'] for h in heroes}
     for name, ref in sorted(snapshot.get('foundation', {}).get('champions', {}).items()):
         if name not in names:
@@ -246,6 +260,10 @@ def compile_frame(snapshot, *, max_chars=60000, max_principles=4):
         context_policy=dict(full_skill_tooltips='omitted_lookup_short_descriptions_available',
             unused_experience='omitted', selected_principles=len(eligible[:max_principles]),
             facts='no_silent_truncation', observations='prefix_filtered_upstream_then_whitelisted'))
+    if lane_ids:
+        frame['lane_fact_ids'] = lane_ids
+        frame['unknowns']['waves'] = 'observer_limited_state_joined_hidden_units_exact_positions_and_priority_unresolved'
+        frame['input_policy'].append('兵线计数只含本队可见且有存活证据的小兵；生命按增量保持，位置是前向估计，空间接近不等于交战或线权。')
     frame['frame_id'] = 'frame_' + digest(frame)[:24]
     if len(canonical(frame)) > max_chars:
         raise ValueError('Context budget too small; increase max_chars, do not truncate facts or limitations')
@@ -287,6 +305,11 @@ assumptions或未确认的队友依赖，就必须标conditional并写成立前�
 recommendation.confidence标supported还要求首选与备选都为supported且四项耗时均有工具结果；
 任一耗时为null或仍有条件，就用conditional。无法排序则用insufficient_evidence并列出关键缺口。
 只返回符合round-decision/v1的JSON。给简短可核理由，不输出内部思考过程。未知不阻断条件分析。
+若task.previous_plan存在，先核对旧目标及其成立条件，再按当前facts和round_transition回应。
+旧建议不是玩家执行记录，historical_facts只作历史比较，不能放入facts_used或当前fact_refs。
+输出continuation说明retain/revise/cancel，previous_action_execution保持unknown；改选/取消须引用变化。
+保留总体目标不等于保留全部行动细节；已零血目标不能继续作为可攻击目标，新增目标须重新核对条件。
+持续可见期间的最新复制HP是可用状态，保留同步延迟未知；位置是估计，前后兵团不能合算为前方战力。
 程序只能检查结构、引用和值，战术优劣仍需评审；不要声称自己通过了战术验收。'''
 
 
@@ -311,6 +334,16 @@ def render_frame(bundle):
         rows.append(f"| {h['champion'] or h['entity_id']} | {h['relation']} | {len(h['current_fact_ids'])} | {len(h['history_fact_ids'])} |")
     rows += ['', '## 本次分析顺序', ''] + [f'{i}. {text}' for i, text in enumerate(f['reasoning_order'], 1)]
     rows += ['', '## 已知缺口', ''] + [f'- {k}: {v}' for k, v in f['unknowns'].items()]
+    continuity = f['task'].get('continuity_status')
+    if continuity:
+        rows += ['', '## 相邻回合', '', '承接状态：' + continuity['status']]
+        if f['task'].get('previous_plan'):
+            plan=f['task']['previous_plan']
+            rows += [f"上一时刻：{plan['previous_at_seconds']:g}秒；上一目标：{plan['decision_card']['objective']}",
+                     '上一建议是否执行：未知。旧事实仅作历史，当前事实保持本帧来源。',
+                     f"可追溯观测变化：{len(f['task']['round_transition']['changes'])}项。"]
+        else:
+            rows += ['独立分析原因：' + str(continuity['reason'])]
     rows += ['', f"事实 {len(f['facts'])} 项；参考入口 {len(f['references'])} 项；frame_id `{f['frame_id']}`。", '',
              '同包的messages.json可交给通用模型；reference命令按需查资料；回答必须经check命令核对。',
              '包内audit只供本地追溯，不得与整个reference_library一起直接送入模型。', '']

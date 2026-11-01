@@ -23,6 +23,12 @@ def main():
     if args.max_calls < 1:
         parser.error('--max-calls must be positive')
     bundle = read_bundle(args.bundle)
+    sources = ['scripts/run_reasoning_session.py', 'scripts/reasoning.py',
+               'lol_coach/file_model_bridge.py', 'lol_coach/reasoning_runner.py',
+               'lol_coach/reasoning_frame.py', 'lol_coach/decision_contract.py',
+               'lol_coach/profiles/round_reasoning_cards_v1.json', 'lol_coach/round_chain.py']
+    implementation_at_start = {path: file_sha256(ROOT/path) for path in sources}
+    input_at_start = file_sha256(args.bundle)
     output = new_directory(args.output)
     bridge = file_generate(output / 'exchange', timeout_seconds=args.timeout_seconds,
         on_request=lambda event: print(json.dumps(event, ensure_ascii=True), flush=True))
@@ -37,17 +43,15 @@ def main():
         markdown += '\n运行状态：' + result['status'] + '\n\n' + result['error'] + '\n'
     with (output / 'answer.md').open('x', encoding='utf-8') as stream:
         stream.write(markdown)
-    sources = ['scripts/run_reasoning_session.py', 'scripts/reasoning.py',
-               'lol_coach/file_model_bridge.py', 'lol_coach/reasoning_runner.py',
-               'lol_coach/reasoning_frame.py', 'lol_coach/decision_contract.py',
-               'lol_coach/profiles/round_reasoning_cards_v1.json']
+    changed_during_run = {path: file_sha256(ROOT/path) for path in sources
+                         if file_sha256(ROOT/path) != implementation_at_start[path]}
     manifest = dict(schema='file-reasoning-session/v1', execution_method='file_model_bridge',
         response_producer='not_authenticated_by_file_transport', external_api_used_by_cli=False,
-        input_bundle=dict(path=str(args.bundle.resolve()), sha256=file_sha256(args.bundle)),
+        input_bundle=dict(path=str(args.bundle.resolve()), sha256=input_at_start),
         frame_id=bundle['frame']['frame_id'], status=result['status'],
         model_callback_calls=result['model_calls'], reference_reads=result['reference_reads'],
         timeout_seconds_per_response=args.timeout_seconds, max_calls=args.max_calls, max_repairs=1,
-        implementation={path: file_sha256(ROOT/path) for path in sources},
+        implementation=implementation_at_start, implementation_changed_during_run=changed_during_run,
         outputs={str(path.relative_to(output)):file_sha256(path)
                  for path in output.rglob('*') if path.is_file()})
     atomic_json(output / 'manifest.json', manifest)

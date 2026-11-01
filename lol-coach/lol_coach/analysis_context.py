@@ -8,6 +8,7 @@ import re
 from .macro_snapshot import build_snapshot, render_markdown
 from .replay_vision import VERSION
 from .tower_vision import enemy_tower_view
+from .lane_wave import build_lane_view, render_lane_view
 
 
 def cached_champion(root, name, patch='16.20.1'):
@@ -86,12 +87,17 @@ def join_towers(snapshot, towers, vision):
 
 
 def build_context(bundles, *, at, team, player=None, cache_root, human_cards, mechanisms,
-                  towers=None, tower_vision=None, window=30):
+                  towers=None, tower_vision=None, lane_evidence=None, lane_combat=None, window=30):
     """Preserve macro-snapshot/v1 and add optional reference namespaces."""
     snapshot=build_snapshot(*bundles,at=at,team=team,player=player,window=window)
     if (towers is None) != (tower_vision is None):raise ValueError('Both tower inputs are required')
     if towers is not None:join_towers(snapshot,towers,tower_vision)
     else:snapshot['world']['enemy_towers']=dict(status='unknown',towers=[],reason='Paired tower state/visibility exports unavailable for this replay')
+    if lane_evidence is not None:
+        snapshot['world']['lane_waves']=build_lane_view(lane_evidence,at=at,team=team,
+            source_sha256=snapshot['source_sha256'],towers=towers,combat=lane_combat)
+    elif lane_combat is not None:
+        raise ValueError('Lane combat requires paired lane identity/state evidence')
     refs={h['champion']:cached_champion(cache_root,h['champion']) for h in snapshot['heroes'] if h['champion'] is not None}
     if human_cards.get('schema') != 'conditional-human-experience/v1':raise ValueError('Invalid human cards')
     if mechanisms.get('schema') != 'champion-mechanisms/v1':raise ValueError('Invalid mechanism bundle')
@@ -118,6 +124,7 @@ def build_context(bundles, *, at, team, player=None, cache_root, human_cards, me
         exact_client_compatibility='static patch 16.20.1; client build compatibility not independently verified')
     snapshot['analysis_contract']['usable'].extend(['source_checked_lineup_static_descriptions','historical_conditional_experience'])
     if towers is not None:snapshot['analysis_contract']['usable'].append('named_enemy_tower_visible_health_samples')
+    if lane_evidence is not None:snapshot['analysis_contract']['usable'].append('observer_lane_lifecycle_health_and_motion_estimates')
     snapshot['coverage']=dict(static_champions=len(refs),static_abilities=sum(len(r['abilities']) for r in refs.values()),
         unknown_champion_entity_ids=[h['entity_id'] for h in snapshot['heroes'] if h['champion'] is None],
         historical_experience_cards=len(human_cards['cards']),lineup_matching_conditional_rules=len(applicable),
@@ -125,6 +132,9 @@ def build_context(bundles, *, at, team, player=None, cache_root, human_cards, me
                     'camp_identity_and_respawn','ward_and_area_vision','actual_casts_and_cooldowns',
                     'complete_inventory_and_undo_consumption','condition_complete_jungle_clear_records',
                     'more_lineup_interaction_rules'],complete_macro_analysis_ready=False)
+    if lane_evidence is not None:
+        snapshot['coverage']['unresolved'].remove('minion_identity_and_waves')
+        snapshot['coverage']['unresolved'].append('hidden_lane_units_exact_positions_and_lane_priority')
     return snapshot
 
 
@@ -138,8 +148,10 @@ def render_context(snapshot):
     for t in snapshot['world'].get('enemy_towers',{}).get('towers',[]):
         hp=(t['observed_now'] or {}).get('health')
         lines.append(f"| {t['identity']['name']} | {t['visible']} | {hp['value'] if hp else '未知'} | {round(hp['age_seconds'],3) if hp else '未知'} |")
+    if snapshot['world'].get('lane_waves'):
+        lines+=['',render_lane_view(snapshot['world']['lane_waves'])]
     lines+=['','## 仍不能自动下结论的部分','',
-        '地图/模式与导航绑定、实际到场时间、兵线/营地身份、区域视野、实际施法/冷却、完整背包与撤销/消耗、条件完整刷野记录仍缺。',
+        '精确导航/到场时间、隐藏单位与线权、完整营地状态、区域视野、实际施法/冷却、完整背包与撤销/消耗、条件完整刷野记录仍缺。',
         f"本阵容匹配现有条件规则 {c['lineup_matching_conditional_rules']} 项；不匹配时不硬套潘森规则。",'',
         'JSON 保留原 macro-snapshot/v1 的时刻事实结构，另附 foundation 来源参考、coverage 缺口。分析仍须列证据、候选行动、机会成本和改变计划的条件。','']
     return '\n'.join(lines)

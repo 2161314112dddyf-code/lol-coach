@@ -1,8 +1,8 @@
 # 回合复盘方案 v0.1
 
-继续实施先读[后续推进指南](../DEVELOPMENT_GUIDE.md)：下一项是已有兵线信息的可知性接入，再做相邻回合计划。本目录保存研究依据、方案演进与试跑结果；原数值门槛仍为草案，当前任务以[任务入口](../CURRENT_TASK.md)为准。
+继续实施先读[文档索引](../INDEX.md)和[当前任务](../CURRENT_TASK.md)。兵线可知性接入、相邻计划承接和整段检查点已交付，不能再按旧排期重做；[最新实际结果](../OFFLINE_FINISH_RESULTS.md)记录34个检查点及300/320秒宿主分析。本目录保存研究依据、方案演进与早期试跑，原数值门槛仍为草案。
 
-这次讨论的材料集中在这里。**最新进展先看[真实回放三个时刻的试跑结果](REAL_REPLAY_RESULTS.md)**：实际模型与资料查询闭环、建议随信息变化，以及一次超时后的恢复。[模拟场景测试与迭代](SIMULATION_RESULTS.md)保留14个合成场景、首轮失败及三处修订。[大模型复盘思考框架](REASONING_FRAMEWORK.md)说明局势组织、思考顺序、模型调用方式、运行命令与实际边界；首版记录见[交付与验证记录](../../reports/reasoning_framework_validation.md)。
+这次讨论的材料集中在这里。[早期真实回放三个时刻试跑](REAL_REPLAY_RESULTS.md)保存实际模型与资料查询闭环、建议变化和一次超时恢复。[模拟场景测试与迭代](SIMULATION_RESULTS.md)保留14个合成场景、首轮失败及三处修订。[大模型复盘思考框架](REASONING_FRAMEWORK.md)说明局势组织、思考顺序和模型使用；当前命令见[项目运行手册](../../README.md)，首版记录见[交付与验证记录](../../reports/reasoning_framework_validation.md)。
 
 调研依据见[国服调研结论](CN_REVIEW_FINDINGS.md)：46项去重来源的实际阅读范围、六个关键发现，以及对原方案的修改建议。
 

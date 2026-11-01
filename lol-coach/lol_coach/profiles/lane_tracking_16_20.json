@@ -1,0 +1,164 @@
+{
+  "schema": "lane-tracking-profile/v1",
+  "version": "16.20.824.8524",
+  "maps": {
+    "Map12": {
+      "map_id": 12,
+      "origin_xz": [
+        6581,
+        6241
+      ],
+      "binding_status": "inferred_from_static_and_binary_crosscheck",
+      "runtime_map_id_decoded": false,
+      "source_refs": [
+        {
+          "kind": "local_static_evidence_manifest",
+          "sha256": "9ed3537dfc5efeed78d7404f359fe3cba001cf21ace2fc03d11cf277ee080a5b"
+        }
+      ],
+      "calibration_scope": {
+        "replay_version": "16.20.824.8524",
+        "paired_layout_samples": 25,
+        "residual_distance": {
+          "count": 25,
+          "median": 1.6601308169941238,
+          "p90": 2.3149417667191505,
+          "maximum": 2.6636112759509727,
+          "mean": 1.5998394271942955,
+          "within_50": 25,
+          "within_100": 25
+        },
+        "maximum_absolute_axis_residual": 1.9541015625,
+        "exact_replay_grid_version_matched": false,
+        "origin_is_empirical_hypothesis": true,
+        "independent_video_calibration": false
+      },
+      "limitations": [
+        "Map12 local grid is 16.21; cached config and replay are 16.20",
+        "Origin translation is an explicit corroborated hypothesis, not decoded runtime map selection"
+      ]
+    },
+    "Map11": {
+      "map_id": 11,
+      "origin_xz": [
+        7358,
+        7412
+      ],
+      "binding_status": "inferred_from_static_and_binary_crosscheck",
+      "runtime_map_id_decoded": false,
+      "source_refs": [
+        {
+          "kind": "local_static_evidence_manifest",
+          "sha256": "1e8b3b9f0e62f7e58213936a941fd1ea45eb31bee9b2040eef83861563a54f87"
+        }
+      ],
+      "calibration_scope": {
+        "replay_version": "16.20.824.8524",
+        "paired_layout_samples": 12,
+        "residual_distance": {
+          "count": 12,
+          "median": 1.6797035388983557,
+          "p90": 2.301853571224187,
+          "maximum": 2.7716688507386498,
+          "mean": 1.4862144149236756,
+          "within_50": 12,
+          "within_100": 12
+        },
+        "maximum_absolute_axis_residual": 1.98388671875,
+        "exact_replay_grid_version_matched": true,
+        "origin_is_empirical_hypothesis": true,
+        "independent_video_calibration": false
+      },
+      "limitations": [
+        "Explicit inferred replay/profile selection; runtime map or skin is not decoded"
+      ]
+    }
+  },
+  "evaluation": {
+    "method": "constant_speed_along_latest_received_path",
+    "coordinate_space": "lane_relative",
+    "checkpoint_comparison": {
+      "hold_last_start": {
+        "count": 229,
+        "median": 161.22034611053283,
+        "p90": 699.042201873392,
+        "maximum": 1176.0901326003886,
+        "mean": 252.21209487686085,
+        "within_50": 90,
+        "within_100": 105
+      },
+      "advance_along_path": {
+        "count": 229,
+        "median": 2.605219482879718,
+        "p90": 30.329428206676788,
+        "maximum": 107.71048387149716,
+        "mean": 12.573118020689407,
+        "within_50": 212,
+        "within_100": 228
+      },
+      "advance_better": 157,
+      "same": 66,
+      "advance_worse": 6
+    },
+    "checkpoint_replays": 2,
+    "evaluated_replays": 4,
+    "next_live_start_comparison": {
+      "hold_last_start": {
+        "count": 12649,
+        "median": 68.35202996254024,
+        "p90": 816.100484009169,
+        "maximum": 2999.5499662449365,
+        "mean": 277.85394893657514,
+        "within_50": 5814,
+        "within_100": 7026
+      },
+      "advance_along_path": {
+        "count": 12649,
+        "median": 6.673933439772357,
+        "p90": 39.805573215786175,
+        "maximum": 2999.5499662449365,
+        "mean": 18.02951942868633,
+        "within_50": 11785,
+        "within_100": 12422
+      },
+      "advance_better": 7392,
+      "same": 4681,
+      "advance_worse": 576
+    },
+    "independent_video_validation": false,
+    "error_bounds_guaranteed": false,
+    "discontinuity_count_over_500": 13,
+    "discontinuities_with_extra_byte_1": 11,
+    "source_refs": [
+      {
+        "kind": "normalized_lane_evidence",
+        "sha256": "59648f99bc392af9c7c4a1dc2773aa55d01be26749a73543c0b7ec034974c0cc",
+        "replay_source_sha256": "c08c6f1a4a87f1670a6156c6badfca15a21aa13c74eaa18dff5efdc26b94e7e0"
+      },
+      {
+        "kind": "normalized_lane_evidence",
+        "sha256": "a9ebea7b2268b48a0dfae891c031de8b6eae1efc3124a4437eb129ac5679b4b6",
+        "replay_source_sha256": "1c17e0bb43b2629bf73972ddac9c53782abc1c2c32fca2d039c024e6c004aca3"
+      },
+      {
+        "kind": "normalized_lane_evidence",
+        "sha256": "6ba0ddd9497c11a89dce3d013728749d9b859ba81283fa902961836667bfa70c",
+        "replay_source_sha256": "f89bb444d046b7e6a9699e6dc83c06861d81e2a6d4c2b7585cc4e35cc9654238"
+      },
+      {
+        "kind": "normalized_lane_evidence",
+        "sha256": "32af8c3e1661aad2b12c01108915383b22137eb98a957ff9ffcf4af62cfdb1b7",
+        "replay_source_sha256": "63722ae127363373452b24702a855a0f54de1da0be615e661c73c9cb23912f0b"
+      }
+    ],
+    "evaluation_artifact_sha256": "dd92be6c4249519be24bfa4075f9c35f30cb7cf980a3149c112b6a9f60a78f7a"
+  },
+  "usage_constraints": [
+    "Use only paths received in the current explicit observer-visible interval; never hidden or checkpoint paths.",
+    "Exclude zero-health and removal-supported inactive units before wave aggregation.",
+    "For enemy units expose estimated current position and motion only, not future route/endpoints.",
+    "Map profile selection must be bound to known map-family or static object-name evidence; do not select by replay filename.",
+    "Single-point or endpoint holds are estimates; serialized coordinates do not prove continued survival.",
+    "Aggregate errors describe these samples and cannot bound every instant or unit."
+  ]
+}

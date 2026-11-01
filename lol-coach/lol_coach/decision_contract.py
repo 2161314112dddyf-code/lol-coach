@@ -65,7 +65,18 @@ def output_schema():
             'switch_conditions': {**deepcopy(_TEXTS), 'minItems': 1},
         }),
         'open_questions': _TEXTS,
+        'continuation': _object({
+            'previous_frame_id': _TEXT,
+            'disposition': {'enum': ['retain', 'revise', 'cancel']},
+            'previous_action_execution': {'enum': ['unknown']},
+            'reason': _TEXT,
+            'current_fact_refs': nonempty_refs,
+            'change_refs': refs,
+        }),
     })
+    # Old standalone answers remain valid. The frozen frame determines whether
+    # this optional structural field is semantically required or forbidden.
+    root['required'].remove('continuation')
     root['$schema'] = 'https://json-schema.org/draft/2020-12/schema'
     root['title'] = SCHEMA
     return deepcopy(root)
@@ -220,6 +231,9 @@ def validate_decision(answer, frame):
 
     def fact_refs(ids, path):
         for i, fid in enumerate(ids):
+            if fid.startswith('h_'):
+                fail(f'{path}[{i}]', '历史引用不能作为当前事实；请引用本帧 facts。')
+                continue
             if fid not in facts:
                 fail(f'{path}[{i}]', '引用不存在的事实 ID。')
                 continue
@@ -238,6 +252,41 @@ def validate_decision(answer, frame):
         seen_facts.add(fid)
         if fid in facts and not _json_equal(used['value'], facts[fid]['value']):
             fail(f'$.facts_used[{i}].value', '事实值与输入不一致，不能修改数值或类型。')
+
+    task = frame.get('task', {})
+    previous = task.get('previous_plan') if isinstance(task, dict) else None
+    continuation = answer.get('continuation')
+    if previous is None:
+        if continuation is not None:
+            fail('$.continuation', '本帧没有上一计划，不能提交承接处置。')
+    elif (not isinstance(previous, dict)
+          or not isinstance(previous.get('previous_frame_id'), str)
+          or not previous['previous_frame_id'].strip()):
+        fail('frame.task.previous_plan', '上一计划缺少有效的 previous_frame_id。')
+    elif continuation is None:
+        fail('$.continuation', '本帧含上一计划，必须说明保留、改选或取消及当前依据。')
+    else:
+        path = '$.continuation'
+        if continuation['previous_frame_id'] != previous['previous_frame_id']:
+            fail(path + '.previous_frame_id', '承接引用的上一决策帧不匹配。')
+        current_refs = continuation['current_fact_refs']
+        fact_refs(current_refs, path + '.current_fact_refs')
+        for i, fid in enumerate(current_refs):
+            if fid not in seen_facts:
+                fail(f'{path}.current_fact_refs[{i}]', '承接依据必须同时列入 facts_used 并核对当前值。')
+        change_refs = continuation['change_refs']
+        if continuation['disposition'] in ('revise', 'cancel') and not change_refs:
+            fail(path + '.change_refs', '改选或取消上一计划必须引用至少一条当前变化。')
+        transition = task.get('round_transition', {})
+        changes = transition.get('changes', {}) if isinstance(transition, dict) else {}
+        for i, change_id in enumerate(change_refs):
+            change = changes.get(change_id) if isinstance(changes, dict) else None
+            if not isinstance(change, dict):
+                fail(f'{path}.change_refs[{i}]', '变化引用不在本帧 round_transition.changes 中。')
+                continue
+            current_id = change.get('current_fact_id')
+            if not isinstance(current_id, str) or current_id not in current_refs:
+                fail(f'{path}.change_refs[{i}]', '引用变化对应的 current_fact_id 必须列入 current_fact_refs。')
 
     role_actors = []
     for i, role in enumerate(answer['role_assignments']):
@@ -370,6 +419,15 @@ def render_decision(answer, validation):
              rec['why'], '']
     if fallback:
         lines += [f"退路：{fallback['action']}", '']
+    continuation = answer.get('continuation')
+    if continuation is not None:
+        dispositions = {'retain': '保留', 'revise': '改选', 'cancel': '取消'}
+        lines += [f"上一计划承接：{dispositions[continuation['disposition']]}",
+                  f"上一决策帧：{continuation['previous_frame_id']}",
+                  '上一行动执行：未知；先前建议不等于已经执行。',
+                  '承接原因：' + continuation['reason'],
+                  '当前事实引用：' + '、'.join(continuation['current_fact_refs']),
+                  '变化引用：' + ('、'.join(continuation['change_refs']) or '无新增变化引用'), '']
     option_levels = {'supported': '已具备条件', 'conditional': '待条件满足',
                      'ruled_out': '已排除，不执行'}
     for option in answer['options']:
