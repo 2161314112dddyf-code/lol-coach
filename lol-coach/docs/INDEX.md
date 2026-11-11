@@ -6,6 +6,7 @@
 
 | 想了解什么 | 读哪里 |
 | --- | --- |
+| 课程表单第 5 题的七项材料 | [完成情况、证据与复验命令](COURSE_SUBMISSION.md) |
 | 安装、公开测试、仓库边界 | [根README](../../README.md) |
 | 实际命令和私有数据前提 | [项目运行手册](../README.md) |
 | 最新接管点与待办 | [CURRENT_TASK](CURRENT_TASK.md) |
