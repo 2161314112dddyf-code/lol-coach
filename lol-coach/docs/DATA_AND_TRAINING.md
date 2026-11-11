@@ -8,7 +8,7 @@
 | 真实回放与配套片段 | 本地旧版本 16.20 的四份限定样本用于对照动作与字段；新版 16.21.829.9102 样本用于兼容性研究。实验记录绑定构建、回放哈希、观察队伍、游戏时钟、操作和干扰因素。 | Git 提供[实验记录模板](../reports/templates/controlled_experiment_log.csv)和[结果报告](OFFLINE_FINISH_RESULTS.md)。私人回放、录像、派生明细与完整模型会话保存在本机。 |
 | 真人经验 | 记录来源、实际阅读范围、阵容、适用条件及反例。当前主局有四张有阅读依据的中文经验卡。 | 可检查经验是否适用于当前阵容。作者观点、单局观测与模型解释分别核对。[国服调研](回合复盘方案_v0.1/CN_REVIEW_FINDINGS.md) · [本局使用情况](OFFLINE_FINISH_RESULTS.md) |
 | 合成用例与实局评测样本 | 合成对照用于改变单一条件，例如队友仍在清线或已经移动。实局整理了 175 个观察时刻，其中 34 个进入检查点，另留 141 个未选时刻供检查漏选。 | [合成用例判据](回合复盘方案_v0.1/SIMULATION_RUBRIC.json)可公开检查。实局时刻来自同一段材料，评测需按整局分组、冻结输入、保留未选时刻。独立标签仍为空。[评测用例](../tests/test_review_evaluation.py) · [实际样本统计](OFFLINE_FINISH_RESULTS.md) |
-| 外部候选数据 | 后续聊天调研了 maknee 的历史解码包和 zauberine 的职业赛时序数据，分别用于提出物品槽位、时刻状态等对照问题。 | 作为候选资料登记，使用前核对构建、视角、字段、许可与样本来源。未计入本项目训练或国服目标构建的验证集。[历史包目录](https://huggingface.co/datasets/maknee/league-of-legends-decoded-replay-packets) · [时序数据目录](https://huggingface.co/datasets/zauberine/lol-winprob) |
+| 外部软件验证样本 | 11 月 11 日实测 maknee 一局 12.22 的购买换槽事件，以及 zauberine 两局赛事服的双阵营逐秒状态，复用了已有背包时间线和模型输入编译器。 | 计入软件输入及事件处理验证。训练、国服目标构建字段和独立战术评测另行采证。[实测范围和复跑方法](../reports/hf_experiment_feasibility_20261111.md) · [抽样与来源](HUGGING_FACE_SOURCES_20261107.md) |
 
 ## 训练与评测
 

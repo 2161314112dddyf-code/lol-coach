@@ -13,6 +13,7 @@
 | 已实现能力与未解缺口 | [PROJECT_SUMMARY](PROJECT_SUMMARY.md) |
 | 后续依赖、验收、模型与训练边界 | [DEVELOPMENT_GUIDE](DEVELOPMENT_GUIDE.md) |
 | 当前阶段全部实验，逐步操作 | [完整实验操作单TXT](CURRENT_STAGE_EXPERIMENTS_20261101.txt) |
+| 哪些录像可以省、哪些仍需同局对照 | [公开数据可行性实测与国服补证范围](../reports/hf_experiment_feasibility_20261111.md) |
 | 哪些事情依赖录像 | [依赖表](VIDEO_AND_OFFLINE_BACKLOG.md) |
 | 宪法原文与执行规则 | [PROJECT_CONSTITUTION](PROJECT_CONSTITUTION.md)、[WORKFLOW](WORKFLOW.md)、[AGENTS](../AGENTS.md) |
 
