@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 需求 | [项目目标与用户场景](PROJECT_BRIEF.md)、[已批准的基础阶段范围](FOUNDATION_ACCEPTANCE.md) | 从一局回放、一个玩家和决策时刻出发，结合资源、人物动向、经济装备以及双方阵容，解释可选行动、代价和改选条件。基础范围的批准记录只覆盖对应阶段。 |
 | 规约 | [模型输入与输出契约](回合复盘方案_v0.1/REASONING_FRAMEWORK.md)、[整段处理的 GWT 验收条件](OFFLINE_FINISH_TASK.md) | 改动未来数据或隐藏敌情后，同一时刻的模型输入应保持一致。上一张卡的建议进入历史，后续要用新观测才能判断是否实际执行。 |
-| ADR、前置调研与研究路线 | [架构决策记录与调研路线](ARCHITECTURE_DECISIONS.md) | 各项记录给出问题、比较过的方案、采用理由、代价和能推翻结论的证据，区分已采用的设计与待验证方案。 |
+| ADR、前置调研与研究路线 | [架构决策记录](ARCHITECTURE_DECISIONS.md)、[自建复盘 Agent 与 MCP 设计稿](回合复盘方案_v0.1/AGENT_MCP_REVIEW_DESIGN.md)、[技术实施方案](回合复盘方案_v0.1/AGENT_MCP_IMPLEMENTATION.md) | ADR-04 记录拟议架构。设计稿用 5:00 和 5:20 两帧说明如何比较行动与调整计划，实施方案给出三个工具和分阶段验收条件。[行动比较参数契约](回合复盘方案_v0.1/compare_actions.v1.schema.json)可单独校验；MCP 服务的端到端运行待实现。 |
 | 项目级 Harness | [AI 与工程约定](../AGENTS.md)、[工程工作流](WORKFLOW.md)、[开发与验收指南](DEVELOPMENT_GUIDE.md)、[运行手册](../README.md) | 代码沿用 Python 包和 CLI，复用已有模块，以对应测试核对行为。每项任务写明改动范围及恢复点。文档依职责维护，报告登记版本、命令、结果和失败。输入、事实引用和输出之间应能追溯。 |
 | Global、Plan、Tasks | [总体目标](PROJECT_BRIEF.md)、[首轮任务与初期顺序](FIRST_TASK.md)、[路线图](ROADMAP.md)、[任务拆分规范](DEVELOPMENT_GUIDE.md)、[具体任务卡](OFFLINE_FINISH_TASK.md) | 初期先核验数据、地图、机制与行动耗时，再构建当时可知的局势，最后接入模型比较行动。任务卡记录输入、输出、验收条件、检查和恢复点；[接管点](CURRENT_TASK.md)记录已交付和待办。 |
 | 可执行或验证的部分代码及评测证据 | [决策帧实现](../lol_coach/reasoning_frame.py)、[决策帧测试](../tests/test_reasoning_frame.py)、[评测实现](../lol_coach/review_evaluation.py)、[公开副本测试记录](../reports/github_sync_20261101.md)、[实际样例及修订](OFFLINE_FINISH_RESULTS.md) | 可在没有私人回放的副本运行下面的测试，对照已提交报告。实局卡另有输入前提。 |

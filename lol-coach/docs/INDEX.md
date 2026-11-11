@@ -31,6 +31,10 @@
 
 ## 专题资料与设计依据
 
+- [复盘 Agent 技术实施方案](回合复盘方案_v0.1/AGENT_MCP_IMPLEMENTATION.md)包含代码接入点、工具参数契约和两帧验收命令草案。
+
+- [复盘 Agent 与 MCP 设计稿](回合复盘方案_v0.1/AGENT_MCP_REVIEW_DESIGN.md)涵盖回合判断、时间余量计算、工具权限和同帧对照实验。
+
 - [项目初始目标](PROJECT_BRIEF.md)、[原始首轮任务](FIRST_TASK.md)、[来源索引](SOURCES.md)：背景，不重复初始化。
 - [宏观快照结构](MACRO_SNAPSHOT.md)、[分析信息需求](ANALYSIS_INFORMATION_REQUIREMENTS.md)、[地图格式](MAP_FORMAT_NOTES.md)：接口/研究背景；当前覆盖以能力总结为准。
 - [国服调研、回合框架、模型使用与模拟记录](回合复盘方案_v0.1/README.md)：保留来源阅读级别和历史草案身份。

@@ -1,5 +1,7 @@
 # 回合复盘方案 v0.1
 
+2026-11-07 的[复盘 Agent 与 MCP 设计稿](AGENT_MCP_REVIEW_DESIGN.md)从 5:00 和 5:20 的实际局面展开，给出主播教学依据、程序计算项和下一版对照验收。
+
 继续实施先读[文档索引](../INDEX.md)和[当前任务](../CURRENT_TASK.md)。兵线可知性接入、相邻计划承接和整段检查点已交付，不能再按旧排期重做；[最新实际结果](../OFFLINE_FINISH_RESULTS.md)记录34个检查点及300/320秒宿主分析。本目录保存研究依据、方案演进与早期试跑，原数值门槛仍为草案。
 
 这次讨论的材料集中在这里。[早期真实回放三个时刻试跑](REAL_REPLAY_RESULTS.md)保存实际模型与资料查询闭环、建议变化和一次超时恢复。[模拟场景测试与迭代](SIMULATION_RESULTS.md)保留14个合成场景、首轮失败及三处修订。[大模型复盘思考框架](REASONING_FRAMEWORK.md)说明局势组织、思考顺序和模型使用；当前命令见[项目运行手册](../../README.md)，首版记录见[交付与验证记录](../../reports/reasoning_framework_validation.md)。
@@ -23,4 +25,4 @@
 - [官方规则与楚钧回合理论入口4项](CN_OFFICIAL_AND_ROUND_SOURCES.md)。
 - [完整来源索引与可复算计数](CN_SOURCE_INDEX.json)、[本轮任务与有限验收](CN_RESEARCH_TASK.md)。
 
-文档仍为讨论初稿；新增观点与验收建议没有写成已实现能力。视频入口、平台智能文稿、原作者正文分开登记，本轮没有完整观看新的国服录像。文档自检见[检查记录](../../reports/cn_review_research_check_20261023.json)。
+文档仍为讨论初稿；新增观点与验收建议没有写成已实现能力。视频入口、平台智能文稿、原作者正文分开登记，本轮没有完整观看新的国服录像。可公开核查[来源索引与阅读范围](CN_SOURCE_INDEX.json)。文档自检的完整机器记录保存在本机 `lol-coach/reports/cn_review_research_check_20261023.json`。

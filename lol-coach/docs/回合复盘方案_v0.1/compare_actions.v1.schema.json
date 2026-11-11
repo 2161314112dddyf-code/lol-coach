@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "compare_actions v1 — model arguments",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "actions"
+  ],
+  "properties": {
+    "actions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "withdrawn_condition": {
+      "$ref": "#/$defs/requirement"
+    }
+  },
+  "$defs": {
+    "entity_id": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{8}$"
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "can_act_here",
+            "structure_attackable",
+            "ally_cover",
+            "exit_route_known"
+          ]
+        },
+        "entity_id": {
+          "$ref": "#/$defs/entity_id"
+        }
+      },
+      "required": [
+        "kind",
+        "entity_id"
+      ]
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]{0,11}$"
+        },
+        "kind": {
+          "enum": [
+            "attack_structure",
+            "press_forward",
+            "regroup",
+            "disengage",
+            "reassess"
+          ]
+        },
+        "target_id": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "requires": {
+          "type": "array",
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/requirement"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "requires"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "attack_structure"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "target_id"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
