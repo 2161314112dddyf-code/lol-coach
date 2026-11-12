@@ -7,11 +7,11 @@ def replay(version='16.21.829.9102',flag=4,compressed=True,payload=None):
     blob=zstandard.ZstdCompressor().compress(raw) if compressed else raw
     v=version.encode();head=b'RIOT\x02'+b'\0'*9+bytes([len(v)])+v
     chunk=struct.pack('<IIBII',1,2,1,len(raw),len(blob) if compressed else 0)
-    if version.startswith('16.21'):chunk+=bytes([flag])
+    if version in ('16.21.829.9102','16.22.836.1077'):chunk+=bytes([flag])
     meta=json.dumps({'gameLength':3000}).encode()
     return head+chunk+blob+b'\0'*256+meta+len(meta).to_bytes(4,'little')
 
-@pytest.mark.parametrize('version',['16.20.824.8524','16.21.829.9102'])
+@pytest.mark.parametrize('version',['16.20.824.8524','16.21.829.9102','16.22.836.1077'])
 @pytest.mark.parametrize('compressed',[True,False])
 def test_both_headers_and_signed_parameter_delta(version,compressed):
     rows=list(packets(replay(version,compressed=compressed)))
