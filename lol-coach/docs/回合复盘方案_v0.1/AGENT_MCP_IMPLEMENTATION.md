@@ -1,5 +1,7 @@
 # 复盘 Agent 技术实施方案
 
+2026-11-12 的实现使用 `scripts.run_review_agent`。实际启动参数、模型后端、工具和验收以[运行手册](../../README.md)与[实战自验](../../reports/round_agent_acceptance_20261112.md)为准。下文保留初版设计供追溯。
+
 2026-11-07 · 设计规格，供开发与验收。产品判断依据见[回合分析设计](AGENT_MCP_REVIEW_DESIGN.md)。本文中新增的命令、模块和工具均为拟实现项。
 
 ## 首次交付长什么样

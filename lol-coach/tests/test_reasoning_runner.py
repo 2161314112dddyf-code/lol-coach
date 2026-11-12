@@ -89,6 +89,12 @@ def test_no_repair_configuration_returns_invalid_immediately():
     assert out['status'] == 'invalid_answer' and out['model_calls'] == 1
 
 
+def test_invalid_final_response_reports_validation_failure():
+    out = run_reasoning(bundle_fixture(), scripted(request(), {'answer': {}}), max_calls=2)
+    assert out['status'] == 'invalid_answer' and out['model_calls'] == 2
+    assert out['validation']['status'] == 'FAIL'
+
+
 def test_call_budget_is_explicit():
     out = run_reasoning(bundle_fixture(), scripted(request()), max_calls=1)
     assert out['status'] == 'budget_exhausted' and out['model_calls'] == 1

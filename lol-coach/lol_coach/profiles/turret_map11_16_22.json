@@ -1,0 +1,341 @@
+{
+  "version": "16.22.836.1077",
+  "geometry_path": "data/maps/mapgeometry/map11/base_srx.materials.bin",
+  "geometry_sha256": "b8709c64290fe8327ee1d14e927628efddd6dcea9ef1968989098d8477e71c3c",
+  "training_replay_sha256": "2febca32e5e32b182ded7dcccdcc0f2c41405d51e41115b058a5f2d7824e3692",
+  "opcode": 1026,
+  "towers": [
+    {
+      "name": "Turret_TChaos_L0_P1_478290356_0",
+      "team": 200,
+      "role": "SR_Inhibitor",
+      "xz": [
+        13624.0,
+        10572.0
+      ],
+      "wire_names": [
+        "0e9313a1f30e293d0bd79a93240a930e2593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e526541526140523d3a393f38413e3c3b5241",
+        "73a48587d058d0019e8f98a4879773f4d23effecc5c94a87be9987a31f87a4"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L0_P2_528623213_0",
+      "team": 200,
+      "role": "SR_Inner",
+      "xz": [
+        13327.0,
+        8226.0
+      ],
+      "wire_names": [
+        "0e93f3243df33d130b3da1933d0a930e2593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e52654152613f523c3f393b3f3e3f403e5241",
+        "73a48587d08fd0999ef4988f87f47358d23efff4c5014a87bef487a31f87a4"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L0_P3_511845594_0",
+      "team": 200,
+      "role": "SR_Outer",
+      "xz": [
+        13866.0,
+        4505.0
+      ],
+      "wire_names": [
+        "0e939a29a1a19a0b2424a193f30a930e2593bfe4cce11e8193f0c688885c81",
+        "73a48587d0c9d0979e01980187c9733ed299ff99c5014a87be8f87a31f87a4"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L1_P0_1017949901_0",
+      "team": 200,
+      "role": "Root",
+      "xz": [
+        14576.0,
+        14693.0
+      ],
+      "wire_names": [
+        "0e93240e29299a29d7240e24930e0a93242593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e526540526141524041403a383d383841405241",
+        "73a48587d099d0a49e97989787c97397d2ecff99c5a44a99be8787a41fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L1_P1_2220646803_0",
+      "team": 200,
+      "role": "SR_Inhibitor",
+      "xz": [
+        11134.0,
+        11207.0
+      ],
+      "wire_names": [
+        "5d7c7f7f4c7d525d2e4950027e526540526140523f3f3f413b3d3b39413e5241",
+        "73a48587d08fd0a49e3e985887c97358d2a4fff4c5f44af4be8787991fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L1_P2_2237424422_0",
+      "team": 200,
+      "role": "SR_Inner",
+      "xz": [
+        9767.0,
+        10113.0
+      ],
+      "wire_names": [
+        "0e933d3d9a9a3d9ad7f33d3d933d0a93242593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e52654052613f523f3f3e3a3d3f3d3d3f3f5241",
+        "73a48587d0f4d0f49ec998c987f473c9d2ecff8fc5f44af4be8787f41fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L1_P3_2254202041_0",
+      "team": 200,
+      "role": "SR_Outer",
+      "xz": [
+        8955.0,
+        8510.0
+      ],
+      "wire_names": [
+        "0e93249a0e3d0e3d9aa13d3d93f30a93242593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e52654052613e523f3f3c3d3f413f413d405241",
+        "73a48587d099d0c99ea498f487a473f4d2c9ff01c5f44af4be87878f1fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L1_P4_392430785_0",
+      "team": 200,
+      "role": "SR_Nexus",
+      "xz": [
+        12611.0,
+        13084.0
+      ],
+      "wire_names": [
+        "0e93a10bd70ef39a3d29f3939a0a93242593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e52654052613d523e383f3d3e413a393c5241",
+        "73a48587d001d03e9eec98a4878f73c9d2f4ff97c58f4a87bec987a31f8799"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L1_P5_342097928_0",
+      "team": 200,
+      "role": "SR_Nexus",
+      "xz": [
+        13052.0,
+        12612.0
+      ],
+      "wire_names": [
+        "0e930b3d29d7290e3d9af393a10a93242593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e52654052613c523e3d3f41383a383f395241",
+        "73a48587d03ed0f49e9798ec879773a4d2f4ffc9c58f4a87be0187a31f8799"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L2_P1_2555066350_0",
+      "team": 200,
+      "role": "SR_Inhibitor",
+      "xz": [
+        10481.0,
+        13650.0
+      ],
+      "wire_names": [
+        "0e930ea1f313130ea1a1a13d93240a933d2593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e52653f526140523f3c3c3c413b3b3e3c415241",
+        "73a48587d0a4d0019e8f9858875873a4d201ff01c5014af4be8787991fa3f487"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L2_P2_2538288731_0",
+      "team": 200,
+      "role": "SR_Inner",
+      "xz": [
+        7943.0,
+        13411.0
+      ],
+      "wire_names": [
+        "5d7c7f7f4c7d525d2e4950027e52653f52613f523f3c3e393f39393a3e405241",
+        "73a48587d099d08f9eec983e873e73f4d23eff8fc5014af4be8787f41fa3f487"
+      ]
+    },
+    {
+      "name": "Turret_TChaos_L2_P3_2521511112_0",
+      "team": 200,
+      "role": "SR_Outer",
+      "xz": [
+        4318.0,
+        13875.0
+      ],
+      "wire_names": [
+        "0e933d24242424a1243da13d93f30a933d2593bfe4cce11e8193f0c688885c81",
+        "5d7c7f7f4c7d525d2e4950027e52653f52613e523f3c3f403c404040403f5241",
+        "73a48587d0f4d0999e99989987997301d299fff4c5014af4be87878f1fa3f487"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L0_P1_3761733236_0",
+      "team": 100,
+      "role": "SR_Inhibitor",
+      "xz": [
+        4281.0,
+        1253.0
+      ],
+      "wire_names": [
+        "0e9313f33df3f3d72413d7f393240a930e259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f526541526140523e3a3b403a3e3e3f3e3b5241",
+        "73a48587d058d08f9ef4988f878f73ec5f99d0581dec9e8fd08787991fa3a487"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L0_P2_3812066093_0",
+      "team": 100,
+      "role": "SR_Inner",
+      "xz": [
+        6919.0,
+        1483.0
+      ],
+      "wire_names": [
+        "0e93f3290e13130e3d240bf3933d0a930e259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52654152613f523e39403f413b3b41383e5241",
+        "73a48587d08fd0979ea49858875873a45ff4d0991d3e9e8fd08787f41fa3a487"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L0_P3_3795288474_0",
+      "team": 100,
+      "role": "SR_Outer",
+      "xz": [
+        10504.0,
+        1029.0
+      ],
+      "wire_names": [
+        "5d7c7f7f4c7d525d627f4d4c7f52654152613e523e3a383c3f39393d3a3d5241",
+        "73a48587d0c9d0ec9ec9983e873e73f45f01d0971dec9e8fd087878f1fa3a487"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L1_P0_3208613133_0",
+      "team": 100,
+      "role": "Root",
+      "xz": [
+        105.0,
+        134.0
+      ],
+      "wire_names": [
+        "0e93f3f324f324130b0e3df3930e0a9324259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f526540526141523e3f41393b403e403e3e5241",
+        "73a48587d08fd08f9e99988f879973585f3ed0a41df49e8fd08787a41fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L1_P1_1209122387_0",
+      "team": 100,
+      "role": "SR_Inhibitor",
+      "xz": [
+        3651.0,
+        3696.0
+      ],
+      "wire_names": [
+        "0e93d70bf33d3d24290e3d2493240a9324259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52654052614052403f4138403f3f3e393a5241",
+        "73a48587d0ecd03e9e8f98f487f473995f97d0a41df49e99d08787991fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L1_P2_1225900006_0",
+      "team": 100,
+      "role": "SR_Inner",
+      "xz": [
+        5048.0,
+        4812.0
+      ],
+      "wire_names": [
+        "0e93130e0e0e0e29a13d3d24933d0a9324259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52654052613f52403f3f3c38414141413b5241",
+        "73a48587d058d0a49ea498a487a473975f01d0f41df49e99d08787f41fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L1_P3_1242677625_0",
+      "team": 100,
+      "role": "SR_Outer",
+      "xz": [
+        5846.0,
+        6396.0
+      ],
+      "wire_names": [
+        "0e93a13d13d7d7133d9a3d2493f30a9324259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52654052613e52403f3d3f3b3a3a3b3f3c5241",
+        "73a48587d001d0f49e5898ec87ec73585ff4d0c91df49e99d087878f1fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L1_P4_3675873665_0",
+      "team": 100,
+      "role": "SR_Nexus",
+      "xz": [
+        2177.0,
+        1807.0
+      ],
+      "wire_names": [
+        "0e93a11313f3d70ba1d713f3939a0a9324259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52654052613d523e3b3a3c393a3e3b3b3c5241",
+        "73a48587d001d0589e58988f87ec733e5f01d0ec1d589e8fd08787c91fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L1_P5_3625540808_0",
+      "team": 100,
+      "role": "SR_Nexus",
+      "xz": [
+        1748.0,
+        2270.0
+      ],
+      "wire_names": [
+        "0e930b0e0b0e9aa1a13d13f393a10a9324259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52654052613c523e3b3f3c3c3d413941395241",
+        "73a48587d03ed0a49e3e98a487c973015f01d0f41d589e8fd08787011fa39987"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L2_P1_1543541934_0",
+      "team": 100,
+      "role": "SR_Inhibitor",
+      "xz": [
+        1169.0,
+        4287.0
+      ],
+      "wire_names": [
+        "0e939af329249aa1f39aa12493240a933d259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52653f52614052403c3d3e3c3d40383e3d5241",
+        "73a48587d0c9d08f9e97989987c973015f8fd0c91d019e99d08787991fa3f487"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L2_P2_1526764315_0",
+      "team": 100,
+      "role": "SR_Inner",
+      "xz": [
+        1512.0,
+        6699.0
+      ],
+      "wire_names": [
+        "0e93a124f39a13d7133da124933d0a933d259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52653f52613f52403c3f3b3a3b3d3e403c5241",
+        "73a48587d001d0999e8f98c9875873ec5f58d0f41d019e99d08787f41fa3f487"
+      ]
+    },
+    {
+      "name": "Turret_TOrder_L2_P3_1509986696_0",
+      "team": 100,
+      "role": "SR_Outer",
+      "xz": [
+        981.0,
+        10441.0
+      ],
+      "wire_names": [
+        "0e93132913130b29290ea12493f30a933d259388c6cf888e8193f0c688885c81",
+        "5d7c7f7f4c7d525d627f4d4c7f52653f52613e52403c413838393b3b383b5241",
+        "73a48587d058d0979e589858873e73975f97d0a41d019e99d087878f1fa3f487"
+      ]
+    }
+  ]
+}

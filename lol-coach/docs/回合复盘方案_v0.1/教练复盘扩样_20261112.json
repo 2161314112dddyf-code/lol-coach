@@ -1,0 +1,1594 @@
+{
+  "study": "AGENT-STUDY-01 扩样",
+  "date": "2026-11-12",
+  "unit": "独立发布作品。镜像、同作不同片段合并。kind 描述主选段的处理方式。",
+  "time_unit": "秒，视频进度；音频与视频的两套时间分别见 time_basis 和 evidence_url。",
+  "scope": "observation 为讲者观点的中文转述，intervention 为本项目设计的对照题。",
+  "counts": {
+    "new_works": 66,
+    "by_platform": {
+      "B站": 35,
+      "YouTube": 31
+    },
+    "publication_accounts_within_platform": {
+      "B站": 19,
+      "YouTube": 12
+    },
+    "by_lead_kind": {
+      "实战口述": 12,
+      "回放复盘": 36,
+      "教学示范": 15,
+      "赛事分析": 3
+    },
+    "author_labeled_mainland_server": 10
+  },
+  "works": [
+    {
+      "id": "BV1FdikBkELz",
+      "platform": "B站",
+      "creator": "studyliang",
+      "source_title": "【下路辅助间的博弈】辅助如何通过博弈取胜呢？本期两个章节，教你完美诠释洛的特性！",
+      "case_title": "洛对群控与飞行技能的两种站位",
+      "role": "辅助",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 70,
+          "end": 93,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1FdikBkELz/?t=70",
+          "observation": "对牛头等范围控制，洛与射手要错开。见牛头要前压，先退开避二连，再回头抬人和回血。对卡莎飞来的 W 又选择站前面帮挡。79、86 秒画面字幕可定位。",
+          "intervention": "把威胁种类从群控切换为可挡的飞行技能，看“保护 AD”这项职责应怎样改变站位。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1FdikBkELz/?t=70"
+        }
+      ],
+      "source_duration_seconds": 477
+    },
+    {
+      "id": "BV1rh411z7TS",
+      "platform": "B站",
+      "creator": "a安欢欢",
+      "source_title": "为什么你补刀少？学塞拉斯必看教学！我是真想教会你们~",
+      "case_title": "塞拉斯趁补刀消耗与对手先升二",
+      "role": "中单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 167,
+          "end": 194,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1rh411z7TS/?t=167",
+          "observation": "讲者先找对手普攻补兵的动作间隙给一下消耗，下一次则指出不该往前，因为对手马上升二，随后回看升级。这段还推测玩家没注意到，属于讲解者的猜测。",
+          "intervention": "当同一个补刀动作撞上对方升级窗口，改变换血建议。等级经验不够确切时保留条件。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1rh411z7TS/?t=167"
+        }
+      ],
+      "source_duration_seconds": 3898
+    },
+    {
+      "id": "BV1K3SyBtEqL",
+      "platform": "B站",
+      "creator": "蔬菜鸡腿表弟ad",
+      "source_title": "（AD复盘教学）大师中单转玩AD/金克丝 游戏理解还是行的就是 对线还是太给机会了 另外对AD确实不太熟悉",
+      "case_title": "金克丝该不该接有敌野威胁的下路交手",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 303,
+          "end": 354,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1K3SyBtEqL/?t=303",
+          "observation": "眼看见剑魔，消失后并不证明已经离开。己方赵信在上路，讲者结合剑魔由上往下刷、下半区可能没事做，要求下路暂缓压线。随后重新解释即使下路单独能打，当时也不宜主动接。",
+          "intervention": "把“最近见到”“去向推测”“本方能否反蹲”分成三项。营地已清不保证对方必来。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1K3SyBtEqL/?t=303"
+        }
+      ],
+      "source_duration_seconds": 1869
+    },
+    {
+      "id": "BV1JQ4y1G78L",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【辅助复盘】钻石分段辅助通病！中期我该做些什么？对线强势组合一级如何防守、洛w的释放时机和细节、学会站在ad角度思考团战！一区翡翠钻石-钻石三-洛vs派克",
+      "case_title": "洛对派克一级学什么能反制",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "作者标题标一区钻三",
+      "segments": [
+        {
+          "start": 153,
+          "end": 254,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1JQ4y1G78L/?t=153",
+          "observation": "教练先站在对手角度写下派克换血、抢二的剧本，再问洛一级学什么能在中钩后有反制。逐项比较 Q 消耗和留 W 位移反制，带入己方厄斐琉斯、敌方卡莎能补的伤害。",
+          "intervention": "先生成对手最合理的下一步，再检查本人的一级技能与被开后的退路。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1JQ4y1G78L/?t=153"
+        }
+      ],
+      "source_duration_seconds": 2697
+    },
+    {
+      "id": "BV1vb4y1g7bf",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【辅助复盘】一区大师局，老生常谈的平行四边形对线误区、璐璐w技能怎么正确使用？软辅打软辅有优势如何压制？防御塔塔皮的双抗机制、什么时候该游走什么时候不能游？",
+      "case_title": "璐璐看见娜美后该不该交技能",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "作者标题标一区大师",
+      "segments": [
+        {
+          "start": 239,
+          "end": 274,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1vb4y1g7bf/?t=239",
+          "observation": "学员想趁看见娜美时消耗。教练指出卡莎、娜美和璐璐已经成三角，自家厄斐琉斯离得最远，第一时间接不上，两人都在同一路也可能局部一打二。上一波借艾克打掉闪的威慑才得以前压。",
+          "intervention": "触发时刻算可立即跟进的主体及距离，保留上一波威慑的时效。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1vb4y1g7bf/?t=239"
+        }
+      ],
+      "source_duration_seconds": 1649
+    },
+    {
+      "id": "BV1hX4y1a7zs",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【下路复盘】情侣包下不再吵架，让你的辅助一起看！AD兵线理解教学，什么时候应该囤线什么时候可以速推兵线？电一黄金局全程讲解下路对线细节，干货拉满！",
+      "case_title": "双人下路对日女与莎弥拉的兵线位置",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "作者标题标电一黄金局",
+      "segments": [
+        {
+          "start": 245,
+          "end": 287,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1hX4y1a7zs/?t=245",
+          "observation": "教练问把兵推到对面塔前，被三级日女 E 到后还能不能跑回来，讨论莎弥拉的追击。接着将兵线放在己方塔附近，日女难以出手，己方可以在小兵附近消耗。此段 ASR 很稀，只引用可对照画面的 245、252、259、273、280、287 秒烧录字幕。",
+          "intervention": "算推线后交战发生的位置和回己塔距离。不能从对线优势直接得出推到底。",
+          "evidence": "原画内嵌中文字幕，ASR在此段漏录",
+          "evidence_url": "https://www.bilibili.com/video/BV1hX4y1a7zs/?t=245"
+        }
+      ],
+      "source_duration_seconds": 1929
+    },
+    {
+      "id": "BV1JX4y167DA",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【辅助复盘】电一高分王者组排 与职业化下路对线应该如何正确处理？对线puff+南风 全程细节 干货完整版",
+      "case_title": "泰坦与金克丝对霞洛一级开战",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "作者标题标电一高分王者组排",
+      "segments": [
+        {
+          "start": 219,
+          "end": 258,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1JX4y167DA/?t=219",
+          "observation": "复盘实际 AQ 换血后，教练要求学员解释己方和霞洛的组合。学员认为技能给到 AD 才有机会赢，教练反问即使一级勾到霞，也可能先被打死。这是对本例的教练判断。",
+          "intervention": "同一钩命中后，还需比较两边第一轮输出、位置、可以参加的人。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1JX4y167DA/?t=219"
+        }
+      ],
+      "source_duration_seconds": 1381
+    },
+    {
+      "id": "BV1Di421e763",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【ad复盘】前期有优势的大核ad为啥赢不了？单排和组排游戏思路上的转变！单带点处理不掉如何才能破局？为什么我指挥总感觉力不从心浑身疲惫？",
+      "case_title": "大核 AD 在队友脱节时的责任",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 192,
+          "end": 245,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1Di421e763/?t=192",
+          "observation": "教练问队友脱节后 AD 能否留下防守、寻找下一波机会，学员认为本局对线没压力，两人决定从已取得优势的中期继续看。实际读到的是复盘选段与失败归因方法。",
+          "intervention": "全场先选影响取舍的时间点，再把“跟队友硬接”与“不跟并防守”并列。不能从队友失误自动给 AD 判错。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1Di421e763/?t=192"
+        },
+        {
+          "start": 1856,
+          "end": 1909,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1Di421e763/?t=1856",
+          "observation": "讲者给出具体的四一分工，玛尔扎哈带 TP 守边站塔下，只收过来的兵，奎桑提随 AD 去大龙，因为另外四人打龙需要前排。其依据包括讲者判断敌方当时两人的装备不足以越塔杀玛尔扎哈。AD 阵亡后己方剩余输出少，后来打过与对手给机会、少人有关。对照可改成边线英雄没有 TP、塔下挡不住越塔、或龙区没有能扛伤的人，重新评估分工。",
+          "evidence": "原声ASR＋画面内嵌字幕抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1Di421e763/?t=1856"
+        }
+      ],
+      "source_duration_seconds": 2511
+    },
+    {
+      "id": "BV1aN4y117bW",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【辅助复盘】每次资源团视野都被排了感觉眼不够用？回城补眼的时机，如何制造视野差？对线优势视野掌控下半区！龙团眼位教学，怎么打有效信号？",
+      "case_title": "日女与霞对持净化组合的控制顺序",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 95,
+          "end": 152,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1aN4y117bW/?t=95",
+          "observation": "教练先要学员讲日女、霞对卡莎、芮尔什么时候能打，再要求看对手带的召唤师技能。看到净化后，讨论双方控制的施放顺序，避免同时把资源全部交出去。标题另讲龙团眼位，本选段只证明对线组合讨论。",
+          "intervention": "模型先给双方控制与解控动作排序，关键解控未知则输出两支。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1aN4y117bW/?t=95"
+        },
+        {
+          "start": 2015,
+          "end": 2076,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1aN4y117bW/?t=2015",
+          "observation": "清完兵时，正面仍能看到蛮王。教练主张跟着己方兵线向前压，外塔和二塔已掉，逼对方退后接线。队友推线的同时日女为侧翼做视野，防止绕开，等守方接兵再评估进野接团的时间。对手是否会接是尚待观察的反应。",
+          "evidence": "原声ASR＋画面内嵌字幕抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1aN4y117bW/?t=2015"
+        }
+      ],
+      "source_duration_seconds": 2702
+    },
+    {
+      "id": "BV18e411N7rL",
+      "platform": "B站",
+      "creator": "EMTJUG",
+      "source_title": "峡谷之巅大师局对位汤小圆佛爷哥 前期凯隐发育处理 教你7分钟快速变身拿下对局",
+      "case_title": "凯隐在敌野露上后换营地",
+      "role": "打野",
+      "kind": "实战口述",
+      "region": "作者标题标峡谷之巅大师局",
+      "segments": [
+        {
+          "start": 234,
+          "end": 276,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV18e411N7rL/?t=234",
+          "observation": "对手在上路露头后，讲者放下本方蓝和河蟹，选择换对方 F6 与石甲虫，然后做视野。中单发来求抓信号，他仍沿外侧刷石甲虫，因凯隐可翻墙下去，再判断能否抓下。",
+          "intervention": "把“队友请求”和“本人最佳下一步”分开，比较路线重叠、耗时及做完后的下一项选择。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV18e411N7rL/?t=234"
+        }
+      ],
+      "source_duration_seconds": 380
+    },
+    {
+      "id": "BV1WHbNzyEsz",
+      "platform": "B站",
+      "creator": "小汤宝ovo",
+      "source_title": "两边打野互相变奏，谁能先下一城？这场与峡谷之巅王者的博弈，谁会夺得胜利？",
+      "case_title": "豹女放弃蛤蟆抓落单小炮",
+      "role": "打野",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 175,
+          "end": 197,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1WHbNzyEsz/?t=175",
+          "observation": "本来要打蛤蟆，看见派克回城，小炮单人吃塔皮，改为呼叫娜美留人。小炮还持有 W，讲者保留豹女 Q，先通过普攻施压，见起跳再瞄落点。",
+          "intervention": "“出现能抓的目标”开启回合，而“脱离技能尚在”改变行动顺序。对手下落点只有起跳后才能更新。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1WHbNzyEsz/?t=175"
+        }
+      ],
+      "source_duration_seconds": 822
+    },
+    {
+      "id": "BV1u94y1s7Aq",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【下路复盘】大师德莱文，中期转线常见误区，抢二压制需要调整的细节、囤线慢推的意义、如何扩大优势完成滚雪球？防gank及临场判断能力，一级防入侵AD站位",
+      "case_title": "德莱文抢二后如何插眼并保持飞斧",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 153,
+          "end": 231,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1u94y1s7Aq/?t=153",
+          "observation": "抢二先看辅助能否开到人，若没开到就后拉，趁炮车线到前做眼。学员顾虑掉斧，教练逐步解释 A 兵、接斧移动、放眼再开 W 回来的时序，之后再压。",
+          "intervention": "同时比较视野和英雄自身的状态持续时间。路径可行时两个目标可以兼得，窗口未知就不报秒数。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1u94y1s7Aq/?t=153"
+        },
+        {
+          "start": 1950,
+          "end": 2030,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1u94y1s7Aq/?t=1950",
+          "observation": "教练举锤石先钩到泰坦的例子，德莱文上前打几刀后 W 回拉，己方双人至少留一个打断给莎弥拉 R，建议自己保留 E。学员说习惯用 E 断对手突进，教练解释如果此时用掉而打断失败，随后便没人打断大招。可以测试“第一时间交掉全部控制”与“留一个在双方技能序列真正失效的一刻再交”的区别。",
+          "evidence": "原声ASR＋画面内嵌字幕抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1u94y1s7Aq/?t=1950"
+        }
+      ],
+      "source_duration_seconds": 2902
+    },
+    {
+      "id": "BV16z421z7wY",
+      "platform": "B站",
+      "creator": "陌路里mid",
+      "source_title": "【沙皇教学系列】越简单的思路往往越行之有效，走位并非无章法可言",
+      "case_title": "沙皇用假动作处理对手抓补刀抬手",
+      "role": "中单",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 72,
+          "end": 117,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV16z421z7wY/?t=72",
+          "observation": "分析对手会抓补刀抬手时，可在兵进入可补区间先佯装补刀，等对方先交技能后再收尾，也可取消抬手直接走位。",
+          "intervention": "检验反事实中的可取消动作、漏刀成本及对手是否已交技能。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV16z421z7wY/?t=72"
+        }
+      ],
+      "source_duration_seconds": 358
+    },
+    {
+      "id": "BV13qw9eNE3N",
+      "platform": "B站",
+      "creator": "乐芙皇三盘-中单教学",
+      "source_title": "还在惧怕梅尔？教你直接用一手发条对线期就给梅尔彻底打爆",
+      "case_title": "发条对梅尔的消耗窗口",
+      "role": "中单",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 45,
+          "end": 75,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV13qw9eNE3N/?t=45",
+          "observation": "对手 E 还在时保持距离，留出反应空间。见梅尔 W 仍未转好、炮车可补，发条选择前压消耗。片中还讨论 W 交过后可以越线放球逼走位。",
+          "intervention": "对位技能窗口与对手想补的特定一只兵共同决定是否上前。限旧版本片段，不外推精确 CD。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV13qw9eNE3N/?t=45"
+        }
+      ],
+      "source_duration_seconds": 298
+    },
+    {
+      "id": "BV1bR4y1s7MT",
+      "platform": "B站",
+      "creator": "小白打野",
+      "source_title": "小白打野 1对1 打野思路课 复盘解析",
+      "case_title": "人马能否把主动资源留给中路",
+      "role": "打野",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 223,
+          "end": 289,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1bR4y1s7MT/?t=223",
+          "observation": "教练比较上路立刻用掠食者与把它留给中路无闪瑞兹。上一轮兵线已送进塔，己方卡萨丁带电刑。教练问如果此前留着资源，此后的人马能否把瑞兹踢回、替队友省掉一个闪现，同时说明后续赶到者包含事后得知的信息。",
+          "intervention": "给同一种主动资源比较跨路、跨回合的机会成本。把讲者的假设与实际已发生的击杀或召唤师技能消耗分开。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1bR4y1s7MT/?t=223"
+        }
+      ],
+      "source_duration_seconds": 703
+    },
+    {
+      "id": "BV1rWtXeLEwb",
+      "platform": "B站",
+      "creator": "Koly2z",
+      "source_title": "尼拉对线思路与操作细节教学，以及出装加点思路和英雄特殊性讲解",
+      "case_title": "尼拉的经验被动与二级换血",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 184,
+          "end": 235,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1rWtXeLEwb/?t=184",
+          "observation": "尼拉将升二时学员后退，自述误以为还需再吃一只兵。教练结合尼拉的经验被动，回放后提出借兵位移靠近、打一轮消耗或逼屏障。打完若继续追，够不到人还要白挨打。",
+          "intervention": "抢等级的计算要绑定英雄机制，且分别检验发起换血和继续追击。能逼出屏障只是备选结果。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1rWtXeLEwb/?t=184"
+        }
+      ],
+      "source_duration_seconds": 1139
+    },
+    {
+      "id": "BV1Sa4y1G7Be",
+      "platform": "B站",
+      "creator": "羽妹Sup",
+      "source_title": "【辅助复盘】如何判断下路兵线得到最佳回城时机？赌2个币！黄金白金锤石玩家进阶课程 无废话全程究极干货下路教学系列 看完没上分我给大伙儿表演女装！",
+      "case_title": "锤石空钩后是否继续往前",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 137,
+          "end": 191,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1Sa4y1G7Be/?t=137",
+          "observation": "空钩后只剩 E，教练希望等 Q 转好再凶。眼下对方一波兵又来了，即便锤石二级，往前抗兵换血仍可能亏。",
+          "intervention": "用“已经交空一个关键技能”触发行动资格重查，小兵增援与等级优势一起算。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1Sa4y1G7Be/?t=137"
+        }
+      ],
+      "source_duration_seconds": 1131
+    },
+    {
+      "id": "BV1iEuc6HEvx",
+      "platform": "B站",
+      "creator": "猛男喝雪碧",
+      "source_title": "Theshy纳尔打狼母上路视角复盘，纯抽陀螺单吃，对面没见过他的塔。",
+      "case_title": "第三方解读纳尔形态与狼母换血",
+      "role": "上单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 127,
+          "end": 157,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1iEuc6HEvx/?t=127",
+          "observation": "讲者讲纳尔刚变小时应保持距离，趁狼母打兵用回旋镖消耗。随后从狼母视角分析有了新装备仍要等纳尔变小，且本轮攻击受到小兵遮挡。本条是解说者解读，无选手口述动机。",
+          "intervention": "形态、资源和攻击线路共同决定开战资格；装备刚买成不足以单独判能打。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1iEuc6HEvx/?t=127"
+        }
+      ],
+      "source_duration_seconds": 248
+    },
+    {
+      "id": "BV1N1421i74e",
+      "platform": "B站",
+      "creator": "留白Camille",
+      "source_title": "当绝活哥复盘bin哥青钢影！教科书级的操作和思路 附带青钢影ew闪E快速教学",
+      "case_title": "复盘 Bin 青钢影主动吃第一轮技能",
+      "role": "上单",
+      "kind": "赛事分析",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 64,
+          "end": 104,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1N1421i74e/?t=64",
+          "observation": "讲者暂停说明对手尚未聚齐，青钢影有血量和护盾，可以让对方先把第一轮技能用在自己身上，队友再跟进；分析吃钩后还保留了哪些行动选项。",
+          "intervention": "“主动开团”可以是先让敌方交技能。备选要检验敌方瞬时可到人数、承受伤害的上限及队友跟进，不保证同打法必然存活。",
+          "evidence": "第三方原声ASR＋职业录像画面",
+          "evidence_url": "https://www.bilibili.com/video/BV1N1421i74e/?t=64"
+        }
+      ],
+      "source_duration_seconds": 1330
+    },
+    {
+      "id": "BV1EY4y1J7VA",
+      "platform": "B站",
+      "creator": "夕仔上单教学",
+      "source_title": "刀妹打青钢影教学（含有两种不同打法，最后有打青钢影两种兵线总结教学务必看完哟~）",
+      "case_title": "刀妹对青钢影的两种一级兵线",
+      "role": "上单",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 340,
+          "end": 401,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1EY4y1J7VA/?t=340",
+          "observation": "若青钢影一级放线，刀妹学 Q 叠被动抢二，慢推炮车线进塔，再按己方打野路线选帮河蟹或回城。若青钢影一级凭护盾、不灭压线，就学 E 放线，收塔下兵后借满被动慢推。画面有作者打出的分支总结。",
+          "intervention": "给同一对位只改敌方一级的推线选择，检验一级加点与之后两三波计划联动，而非照抄英雄攻略。",
+          "evidence": "原声ASR＋画面打字总结",
+          "evidence_url": "https://www.bilibili.com/video/BV1EY4y1J7VA/?t=340"
+        }
+      ],
+      "source_duration_seconds": 427
+    },
+    {
+      "id": "BV1oisHzeEFN",
+      "platform": "B站",
+      "creator": "乾夏帆",
+      "source_title": "中单万金油发条，学会一个英雄不再怕counter",
+      "case_title": "发条对远程法师与短手突进的站位",
+      "role": "中单",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 128,
+          "end": 170,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1oisHzeEFN/?t=128",
+          "observation": "打辛德拉时站出兵堆，迫使对方技能在人、兵之间选，自己力求打兵同时消耗。面对短手塞拉斯则观察小兵血量错峰，利用兵堆挡他的二段 E，同一个发条改变站位。",
+          "intervention": "检验模型能否按敌方 AOE 或可被小兵挡的技能改变“站兵旁边”的建议。",
+          "evidence": "片段原声ASR＋游戏画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1oisHzeEFN/?t=128",
+          "related_windows": [
+            {
+              "start": 186,
+              "end": 204,
+              "url": "https://www.bilibili.com/video/BV1oisHzeEFN/?t=186"
+            }
+          ]
+        }
+      ],
+      "source_duration_seconds": 258
+    },
+    {
+      "id": "BV1oQXHYwE16",
+      "platform": "B站",
+      "creator": "英雄联盟赛事",
+      "source_title": "LPL职业教学：Rookie教你杰斯中单对线思路",
+      "case_title": "Rookie 比较杰斯打近战和打远程",
+      "role": "中单",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 23,
+          "end": 56,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1oQXHYwE16/?t=23",
+          "observation": "对近战短手可往前站。对法师则谈两套开局，复苏之风配多兰盾抗压；更激进时多兰剑推线，争取回城买女神泪。属于选手口述打法，片段不能证明某一具体排位局选了哪套。",
+          "intervention": "固定己方英雄，改变敌方对位和起始配置，比较先推线回补与保血发育的条件。",
+          "evidence": "选手原声ASR＋访谈画面",
+          "evidence_url": "https://www.bilibili.com/video/BV1oQXHYwE16/?t=23"
+        }
+      ],
+      "source_duration_seconds": 67
+    },
+    {
+      "id": "BV1JeAweuEL5",
+      "platform": "B站",
+      "creator": "轻狂书生贝蕾亚",
+      "source_title": "峡谷之巅大师局贝蕾亚VS千珏，打野教学，走错一步满盘皆输",
+      "case_title": "峡谷之巅大师贝蕾亚对千珏，队友没有回城时的先锋",
+      "role": "打野",
+      "kind": "实战口述",
+      "region": "作者标题标峡谷之巅大师局",
+      "segments": [
+        {
+          "start": 440,
+          "end": 468,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1JeAweuEL5/?t=440",
+          "observation": "贝蕾亚刚打完一波，队友血量低，讲者放弃深入反石甲虫，打算先吃 F6 等队友回城出门再接先锋。队友继续逗留并阵亡，原先接先锋的前提随之消失。",
+          "intervention": "只改队友是否顺利回补并能一起抵达，检查同一只先锋应争、等还是放。",
+          "evidence": "原声ASR＋443、450、457、464秒内嵌字幕与画面",
+          "evidence_url": "https://www.bilibili.com/video/BV1JeAweuEL5/?t=440"
+        }
+      ],
+      "source_duration_seconds": 627
+    },
+    {
+      "id": "BV1zek4YXEM4",
+      "platform": "B站",
+      "creator": "轻狂书生贝蕾亚",
+      "source_title": "电一大师局 稻草人VS死歌 弱势对位教你如何野区制胜",
+      "case_title": "电一大师稻草人对死歌，何时抓上、何时回城",
+      "role": "打野",
+      "kind": "实战口述",
+      "region": "作者标题标电一大师局",
+      "segments": [
+        {
+          "start": 433,
+          "end": 463,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1zek4YXEM4/?t=433",
+          "observation": "看到上路可抓且本人大招快好，稻草人才转去上路；抓完直接回城买装备，讲者解释下一轮巢虫即将刷新。",
+          "intervention": "把本人 R 可用时间推迟或改变巢虫刷新期限，重算这次抓上、购物再到场能否兼得。",
+          "evidence": "原声ASR＋447、461秒内嵌字幕与画面",
+          "evidence_url": "https://www.bilibili.com/video/BV1zek4YXEM4/?t=433"
+        }
+      ],
+      "source_duration_seconds": 944
+    },
+    {
+      "id": "BV1wqGf6KEEk",
+      "platform": "B站",
+      "creator": "峡谷朱丽叶",
+      "source_title": "腕豪排:一区大师局对线带风暴+虚弱的诺手，一级拿什么和腕豪all in？卡六丝滑连招带走满血诺手,线上无敌这把真力尽!",
+      "case_title": "一区大师腕豪等人补视野再转大龙",
+      "role": "上单",
+      "kind": "实战口述",
+      "region": "作者标题标一区大师局",
+      "segments": [
+        {
+          "start": 587,
+          "end": 614,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1wqGf6KEEk/?t=587",
+          "observation": "上半区争视野时，腕豪判断对方可能来补眼，在入口等待。抓到人后立即呼叫转大龙。对方是否缺视野及谁会来属于讲者的判断。",
+          "intervention": "若始终无人来补眼，或己方缺关键打龙人员，不能沿用已经抓到人时的开龙结论。",
+          "evidence": "原声ASR＋592、599秒交手与606–613秒打大龙画面",
+          "evidence_url": "https://www.bilibili.com/video/BV1wqGf6KEEk/?t=587"
+        }
+      ],
+      "source_duration_seconds": 870
+    },
+    {
+      "id": "BV1cV7p6yE3b",
+      "platform": "B站",
+      "creator": "浪漫豹女king",
+      "source_title": "绝对颠覆你的认知！野区超模！峡谷之巅600分超大劣势翻盘！新英雄洛克打野学就上分！",
+      "case_title": "峡谷之巅600分局，洛克看四级杰斯露下再选入侵",
+      "role": "打野",
+      "kind": "回放复盘",
+      "region": "作者标题标峡谷之巅600分",
+      "segments": [
+        {
+          "start": 134,
+          "end": 173,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1cV7p6yE3b/?t=134",
+          "observation": "讲者先暂停提问。杰斯上次四级出现在下半区，他据此推断由上往下刷、下一轮可能回上，喊辅助同行争第二轮 F6，随后才实际撞见杰斯。",
+          "intervention": "把对手起点、回城或首轮营地变成未知，检验能否保留另一条路线，同时为己方辅助不能同行设置退路。",
+          "evidence": "原声ASR＋135、149、156、163秒内嵌字幕和画面",
+          "evidence_url": "https://www.bilibili.com/video/BV1cV7p6yE3b/?t=134"
+        }
+      ],
+      "source_duration_seconds": 712
+    },
+    {
+      "id": "BV1P4pmzSEph",
+      "platform": "B站",
+      "creator": "浪漫豹女king",
+      "source_title": "【版本最强野核】会刷野就上分！峡谷第一都在玩你不学？峡谷之巅对位人马全局思路",
+      "case_title": "峡谷之巅人马对局，团战内切换集火目标",
+      "role": "打野",
+      "kind": "回放复盘",
+      "region": "作者标题标峡谷之巅对位人马",
+      "segments": [
+        {
+          "start": 1102,
+          "end": 1145,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1P4pmzSEph/?t=1102",
+          "observation": "作者重看一段野区交手，因为敌方靠前目标的位置过深并未贸然跟进，转而在控制命中后呼叫先杀开疾跑的人马，并解释其等级与 Q 层数使他威胁大。人马倒下后才比较余下双方英雄的等级、血量与能否追。",
+          "intervention": "若控制没命中、人马的技能层数或己方能跟距的位置改变，重新判断是集火、后拉还是分头追击。",
+          "evidence": "原声ASR＋1105、1112、1126、1140秒回放位置与血条",
+          "evidence_url": "https://www.bilibili.com/video/BV1P4pmzSEph/?t=1102"
+        }
+      ],
+      "source_duration_seconds": 1220
+    },
+    {
+      "id": "BV1w86qYJEv2",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "教练：双人组转中之后，强势的中单该如何滚雪球？",
+      "case_title": "同一个女警，前一波放、后一波可以追",
+      "role": "中单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 40,
+          "end": 121,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1w86qYJEv2/?t=40",
+          "observation": "前一次塔下兵线已经处理，教练追问越塔的理由。后一次女警也清了线，但她离塔、多人已露、己方两路同时推进，教练支持出手，并纠正了学员只看换塔收益的解释。",
+          "intervention": "只改变女警是否仍受塔保护，或改成她身旁多一名能保护她的人。分别重算能不能碰到她、另一侧能兑现什么。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1w86qYJEv2/?t=40"
+        }
+      ],
+      "source_duration_seconds": 211,
+      "instructor": "Tracy"
+    },
+    {
+      "id": "BV1WPktYAErR",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "教练：有的时候布隆也需要站在后面",
+      "case_title": "女警继续推，布隆要不要跟泽丽往前站",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 46,
+          "end": 108,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1WPktYAErR/?t=46",
+          "observation": "女警仍在打兵，线会过来。泽丽能在靠墙处有限地处理兵线。布隆从另一角度跟上，反而多给草中塔姆一个可开的人。",
+          "intervention": "保持兵线方向，只把泽丽的自保、退路或布隆与她的站位间距改掉，再判断谁需要往前。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1WPktYAErR/?t=46"
+        }
+      ],
+      "source_duration_seconds": 183,
+      "instructor": "Tracy"
+    },
+    {
+      "id": "BV17mrBYSEzq",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "教练：有些时候，小地图的信息远比视野重要",
+      "case_title": "哪一侧河道值得中单亲自去看",
+      "role": "中单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 28,
+          "end": 83,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV17mrBYSEzq/?t=28",
+          "observation": "己方打野在上侧，下侧信息少，敌辅在下边露过。讲者要求中单先靠己方能接应的一边，给己方打野信号。需要补眼时还要看能安全走到哪里。",
+          "intervention": "保留同一个未知入口，只把己方打野的接应位置换边，比较发信号、浅眼和亲自探进去三种成本。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV17mrBYSEzq/?t=28"
+        }
+      ],
+      "source_duration_seconds": 151
+    },
+    {
+      "id": "BV14nCGYFEF9",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "狐狸对线亚索，如何判断对方学的技能？",
+      "case_title": "狐狸留 W，怎样根据亚索的走位调整站位",
+      "role": "中单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 18,
+          "end": 82,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV14nCGYFEF9/?t=18",
+          "observation": "讲者从亚索敢不敢上前推测他可能学了 E，要求狐狸一级留 W。若面对这种能借兵突进的亚索，自己没 W 就后撤，有 W 再往前找机会。",
+          "intervention": "只拿掉狐狸自己的 W，检查相同前压还有没有后手。亚索前压是一条线索，只有可见施法才能确证他用过 E。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV14nCGYFEF9/?t=18"
+        }
+      ],
+      "source_duration_seconds": 142,
+      "instructor": "Garry"
+    },
+    {
+      "id": "BV1DABXYKE7A",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "教练：玩辅助一定要清楚自己应该做什么！",
+      "case_title": "双人离线补眼值不值",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 54,
+          "end": 90,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1DABXYKE7A/?t=54",
+          "observation": "讲者用下路兵线与两人一起出去的代价评价插眼时机，并指出偏后的眼位看不到想防的扎克来路。",
+          "intervention": "保持眼位不变，只改变敌方威胁的入口，返回该路线是否穿过眼位、本人什么时候要回线。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1DABXYKE7A/?t=54"
+        }
+      ],
+      "source_duration_seconds": 156
+    },
+    {
+      "id": "BV1DM411g7AS",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "辅助单杀对面AD，你还在补兵？从每一发平A复盘ADC一级对线细节",
+      "case_title": "露露发起换血，射手该跟还是继续推",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 30,
+          "end": 72,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1DM411g7AS/?t=30",
+          "observation": "前三个近战兵处理后，露露独自在与对面换血，己方射手仍在打兵。教练用厄斐琉斯是否在打兵来决定什么时候换血、什么时候跟推。",
+          "intervention": "只把对方射手的普攻目标从兵改为英雄，重新比较己方二人能否在同一段时间打同一个目标。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1DM411g7AS/?t=30"
+        }
+      ],
+      "source_duration_seconds": 241,
+      "instructor": "小政"
+    },
+    {
+      "id": "BV1hP411v7b4",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "中单和上单到中期为什么没经济？",
+      "case_title": "几个近战兵到了塔前，回城窗口成立了吗",
+      "role": "中单／上单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 13,
+          "end": 73,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1hP411v7b4/?t=13",
+          "observation": "教练依次问自己清线要多久、己方兵多久到塔、敌方下一波多久到。推一塔时前排进去、后排停在外面仍可能被卡。他又单独讨论边线推到二塔且仅剩少量后排时的回推。",
+          "intervention": "保留前排兵位置，改变敌方下一波的到达时间。检查能否放心离线以及回来要去多深接线。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1hP411v7b4/?t=13"
+        }
+      ],
+      "source_duration_seconds": 121,
+      "instructor": "Kh"
+    },
+    {
+      "id": "BV1Zs4y1v7XQ",
+      "platform": "B站",
+      "creator": "GenG电竞训练营",
+      "source_title": "及时转线，不要给刺客打野捡起来的机会",
+      "case_title": "中期换中，射手在哪一侧能接下一波团",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 20,
+          "end": 49,
+          "time_basis": "播放器选段",
+          "url": "https://www.bilibili.com/video/BV1Zs4y1v7XQ/?t=20",
+          "observation": "教练让射手转中，在己方挖掘机所在半区接战，让拉克丝处理另一侧。若敌人跟着转，要比较己方推中塔的压力。留在边路接零散小规模战更合对方刺客的意。",
+          "intervention": "把挖掘机的活动半区换掉，或改成敌方仍有人守中。原先的换线要重新比较。",
+          "evidence": "原声选段本地 ASR、原片画面抽查",
+          "evidence_url": "https://www.bilibili.com/video/BV1Zs4y1v7XQ/?t=20"
+        }
+      ],
+      "source_duration_seconds": 117,
+      "instructor": "小政"
+    },
+    {
+      "id": "v-ec5astbE0",
+      "platform": "YouTube",
+      "creator": "CoreJJ",
+      "source_title": "CoreJJ - How To Support Ep.01 Laning Phase | League of Legends",
+      "case_title": "牛头能开到，射手能否同时打到",
+      "role": "辅助",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 60,
+          "end": 123,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=v-ec5astbE0&t=60s",
+          "observation": "示意图里的牛头可以先到，但己方射手落在后面，两名对手都能打到先手的人。调整双人纵向站位后，同一个目标才可能被己方两人一起打。",
+          "intervention": "只沿兵线后移己方射手，保留牛头与目标的距离，检查开团建议是否翻转。",
+          "evidence": "带原作者标识的同片镜像，抽查内嵌字幕和画面",
+          "evidence_url": "https://www.bilibili.com/video/BV13E411v7Up/?t=60"
+        }
+      ]
+    },
+    {
+      "id": "ArA8Pw8yZQE",
+      "platform": "YouTube",
+      "creator": "CoreJJ",
+      "source_title": "CoreJJ - How To Support Ep.02 Critical Thinking | League of Legends",
+      "case_title": "伊泽瑞尔交了 E，为什么仍要等",
+      "role": "辅助",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 82,
+          "end": 114,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=ArA8Pw8yZQE&t=82s",
+          "observation": "对手的逃生技能已用，镜头仍要求看己方射手的距离。先手够到对方、射手追不上时，对方交技能只消掉了开战的一项障碍。",
+          "intervention": "维持对方 E 不可用，只改变己方射手是否能在控制结束前输出。",
+          "evidence": "带原作者标识的同片镜像，抽查内嵌字幕和画面",
+          "evidence_url": "https://www.bilibili.com/video/BV1q7411c7Xe/?t=82"
+        }
+      ]
+    },
+    {
+      "id": "-YvlJB1eRpQ",
+      "platform": "YouTube",
+      "creator": "CoreJJ",
+      "source_title": "CoreJJ - How To Support Ep.04 Vision Control Pt.1: Why and Where Should We Ward | League of Legends",
+      "case_title": "同一个饰品眼，应该看哪几条路",
+      "role": "辅助",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 321,
+          "end": 362,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=-YvlJB1eRpQ&t=321s",
+          "observation": "CoreJJ 在画面上沿野区与河道展示几个点，比较早期普通饰品眼能覆盖的路口。理由是同一枚眼能观察几种进入方式，地图演示还区分眼位与草丛。",
+          "intervention": "保留插眼点，把要防的人改从另一条路来，只对实际经过覆盖区的路线给预警。旧地图坐标不可照搬。",
+          "evidence": "同片 B 站镜像的内嵌字幕与画面。其简介错链 EP04-1，按片内 EP04 标题、分章、画面与另一份 EP04 镜像交叉核对。",
+          "evidence_url": "https://www.bilibili.com/video/BV1b7411c7ab/?t=321"
+        },
+        {
+          "start": 325,
+          "end": 424,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=-YvlJB1eRpQ&t=325s",
+          "observation": "CoreJJ 对比两个路口眼位，画面分别示意能看到五条和四条来路。首次回城后对手可能买控制守卫，选点时还要看普通眼能否避开草里常见的控制守卫。",
+          "intervention": "只新增一条己方目击草中敌方控制守卫的记录，比较原候选眼位和避开它的眼位仍能覆盖哪些通道。只有购买可能性时保留分支。",
+          "evidence": "独立 YouTube 原片名称核对，B 站合集第 8 集选帧查画面英语和中文。该集是 EP04，不同于 EP04-1。",
+          "evidence_url": "https://www.bilibili.com/video/BV1ZJ411a7jm/?p=8&t=325"
+        }
+      ]
+    },
+    {
+      "id": "nuBbiUJuF9g",
+      "platform": "YouTube",
+      "creator": "LoL Dobby",
+      "source_title": "Rank 1 Gumayusi : Learn His Tricks and Mechanics",
+      "case_title": "Gumayusi 如何利用先上线处理首波兵",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "标题标注韩服",
+      "segments": [
+        {
+          "start": 41,
+          "end": 97,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=nuBbiUJuF9g&t=41s",
+          "observation": "作者回看 Gumayusi 提前上线，先拉对方第一波兵集中攻击一只，从而使稍后到线的对方少吃经验，再借等级时差威胁对手、慢推兵线。",
+          "intervention": "只改双方到线先后，检查首波经验差是否仍成立，旧版本兵线交互需独立核实。",
+          "evidence": "带原作者标识的同片镜像，抽查内嵌字幕和画面",
+          "evidence_url": "https://www.bilibili.com/video/BV195411K77A/?t=41"
+        }
+      ]
+    },
+    {
+      "id": "M9YRvL-Caxg",
+      "platform": "YouTube",
+      "creator": "Tutu",
+      "source_title": "FUNDAMENTOS AVANÇADOS DA JUNGLE - Coach League Of Legends",
+      "case_title": "中单还能帮打龙几秒，取决于兵什么时候到塔",
+      "role": "打野",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 1300,
+          "end": 1360,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=M9YRvL-Caxg&t=1300s",
+          "observation": "中单短暂帮龙后离开，教练认为再留约五秒也来得及接线。下路又在打野仍刷魔沼蛙时就把大波兵推进去了，两路的行动窗口没有对齐。",
+          "intervention": "只改敌方中路下一波到塔时间，观察中单留龙和回去接线的排序。五秒是该段口头估计。",
+          "evidence": "公开时间字幕，按选段阅读，未逐帧核对",
+          "evidence_url": "https://pickscribe.com/v/M9YRvL-Caxg"
+        },
+        {
+          "start": 400,
+          "end": 493,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=M9YRvL-Caxg&t=400s",
+          "observation": "学员看对方下路线进塔便猜洛要回城。教练指出野区未追踪到佛耶戈、己方下路也没有先动，进下河道会撞上敌方游走；见到敌野时可撤走争上河蟹。推完线只产生离线机会，不能确定对手去了哪。",
+          "intervention": "只新增本方观测到佛耶戈在上半区的一条记录，重新评估下河蟹风险，仍保留洛回城或游走两支。",
+          "evidence": "葡语公开时间字幕，按选段核读。",
+          "evidence_url": "https://pickscribe.com/v/M9YRvL-Caxg"
+        }
+      ]
+    },
+    {
+      "id": "lSa5nvHjCDQ",
+      "platform": "YouTube",
+      "creator": "Eagz",
+      "source_title": "Season 15 COMPLETE Jungle Guide - FREE Challenger Jungling Course - League of Legends",
+      "case_title": "下路暴露后怎样保护下一轮上半野",
+      "role": "打野",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 104,
+          "end": 144,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=lSa5nvHjCDQ&t=104s",
+          "observation": "讲者回看在下路露头后，预想到男枪可能去即将重生的上半野区，回城时发信号，机器人帮忙直到他赶到。这里既有敌方可能的行动，也有实际响应的队友。",
+          "intervention": "仅拿掉机器人实际靠的证据，打野仍可发信号，但不能把上半区支援计作已兑现。",
+          "evidence": "公开时间字幕，按选段阅读，未逐帧核对",
+          "evidence_url": "https://pickscribe.com/v/lSa5nvHjCDQ"
+        }
+      ]
+    },
+    {
+      "id": "34kHa32NIKQ",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "Why YOU SUCK at MACRO (And How to Fix It) - League of Legends",
+      "case_title": "离开边路击杀烬的同时，谁在拆塔",
+      "role": "上单",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 575,
+          "end": 641,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=34kHa32NIKQ&t=575s",
+          "observation": "作者用欧若拉离开边路、蒙多单独推进的实战，比较中路拿到烬的人头与边塔的损失。打赢局部交手仍要算留下的防守任务。",
+          "intervention": "只加一个能在兵线进塔前接防的人，重算是否值得与队友找击杀。",
+          "evidence": "公开时间字幕，按选段阅读，未逐帧核对",
+          "evidence_url": "https://pickscribe.com/v/34kHa32NIKQ"
+        }
+      ]
+    },
+    {
+      "id": "HN2qjqeGAFM",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "The 10 RULES for ESCAPING LOW ELO (NOT CLICKBAIT!) - League of Legends",
+      "case_title": "无人争的小龙多去一个人值多少",
+      "role": "团队",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 1150,
+          "end": 1216,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=HN2qjqeGAFM&t=1150s",
+          "observation": "一方中单离开中线去无人争的小龙，人数增加没有改变拿龙结果，对手却利用无人守中推塔。后面的另一波也展示了对手集中下侧时中路已推来的那波兵。",
+          "intervention": "保留刷龙时刻，把敌方能争抢的人改为已经露面且可先到，重算第五人到龙和守中的差额。",
+          "evidence": "公开时间字幕，按选段阅读，未逐帧核对",
+          "evidence_url": "https://pickscribe.com/v/HN2qjqeGAFM"
+        }
+      ]
+    },
+    {
+      "id": "OM14vGC9C8A",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "Why YOU SUCK at ADC (And How To Fix It) - League of Legends",
+      "case_title": "卡莎何时从上路退，何时回来拆塔",
+      "role": "下路",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 685,
+          "end": 724,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=OM14vGC9C8A&t=685s",
+          "observation": "卡莎带上路线，女警靠过来防守便后撤。看见女警又去了中路，下一波才继续回上并拆塔。两次决定的差别来自守方露面和新兵线。",
+          "intervention": "去掉女警在中路的新视野，保留原来的最后露头，不能据此认定上塔已无人守。",
+          "evidence": "公开时间字幕，按选段阅读，未逐帧核对",
+          "evidence_url": "https://pickscribe.com/v/OM14vGC9C8A"
+        },
+        {
+          "start": 332,
+          "end": 354,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=OM14vGC9C8A&t=332s",
+          "observation": "卡莎五级、对面女枪六级时暂不开。卡莎知道炮车一死自己会升六，提前往能进场的位置靠，女枪往前走的时刻恰逢升级，大招让她能够应对女枪大招。",
+          "intervention": "只改本人共享经验，让该炮车死亡后仍是五级。核查能否把原先的预站位和即时开战区分开。",
+          "evidence": "镜像简介给出原片 ID，YouTube oEmbed 核实频道和标题。取公开英文原声音轨本地 ASR 并核选段画面字幕。该段为第一人称赛后讲解。",
+          "evidence_url": "https://www.bilibili.com/video/BV1Dw4m1i7Hp/?t=332"
+        }
+      ]
+    },
+    {
+      "id": "dKU-Xiz3PNI",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "How to Play EVERY Bot Lane Matchup in SEASON 14 - League of Legends",
+      "case_title": "机器人的钩命中后是短换还是打到底",
+      "role": "下路",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 925,
+          "end": 1000,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=dKU-Xiz3PNI&t=925s",
+          "observation": "用女警、机器人对卢锡安、拉克丝的对线讲解，首次钩到并不保证伤害足够击杀，拉克丝进入攻击范围会改变长换的结果。可以先耗一轮，再争取下一次。",
+          "intervention": "只改敌辅能否在第一轮技能后接到输出，分别推荐短换、继续追或退开。",
+          "evidence": "公开时间字幕，按选段阅读，未逐帧核对",
+          "evidence_url": "https://pickscribe.com/v/dKU-Xiz3PNI"
+        }
+      ]
+    },
+    {
+      "id": "ZzKpPJ_BNHM",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "Why You SUCK at FARMING (And How to Fix It) - League of Legends",
+      "case_title": "同侧三人没就位时，谁先露头会被抓",
+      "role": "团队",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 876,
+          "end": 947,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=ZzKpPJ_BNHM&t=876s",
+          "observation": "瑟提现在独自给压力，别的队友还没同步，被对手合力击杀。岩雀先刷一段，等瑟提和中路兵线到位再做事。",
+          "intervention": "只移动另一条兵线或队友到位的时刻，检查相同站位的边线英雄是否真的能牵制人。",
+          "evidence": "公开时间字幕，按选段阅读，未逐帧核对",
+          "evidence_url": "https://pickscribe.com/v/ZzKpPJ_BNHM"
+        }
+      ]
+    },
+    {
+      "id": "SzbX4yj505g",
+      "platform": "YouTube",
+      "creator": "Neon LOL",
+      "source_title": "The Ultimate ADC Guide for 2025",
+      "case_title": "一级厄斐琉斯、巴德对艾希、泰坦",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 509,
+          "end": 664,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=SzbX4yj505g&t=509s",
+          "observation": "Neon 回看自己一级四人对位，比较持续伤害、净化与屏障，决定不抢对打。若对方尚未露头就用己方小兵挡钩再给草丛视野；泰坦还没压入那片草，自己才敢稍前站，引诱对方更快推线。",
+          "intervention": "只将泰坦改成已在侧草形成钩人角度，检查原先可以前站的位置是否应放弃。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/SzbX4yj505g/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "zLUGwP4ypYc",
+      "platform": "YouTube",
+      "creator": "enryu",
+      "source_title": "13 lessons to help you CLIMB as ADC",
+      "case_title": "希维尔看到上路团时如何兑现下路",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 313,
+          "end": 392,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=zLUGwP4ypYc&t=313s",
+          "observation": "回看自己的希维尔，镜头看见上半团被侧翼包夹，判断辅助或能靠、本人到不了，继续压金克丝和打下塔。随后自己缺蓝并持金回城，接受可能少吃一波的代价。",
+          "intervention": "只改本人到场时间与交手剩余窗口的相对次序，检查是否应重开“本人去不去”的比较。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/zLUGwP4ypYc/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "lvI6VhTQlo0",
+      "platform": "YouTube",
+      "creator": "perryjg",
+      "source_title": "Stop AFK Farming When You're Behind (Jungle VOD Review)",
+      "case_title": "逆风佛耶戈寻找视野缺口",
+      "role": "打野",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 241,
+          "end": 317,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=lvI6VhTQlo0&t=241s",
+          "observation": "复盘自己出门时，Perry 比较直走红、石甲虫与绕到中路找机会。看过奈德丽的插眼位置，自己再开扫描查途经区域，选择绕入敌方阵型侧面；后来还要重新清眼。",
+          "intervention": "只撤掉这一次扫描观察，原方案还能否断言途经区域没眼？不能拿整张敌方迷雾当答案。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/lvI6VhTQlo0/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "cwyNimB69O4",
+      "platform": "YouTube",
+      "creator": "AloisNL",
+      "source_title": "I Got COACHED On How To ACTUALLY Play- A-Z TOP LANE",
+      "case_title": "Dantes 现场教 Alois 打上单人马",
+      "role": "上单",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 327,
+          "end": 411,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=cwyNimB69O4&t=327s",
+          "observation": "教练先让学员放补刀、只站经验范围等线进塔。局面变为得推线时才提示维持 Q 层数；要拉长追击距离，则先保留 E 的移速再打强化普攻。后段 07:46 又具体要求省蓝时用普攻补兵。",
+          "intervention": "只改兵线方向，比较“省蓝用普攻”和“保 Q 层推线”是否互换，并说明哪个窗口改变。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/cwyNimB69O4/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "8cUqcgpbsNE",
+      "platform": "YouTube",
+      "creator": "xPetu",
+      "source_title": "The Best Way to Use Shen Ultimate",
+      "case_title": "用慎的大招返线并截人",
+      "role": "上单",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 0,
+          "end": 40,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=8cUqcgpbsNE&t=0s",
+          "observation": "慎打算利用大招加快返线，先给自家佛耶戈发信号，看到队友作出配合后才开大落地，用 E、Q 和站位卡住对手回塔路线。",
+          "intervention": "只移走佛耶戈的接应位置，保留慎大招就绪，是否还能用相同的时机或落点截人？",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/8cUqcgpbsNE/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "mRkLkMe8GRo",
+      "platform": "YouTube",
+      "creator": "xPetu",
+      "source_title": "ULTIMATE SHEN GUIDE by TWO CHALLENGER SHEN OTPs (Petu & Shending Help) - How to Win More As Shen",
+      "case_title": "xPetu 与 Shending Help 讨论慎何时该大",
+      "role": "上单",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 1143,
+          "end": 1203,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=mRkLkMe8GRo&t=1143s",
+          "observation": "讲解主动或延后开大时，要等到对方投入部分技能、又不能晚至队友倒下。还要问上路是否把线推进塔、自己有没有传送回线，估算支援失败要放掉的经济经验。该片段是策略讲解。",
+          "intervention": "只把上路兵线从已进敌塔改成将进己塔，检验同一场下路战斗是否值得付出相同支援成本。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/mRkLkMe8GRo/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "sDrKr85LMvU",
+      "platform": "YouTube",
+      "creator": "Coach Leo",
+      "source_title": "How To HARD CARRY As Jungle With PERFECT Fundamentals In S16",
+      "case_title": "巢虫倒计时与打野路线",
+      "role": "打野",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 338,
+          "end": 443,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=sDrKr85LMvU&t=338s",
+          "observation": "本人在下半区、巢虫约 53 秒后刷新、红未刷也没什么值得买，先刷 F6 向上。下路若出现能兑现的机会可以折回；随后需要看队友是否真的能先靠，又考虑自己没闪、莉莉娅有大。",
+          "intervention": "只移除上路火男能先靠的条件，检查是否仍可沿用接巢虫团的理由。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/sDrKr85LMvU/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "EwfWmQZ_E6k",
+      "platform": "YouTube",
+      "creator": "perryjg",
+      "source_title": "Gwen Jungle Only Has To Survive 10 Minutes",
+      "case_title": "格温放弃反对方蛤蟆",
+      "role": "打野",
+      "kind": "实战口述",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 395,
+          "end": 440,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=EwfWmQZ_E6k&t=395s",
+          "observation": "讲者根据极光往下方迷雾走推测对方在打龙。己方贾克斯已经回城，使进对方蛤蟆更危险，于是回自己野区继续向下刷。",
+          "intervention": "只把己方上单改为仍在场且能接应，要求重新比较入侵和回刷；对方是否打龙仍应标为推测。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/EwfWmQZ_E6k/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "X1X_YMPDtZ8",
+      "platform": "YouTube",
+      "creator": "perryjg",
+      "source_title": "Retired Pro Explains Jungle Fundamentals",
+      "case_title": "两路线权与河蟹取舍",
+      "role": "打野",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 443,
+          "end": 533,
+          "time_basis": "播放器选段",
+          "url": "https://www.youtube.com/watch?v=X1X_YMPDtZ8&t=443s",
+          "observation": "用刷完第一轮的假设局面讲河蟹，对位单挑能赢，但敌中或下先动时仍倾向换另一侧河蟹。也提出先短暂施压一条线再让队友靠过来的顺序。",
+          "intervention": "只改变中单谁先动，双方打野强度保持不变，看首选和应先做的第一步是否改变。",
+          "evidence": "WithTranscript 公开定时字幕，按段落起点定位；YouTube 官方 oEmbed 交叉核实频道与视频身份，未核对逐帧。",
+          "evidence_url": "https://www.withtranscript.ai/video/X1X_YMPDtZ8/transcript.md"
+        }
+      ]
+    },
+    {
+      "id": "WE9I6GkyhBA",
+      "platform": "YouTube",
+      "creator": "We Teach League | Broken By Concept",
+      "source_title": "CASE STUDY: Diagnosing a 2000 Games Hardstuck Emerald Player",
+      "case_title": "翡翠学员芸阿娜的龙前一轮",
+      "role": "下路",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 1887,
+          "end": 1938,
+          "time_basis": "YouTube 作者章节，选读位置见音频链接",
+          "url": "https://www.youtube.com/watch?v=WE9I6GkyhBA&t=1887s",
+          "observation": "教练回看时指出，己方打野已阵亡，龙即将刷新，芸阿娜仍往前走，被迫防守开大。教练给的另一条路是预先沟通、拿中推、全队带关键技能向龙部署。后来真在龙区打起来时，芸阿娜与梦魇都没有大招，需要脱离。",
+          "intervention": "只改变龙前能否保住芸阿娜大招，其余人、线和时间相同，检查模型是否重估能否接团，而不承诺一定赢。",
+          "evidence": "官方视频章节 31:27–32:18 对应官方播客同题原声，MP3 约 30:59–31:49 有该具体判断。两个版本剪辑不同，视频秒数是整章起止。 按发行者 RSS 公开音频作本地英文 ASR，核对 YouTube 作者章节。",
+          "evidence_url": "https://traffic.megaphone.fm/APO1221988909.mp3#t=1859,1909"
+        }
+      ]
+    },
+    {
+      "id": "dkPbEzPbwcw",
+      "platform": "YouTube",
+      "creator": "We Teach League | Broken By Concept",
+      "source_title": "Case Study: The Instant Reporting Emerald Player | Broken by Concept 185 | League of Legends Podcast",
+      "case_title": "上单沙皇游中被抓时的退路",
+      "role": "上单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 2114,
+          "end": 2442,
+          "time_basis": "YouTube 作者章节，选读位置见音频链接",
+          "url": "https://www.youtube.com/watch?v=dkPbEzPbwcw&t=2114s",
+          "observation": "教练暂停上单沙皇往中走的片段。基于当时缺的信息，走这条近路可能被雷恩加尔抓；即使仍要支援，也可考虑绕远或先在身后布沙兵。录像中狮子狗开大时身后没有沙兵，反应后才准备位移，已来不及。",
+          "intervention": "保留敌方未知位置与支援目标，只移除或增加身后已布好的沙兵，比较同一路线的退出时延；更改撤离条件不等于获得敌人真位置。",
+          "evidence": "官方原片章节 35:14–40:42 的沙皇例，官方播客原声约 36:00–36:49 核到具体判断。原片与分发音频的时间勿混。 按发行者 RSS 公开音频作本地英文 ASR，核对 YouTube 作者章节。",
+          "evidence_url": "https://traffic.megaphone.fm/APO5728472524.mp3#t=2160,2209"
+        }
+      ]
+    },
+    {
+      "id": "RSFUIlTLYH4",
+      "platform": "YouTube",
+      "creator": "We Teach League | Broken By Concept",
+      "source_title": "Case Study: “I get 24 kills but can’t win?!\"  | Broken by Concept 211 League of Legends Podcast",
+      "case_title": "24 杀却赢不了的来信，奥恩回放的先锋选择",
+      "role": "上单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 3580,
+          "end": 4425,
+          "time_basis": "YouTube 作者章节，选读位置见音频链接",
+          "url": "https://www.youtube.com/watch?v=RSFUIlTLYH4&t=3580s",
+          "observation": "复盘来信者的奥恩，教练对照先锋将刷新时先召集队友与击杀已多次阵亡的贝蕾亚。回看时核对杀她的实际金币很少，又注意先锋还活着，两个中立资源的窗口撞在一起；给出先取先锋、推上线再转龙的备选，若传送仍在则有两种部署顺序。",
+          "intervention": "只改变传送是否还在，保留先锋和龙的时限，比较先控上再往下与先走去龙再传送回上的可行性。",
+          "evidence": "作者原片奥恩复盘章节 59:40–1:13:45（整章）。核对发行者 RSS 同题 MP3 约 1:05:10–1:06:50 的原声，本地英文 ASR。视频和播客剪辑不同，未用音频秒数冒充视频精确帧。",
+          "evidence_url": "https://traffic.megaphone.fm/APO8469676278.mp3#t=3910,4010"
+        }
+      ]
+    },
+    {
+      "id": "dmx1JUYjWHc",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "Why YOU SUCK at SUPPORT (And How To Fix It) - League of Legends",
+      "case_title": "璐璐亏血换来推线，能兑现回城吗",
+      "role": "辅助",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 208,
+          "end": 229,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=dmx1JUYjWHc&t=208s",
+          "observation": "璐璐主动跟萨勒芬妮换血，按血量这次亏。但对手的技能打在璐璐身上就没用来清线，金克丝更容易推线；线真进塔后璐璐才有回城补状态的窗口。",
+          "intervention": "只将来兵接住的位置改到塔外，重新比较这次换血及能否安全补给。",
+          "evidence": "镜像简介给出原片 ID，YouTube oEmbed 核实频道和标题。取公开英文原声音轨本地 ASR 并核选段画面字幕。",
+          "evidence_url": "https://www.bilibili.com/video/BV1Ar421M797/?t=208"
+        }
+      ]
+    },
+    {
+      "id": "YEcdIGfwLVw",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "Why YOU SUCK at TOP LANE (And How To Fix It) - League of Legends",
+      "case_title": "鳄鱼一级的技能打英雄还是同时碰兵",
+      "role": "上单",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 115,
+          "end": 176,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=YEcdIGfwLVw&t=115s",
+          "observation": "第一段鳄鱼到线等诺手走出草，直接换血吃亏，随后诺手先二级并把鳄鱼往后压。教练用对悟空的另一段演示可替代做法，技能冷却时先打兵，转好时才争取同时刮到兵和人。",
+          "intervention": "只改技能范围内是否同时有兵与对手，比较技能用来推线、双目标或纯换血。两个对局不视作严格对照。",
+          "evidence": "镜像简介给出原片 ID，YouTube oEmbed 核实频道和标题。取公开英文原声音轨本地 ASR 并核选段画面字幕。",
+          "evidence_url": "https://www.bilibili.com/video/BV1r4pGepEdU/?t=115"
+        }
+      ]
+    },
+    {
+      "id": "xDoHmuwm7vE",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "How to CLIMB EACH RANK & ESCAPE YOUR ELO as JUNGLE - League of Legends",
+      "case_title": "都抓到了人，为什么狼人的成本更高",
+      "role": "打野",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 99,
+          "end": 151,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=xDoHmuwm7vE&t=99s",
+          "observation": "双方抓人都击杀，但讲者刷完营地再抓中，狼人出门时石甲虫已活、锋喙鸟快刷，却先去了上路。教练要求把同一段时间可刷的营地算入成本，再问各自如果没抓到会损失多少。",
+          "intervention": "让狼人两个营地都尚未刷新且无法提前抵达，重新比较同一成功击杀的机会成本。",
+          "evidence": "镜像简介给出原片 ID，YouTube oEmbed 核实频道和标题。取公开英文原声音轨本地 ASR 并核选段画面字幕。",
+          "evidence_url": "https://www.bilibili.com/video/BV1bi421m7xF/?t=99"
+        }
+      ]
+    },
+    {
+      "id": "yhU144WeOco",
+      "platform": "YouTube",
+      "creator": "Skill Capped Challenger LoL Guides",
+      "source_title": "Why Every Player SUCKS After 14 Minutes! (Must Watch)",
+      "case_title": "追人之后众人临近大龙，打不打得完",
+      "role": "团队",
+      "kind": "回放复盘",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 394,
+          "end": 425,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=yhU144WeOco&t=394s",
+          "observation": "红方越塔送出击杀，蓝方追鳄鱼未果，众人刚好在大龙附近就跟着沃利贝尔信号开龙。讲者停帧追问能否打完，点出剑圣快复活、蔚离得远、阵容打龙慢、活着的炸弹人能消耗。",
+          "intervention": "只改打龙时间，使窗口在剑圣回来前关闭或保留；仍需分别考虑炸弹人与蔚的距离。",
+          "evidence": "镜像简介给出原片 ID，YouTube oEmbed 核实频道和标题。取公开英文原声音轨本地 ASR 并核选段画面字幕。",
+          "evidence_url": "https://www.bilibili.com/video/BV1N3zoYgEgT/?t=394"
+        }
+      ]
+    },
+    {
+      "id": "_U61tI1E9e0",
+      "platform": "YouTube",
+      "creator": "CoreJJ",
+      "source_title": "CoreJJ - How To Support Ep.03 Mindset & Roaming | League of Legends",
+      "case_title": "辅助压出经验区，对手不退才考虑动手",
+      "role": "辅助",
+      "kind": "教学示范",
+      "region": "未核实",
+      "segments": [
+        {
+          "start": 154,
+          "end": 199,
+          "time_basis": "同片镜像播放器，原片按同事件定位",
+          "url": "https://www.youtube.com/watch?v=_U61tI1E9e0&t=154s",
+          "observation": "优势辅助先用站位向对手施压，让对手远离大波兵。对方愿意退，兵线就产生收益；对方不退时再比较开。这是有推线优势时的分支。",
+          "intervention": "只改敌方双人组是后退离开兵线还是留在威胁区，看是否仍执意追击。",
+          "evidence": "独立 YouTube 原片名称核对，同作 B 站合集第 3 集选帧核对画面英中字幕。",
+          "evidence_url": "https://www.bilibili.com/video/BV1ZJ411a7jm/?p=3&t=154"
+        }
+      ]
+    },
+    {
+      "id": "5Gxrh0HSsTc",
+      "platform": "YouTube",
+      "creator": "We Teach League | Broken By Concept",
+      "source_title": "Falling Into Toxic SoloQ Cycles | Broken by Concept 223 League of Legends Podcast",
+      "case_title": "Faker 换大后追打，能从单个镜头推断动机吗",
+      "role": "中单",
+      "kind": "赛事分析",
+      "region": "职业比赛片段，所在服务器未核实",
+      "segments": [
+        {
+          "start": 1125,
+          "end": 1805,
+          "time_basis": "YouTube 作者章节，选读位置见音频链接",
+          "url": "https://www.youtube.com/watch?v=5Gxrh0HSsTc&t=1125s",
+          "observation": "Faker 用塞拉斯与 Chovy 换大并靠 W 回血。教练回应观众对冒险换血的批评，指出约 7:47 的局部片段没有交代之前的交手及整个系列的习惯；打破之前的保守模式是可解释的假设，不能当成选手动机。",
+          "intervention": "保持技能和血量相同，只增加此前数次保守换血的可见记录。观察模型是否仅提高变招解释的合理性，同时保留其他解释。",
+          "evidence": "YouTube 原上传作者章节，与节目 RSS 同名官方音轨逐段核对。取官方音轨 1150–1285 秒本地英文 ASR 并读取内容。",
+          "evidence_url": "https://traffic.megaphone.fm/APO4742441046.mp3#t=1150,1285"
+        }
+      ]
+    },
+    {
+      "id": "ntpv1MPiK5E",
+      "platform": "YouTube",
+      "creator": "We Teach League | Broken By Concept",
+      "source_title": "We Guess Your SoloQ Rank (EXPOSED) | Broken by Concept 245 | League of Legends Podcast",
+      "case_title": "无闪的彗往有眼侧还是无眼侧站",
+      "role": "中单",
+      "kind": "回放复盘",
+      "region": "学员/观众投稿排位，未核实赛区",
+      "segments": [
+        {
+          "start": 875,
+          "end": 1460,
+          "time_basis": "YouTube 作者章节，选读位置见音频链接",
+          "url": "https://www.youtube.com/watch?v=ntpv1MPiK5E&t=875s",
+          "observation": "教练看投稿者彗打龙王，认可 QE 清线拿先动，但主张尽量同时碰到兵和人。彗无闪且上侧有一枚眼，他们质疑站在远离该眼的一侧，也讨论为了炮车多留与没看到打野之间无法仅凭操作区分。",
+          "intervention": "仅将那枚已知眼反转到线的另一侧，保持彗无闪及双方补刀状态。看模型的侧倾建议是否随之改变。",
+          "evidence": "YouTube 原上传作者章节，与节目 RSS 同名官方音轨逐段核对。取官方音轨 925–1070 秒本地英文 ASR 并读取内容。",
+          "evidence_url": "https://traffic.megaphone.fm/APO5188654790.mp3#t=925,1070"
+        },
+        {
+          "start": 2081,
+          "end": null,
+          "time_basis": "YouTube 作者章节起点，精确选段见音频",
+          "url": "https://www.youtube.com/watch?v=ntpv1MPiK5E&t=2081s",
+          "observation": "金克丝贴着己方日女，敌方芮尔一个 W 可以同时击中两人。教练要求错开身位，迫使对方选择目标。",
+          "intervention": "只改变两人横向间距，保持己方火力仍能覆盖同一目标，检查会否一起被控。",
+          "evidence": "同集发布者章节与节目音频，音频 36:04–36:25。",
+          "evidence_url": "https://traffic.megaphone.fm/APO5188654790.mp3#t=2164,2185"
+        }
+      ]
+    },
+    {
+      "id": "qsNbHOVPvpk",
+      "platform": "YouTube",
+      "creator": "We Teach League | Broken By Concept",
+      "source_title": "How To Learn From Watching Pro League of Legends (Esports)",
+      "case_title": "辛德拉让边线先到河口，另一方能换什么",
+      "role": "团队",
+      "kind": "赛事分析",
+      "region": "IG 对 TES 职业比赛，服务器未核实",
+      "segments": [
+        {
+          "start": 4176,
+          "end": 6188,
+          "time_basis": "YouTube 作者章节，选读位置见音频链接",
+          "url": "https://www.youtube.com/watch?v=qsNbHOVPvpk&t=4176s",
+          "observation": "IG 提前布控河口，辛德拉放弃部分边线等待对手进狭口，队伍没有在中路见人就开。对面缺控制时，教练提出 TES 可放龙转向大龙或以大龙施压。边线多拿装备收益与队伍失去先占河口是同一次取舍。",
+          "intervention": "只改变双方到河口的先后，让 TES 已在入口建立防守。复检‘换边’及‘逼对手脸探’是否仍成立。",
+          "evidence": "YouTube 原上传作者章节，与节目 RSS 同名官方音轨逐段核对。取官方音轨 4200–4350 秒本地英文 ASR 并读取内容。",
+          "evidence_url": "https://traffic.megaphone.fm/APO1583369852.mp3#t=4200,4350"
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,8 @@ import math
 from pathlib import Path
 import re
 
+from .region_vision import allied_ward_positions, frame_queries
+
 FRAME_SCHEMA = 'decision-frame/v1'
 PUBLIC_FIELDS = {'health', 'max_health', 'resource', 'max_resource', 'level'}
 PRIVATE_FIELDS = {'current_gold', 'total_gold', 'experience'}
@@ -36,7 +38,7 @@ def plain(text):
     return html.unescape(re.sub(r'<[^>]*>', '', str(text)))
 
 
-def compile_frame(snapshot, *, max_chars=60000, max_principles=4):
+def compile_frame(snapshot, *, max_chars=60000, max_principles=4, vision_indexes=(), vision_subjects=()):
     """Return frame, lookup library and a separate local-only audit manifest.
 
     Refuse a too-small budget rather than silently removing information limits.
@@ -264,6 +266,36 @@ def compile_frame(snapshot, *, max_chars=60000, max_principles=4):
         frame['lane_fact_ids'] = lane_ids
         frame['unknowns']['waves'] = 'observer_limited_state_joined_hidden_units_exact_positions_and_priority_unresolved'
         frame['input_policy'].append('兵线计数只含本队可见且有存活证据的小兵；生命按增量保持，位置是前向估计，空间接近不等于交战或线权。')
+    if vision_indexes or vision_subjects:
+        answers = frame_queries(vision_indexes, snapshot['version'], snapshot.get('source_sha256'),
+                                team, at, vision_subjects, hud_frame=snapshot.get('hud_frame'))
+        frame['vision_fact_ids'] = []
+        for answer in answers:
+            evidence_rows = answer['evidence']
+            when = max((r['time_seconds'] for r in evidence_rows), default=at)
+            value = {k: answer[k] for k in ('visible', 'basis', 'methods', 'team_id')}
+            if 'last_observed_position' in answer:
+                pos = answer['last_observed_position']
+                value['last_observed_position'] = {k: pos[k] for k in ('xz', 'sampled_at', 'age_seconds')}
+                when = max(when, pos['sampled_at'])
+                evidence_rows = [*evidence_rows, dict(mode='visible_path_start', time_seconds=pos['sampled_at'],
+                                 source=pos['source'], visibility_record=pos['visibility_record'])]
+            fid = add(answer['subject'], 'observer_visibility', value, when, 'queried_at_decision_time',
+                      source={'basis': 'team_and_subject_scoped_vision_query', 'evidence': evidence_rows})
+            frame['vision_fact_ids'].append(fid)
+        for ward in allied_ward_positions(vision_indexes, team, at):
+            value = {k:ward[k] for k in ('family','placed_at','sampled_at','xz')}
+            if 'faelight_pad' in ward:
+                value['faelight_bonus_pad'] = ward['faelight_pad']
+            fid = add(ward['subject'], 'allied_ward_last_sample', value, ward['sampled_at'],
+                      'last_position_no_removal_observed_by_cutoff',
+                      source=dict(position=ward['source'], placement=ward['placement_record'],
+                                  bonus=ward.get('faelight_sources', [])))
+            frame['vision_fact_ids'].append(fid)
+        if any(a['visible'] is not None and a['subject'].startswith('ground:') for a in answers):
+            frame['unknowns']['area_vision'] = 'known_only_at_the_listed_ground_subjects'
+        if answers:
+            frame['input_policy'].append('显隐只适用于所标阵营、时刻与地面点或实体。地点亮不等于看见隐身英雄，未覆盖的入口保留未知。')
     frame['frame_id'] = 'frame_' + digest(frame)[:24]
     if len(canonical(frame)) > max_chars:
         raise ValueError('Context budget too small; increase max_chars, do not truncate facts or limitations')
@@ -332,6 +364,21 @@ def render_frame(bundle):
             '| 英雄 | 关系 | 当前可用采样数 | 历史采样数 |', '| --- | --- | ---: | ---: |']
     for h in f['lineup']:
         rows.append(f"| {h['champion'] or h['entity_id']} | {h['relation']} | {len(h['current_fact_ids'])} | {len(h['history_fact_ids'])} |")
+    if f.get('vision_fact_ids'):
+        rows += ['', '## 此刻本队的视野', '']
+        for fid in f['vision_fact_ids']:
+            fact = f['facts'][fid]
+            value = fact['value']
+            if fact['field'] == 'allied_ward_last_sample':
+                label = {'sight_ward':'普通眼', 'control_ward':'控制眼', 'farsight_ward':'远见眼'}[value['family']]
+                bonus = f"该眼触发了精灵之光 {value['faelight_bonus_pad']}。" if 'faelight_bonus_pad' in value else ""
+                rows.append(f"- 己方{label}在 {value['placed_at']:.1f} 秒放下。最近一次位置采样为 {value['xz']}。{bonus}")
+                continue
+            state = {True: '可见', False: '不可见', None: '未知'}[value['visible']]
+            last = value.get('last_observed_position')
+            trail = f"，最后采到的位置 {last['xz']}，距今 {last['age_seconds']:.1f} 秒" if last else ""
+            actor = next((h['champion'] for h in f['lineup'] if 'entity:'+h['entity_id'] == fact['entity_id']), None)
+            rows.append(f"- {actor or fact['entity_id']}　{state}{trail}")
     rows += ['', '## 本次分析顺序', ''] + [f'{i}. {text}' for i, text in enumerate(f['reasoning_order'], 1)]
     rows += ['', '## 已知缺口', ''] + [f'- {k}: {v}' for k, v in f['unknowns'].items()]
     continuity = f['task'].get('continuity_status')

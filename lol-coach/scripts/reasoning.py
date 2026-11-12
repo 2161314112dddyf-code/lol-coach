@@ -54,7 +54,7 @@ def manifest(target, inputs, *, authorship):
              'lol_coach/macro_snapshot.py', 'lol_coach/tower_vision.py', 'lol_coach/lane_wave.py',
              'lol_coach/lane_current_state.py', 'lol_coach/lane_dynamics.py', 'lol_coach/lane_tracking.py',
              'lol_coach/profiles/lane_tracking_16_20.json', 'lol_coach/lane_combat.py', 'lol_coach/profiles/lane_combat_16_20.json',
-             'lol_coach/round_chain.py']
+             'lol_coach/round_chain.py', 'lol_coach/region_vision.py']
     write_json(target/'manifest.json', dict(schema='reasoning-artifacts/v1', inputs=inputs,
         authorship=authorship, network_used=False, model_called=False,
         implementation={p: hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths},
@@ -114,10 +114,16 @@ def main():
     p=argparse.ArgumentParser(description=__doc__); sub=p.add_subparsers(dest='command',required=True)
     prep=sub.add_parser('prepare'); src=prep.add_mutually_exclusive_group(required=True)
     src.add_argument('--replay-id'); src.add_argument('--snapshot',type=Path)
+    src.add_argument('--vision-replay', type=Path, help='Build the vision portion of a decision from a reviewed ROFL')
+    prep.add_argument('--game-dir', type=Path, help='Matching Game directory, for --vision-replay Faelight geometry')
     prep.add_argument('--at',type=float); prep.add_argument('--team',type=int,choices=[100,200],default=100)
     prep.add_argument('--player'); prep.add_argument('--window',type=float,default=30)
     prep.add_argument('--lane-evidence',type=Path)
     prep.add_argument('--lane-combat',type=Path)
+    prep.add_argument('--vision-evidence', type=Path, action='append', default=[],
+                      help='Can be repeated for matching replay-channel and player-view observations')
+    prep.add_argument('--vision-subject', action='append', default=[],
+                      help='Named ground: or entity: subject. Defaults to observable ground evidence.')
     prep.add_argument('--max-chars',type=int,default=60000); prep.add_argument('--output',type=Path,required=True)
     ref=sub.add_parser('reference'); ref.add_argument('--bundle',type=Path,required=True);ref.add_argument('--id',required=True)
     check=sub.add_parser('check');check.add_argument('--bundle',type=Path,required=True)
@@ -131,17 +137,38 @@ def main():
     chain.add_argument('--output',type=Path,required=True)
     a=p.parse_args()
     if a.command=='prepare':
-        if a.snapshot:
+        indexes = []
+        if a.vision_replay:
+            from lol_coach.hero_sight import native_vision_snapshot
+            from scripts.export_vision_channels import export
+            if a.at is None or a.player is None or a.lane_evidence or a.lane_combat:
+                p.error('--vision-replay requires --at and --player; use a macro snapshot for lane evidence')
+            index = export(a.vision_replay.read_bytes(), game_dir=a.game_dir)
+            s = native_vision_snapshot(index, a.team, a.player, a.at)
+            indexes.append(index)
+            inputs = [dict(path=str(a.vision_replay.resolve()), sha256=index['source_sha256'])]
+            if not a.vision_subject:
+                a.vision_subject = ['entity:'+h['entity_id'] for h in s['heroes'] if h['team_id'] != a.team]
+        elif a.snapshot:
             s=read_json(a.snapshot);inputs=[dict(path=str(a.snapshot.resolve()),sha256=hashlib.sha256(a.snapshot.read_bytes()).hexdigest())]
         else:
             if a.at is None or a.player is None:p.error('Replay prepare requires --at and --player')
             s,_,inputs=context(a.replay_id,a.at,a.team,a.player,a.window,a.lane_evidence,a.lane_combat)
-        bundle=compile_frame(s,max_chars=a.max_chars);schema=output_schema()
+        paths = a.vision_evidence
+        if not paths and a.replay_id:
+            default = ROOT/'data/private/region_vision'/f'{a.replay_id}.json'
+            paths = [default] if default.is_file() else []
+        for path in paths:
+            raw = path.read_bytes()
+            indexes.append(json.loads(raw))
+            inputs.append(dict(path=str(path.resolve()), sha256=hashlib.sha256(raw).hexdigest()))
+        bundle=compile_frame(s,max_chars=a.max_chars,vision_indexes=indexes,vision_subjects=a.vision_subject);schema=output_schema()
+        summary = render_frame(bundle)
         target=new_directory(a.output)
         for name,value in [('bundle.json',bundle),('frame.json',bundle['frame']),
                            ('messages.json',model_messages(bundle,schema)),('tools.json',TOOLS),('response.schema.json',schema)]:
             write_json(target/name,value)
-        (target/'frame.md').write_text(render_frame(bundle),encoding='utf-8')
+        (target/'frame.md').write_text(summary,encoding='utf-8')
         manifest(target,inputs,authorship='deterministic_compilation_of_existing_decoded_evidence')
         print(json.dumps(dict(output=str(target),frame_id=bundle['frame']['frame_id'],facts=len(bundle['frame']['facts']),
             frame_chars=bundle['audit']['frame_chars'],model_called=False),ensure_ascii=True))

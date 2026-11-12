@@ -7,6 +7,7 @@ from copy import deepcopy
 import hashlib
 import json
 import math
+import re
 
 
 SCHEMA = 'round-decision/v1'
@@ -182,10 +183,10 @@ def _validate_shape(value, schema, path, errors):
 def validate_decision(answer, frame):
     """Check an answer against its frozen frame, without a model call.
 
-    A future calculator may register a record under ``frame.calculations`` with
+    A scoped calculator may register a record under ``frame.calculations`` with
     a ``time_budget`` mapping. A numerical answer must exactly match such a
     host-provided range. An arbitrary reference ID alone never licenses numbers.
-    The current frame compiler emits no duration calculations.
+    Round-specific records are bound to the corresponding action as well.
     """
     errors = []
 
@@ -228,6 +229,27 @@ def validate_decision(answer, frame):
         fail('frame.lineup', '输入帧的英雄 ID 重复。')
     if answer['frame_id'] != frame.get('frame_id'):
         fail('$.frame_id', '答案不属于此冻结时刻；禁止复用其他帧的答案。')
+    if 'round_comparison' in frame.get('task', {}):
+        if {o['id'] for o in answer['options']} != {'leave_now','help_then_leave','clear_then_leave'}:
+            fail('$.options', '本次回合需逐项比较立即走、协助后走、清线后走。')
+        actions = [o['action'].strip() for o in answer['options']]
+        if len(set(actions)) != len(actions):
+            fail('$.options', '三种走法需分别说明玩家可以执行的第一步。')
+        prose = [('objective', answer['objective']), ('recommendation.why', answer['recommendation']['why'])]
+        prose.extend(('recommendation.switch_conditions', s) for s in answer['recommendation']['switch_conditions'])
+        for i, option in enumerate(answer['options']):
+            if re.fullmatch(r'(?:走法|选项|方案|option|action|plan)\s*[-#._]?\s*(?:[a-z]|[0-9]+|[一二三甲乙丙])',
+                            option['action'].strip(), flags=re.IGNORECASE):
+                fail(f'$.options[{i}].action', '选项编号没有说明玩家的第一步动作。')
+            if any(re.fullmatch(r'[+-]?\d+(?:\.\d+)?', s.strip()) for s in option['costs']):
+                fail(f'$.options[{i}].costs', '需要说明会付出什么代价，单独的数字没有对象或单位。')
+            prose.extend((f'options[{i}].{key}', option[key]) for key in ('action','end_state'))
+            for key in ('costs','gains','abort_signals','preconditions','enemy_responses'):
+                prose.extend((f'options[{i}].{key}', s) for s in option[key])
+        for path, value in prose:
+            if (not any(c.isalnum() for c in value) or '%_' in value
+                    or re.fullmatch(r'[a-zA-Z]+(?:_[a-zA-Z0-9]+)+', value.strip())):
+                fail('$.'+path, '需要可读的具体说明。当前字段含内部标识、占位符或标点残片。')
 
     def fact_refs(ids, path):
         for i, fid in enumerate(ids):
@@ -352,6 +374,8 @@ def validate_decision(answer, frame):
         for j, cid in enumerate(budget['calculation_refs']):
             if cid not in calculations:
                 fail(f'{path}.time_budget.calculation_refs[{j}]', '时间计算引用不存在。')
+            elif isinstance(calculations[cid], dict) and calculations[cid].get('option_id', option['id']) != option['id']:
+                fail(f'{path}.time_budget.calculation_refs[{j}]', '时间计算属于另一种走法。')
         for field in TIME_FIELDS:
             value = budget[field]
             if value is None:
@@ -417,6 +441,9 @@ def render_decision(answer, validation):
              f"结论：{levels[rec['confidence']]}",
              f"首选：{best['action'] if best else '现有信息不足以确定首选'}", '',
              rec['why'], '']
+    if any(isinstance(fact['value'], dict) and fact['value'].get('count_scope') == 'own_team_observed_live_only'
+           for fact in answer['facts_used']):
+        lines += ['兵线依据只覆盖己方小兵。该记录无法确定当时玩家能否看见敌兵、能补几个或多久清完。', '']
     if fallback:
         lines += [f"退路：{fallback['action']}", '']
     continuation = answer.get('continuation')

@@ -1,0 +1,114 @@
+{
+  "material_sha256": "b8709c64290fe8327ee1d14e927628efddd6dcea9ef1968989098d8477e71c3c",
+  "chunk": "Maps/MapGeometry/Map11/Chunks/SRX_Faerie_Lights",
+  "pads": [
+    {
+      "name": "FaerieLightsGroup_OrderBaseBot",
+      "pad_transform": 1440593,
+      "region_transform": 1441189,
+      "vertices_offset": 1441312,
+      "vertex_count": 55,
+      "pad_entry": "{eb56cbf9}",
+      "region_entry": "{41c5518b}"
+    },
+    {
+      "name": "FaerieLightsGroup_ChaosBaseBot",
+      "pad_transform": 1442051,
+      "region_transform": 1442647,
+      "vertices_offset": 1442770,
+      "vertex_count": 45,
+      "pad_entry": "{4502359b}",
+      "region_entry": "{1bcd2abe}"
+    },
+    {
+      "name": "FaerieLightsGroup_ChaosBaseTop",
+      "pad_transform": 1443389,
+      "region_transform": 1443985,
+      "vertices_offset": 1444108,
+      "vertex_count": 50,
+      "pad_entry": "{c8ae64ec}",
+      "region_entry": "{6e171d69}"
+    },
+    {
+      "name": "FaerieLightsGroup_ChaosSplitPushBot",
+      "pad_transform": 1444787,
+      "region_transform": 1445398,
+      "vertices_offset": 1445521,
+      "vertex_count": 41,
+      "pad_entry": "{ca7b86aa}",
+      "region_entry": "{b4fbaba7}"
+    },
+    {
+      "name": "FaerieLightsGroup_ChaosSplitPushTop",
+      "pad_transform": 1446092,
+      "region_transform": 1446703,
+      "vertices_offset": 1446826,
+      "vertex_count": 60,
+      "pad_entry": "{52724db7}",
+      "region_entry": "{4b886c7e}"
+    },
+    {
+      "name": "FaerieLightsGroup_OrderBaseTop",
+      "pad_transform": 1447625,
+      "region_transform": 1448221,
+      "vertices_offset": 1448344,
+      "vertex_count": 58,
+      "pad_entry": "{6401674f}",
+      "region_entry": "{0dd1c956}"
+    },
+    {
+      "name": "FaerieLightsGroup_OrderSplitPushBot",
+      "pad_transform": 1449119,
+      "region_transform": 1449730,
+      "vertices_offset": 1449853,
+      "vertex_count": 62,
+      "pad_entry": "{b10204b7}",
+      "region_entry": "{1f81737a}"
+    },
+    {
+      "name": "FaerieLightsGroup_OrderSplitPushTop",
+      "pad_transform": 1450676,
+      "region_transform": 1451287,
+      "vertices_offset": 1451410,
+      "vertex_count": 36,
+      "pad_entry": "{0459c9eb}",
+      "region_entry": "{9e1d1ec9}"
+    },
+    {
+      "name": "FaerieLightsGroup_RiverPixelBot",
+      "pad_transform": 1451921,
+      "region_transform": 1452518,
+      "vertices_offset": 1452641,
+      "vertex_count": 9,
+      "pad_entry": "{df1406bd}",
+      "region_entry": "{11cc69bb}"
+    },
+    {
+      "name": "FaerieLightsGroup_RiverPixelTop",
+      "pad_transform": 1452828,
+      "region_transform": 1453425,
+      "vertices_offset": 1453548,
+      "vertex_count": 9,
+      "pad_entry": "{260eb56c}",
+      "region_entry": "{ea975084}"
+    },
+    {
+      "name": "FaerieLightsGroup_RiverWallBot",
+      "pad_transform": 1454001,
+      "region_transform": 1454331,
+      "vertices_offset": 1454454,
+      "vertex_count": 8,
+      "pad_entry": "{5b1c5417}",
+      "region_entry": "{60c742ca}"
+    },
+    {
+      "name": "FaerieLightsGroup_RiverWallTop",
+      "pad_transform": 1454895,
+      "region_transform": 1455225,
+      "vertices_offset": 1455348,
+      "vertex_count": 10,
+      "pad_entry": "{b6ab5118}",
+      "region_entry": "{fd4c0641}"
+    }
+  ]
+}

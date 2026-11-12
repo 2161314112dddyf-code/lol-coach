@@ -10,9 +10,11 @@
 | 安装、公开测试、仓库边界 | [根README](../../README.md) |
 | 实际命令和私有数据前提 | [项目运行手册](../README.md) |
 | 最新接管点与待办 | [CURRENT_TASK](CURRENT_TASK.md) |
+| 如何复跑逐回合 Agent，实战有哪些通过和失败 | [运行手册](../README.md)、[工程自验与两张决策卡](../reports/round_agent_acceptance_20261112.md) |
 | 已实现能力与未解缺口 | [PROJECT_SUMMARY](PROJECT_SUMMARY.md) |
 | 后续依赖、验收、模型与训练边界 | [DEVELOPMENT_GUIDE](DEVELOPMENT_GUIDE.md) |
-| 当前阶段全部实验，逐步操作 | [完整实验操作单TXT](CURRENT_STAGE_EXPERIMENTS_20261101.txt) |
+| 国服潘森训练局与二进制阶段收尾 | [本局报告与复跑命令](../reports/replay_closeout_20261112.md)、[已归档的玩家操作单](CURRENT_STAGE_EXPERIMENTS_20261101.txt) |
+| 对手何时看到本人、哪个地点亮或暗 | [潘森中路暴露窗口、两次眼到期及地图查询](../reports/vision_20261112.md) |
 | 哪些录像可以省、哪些仍需同局对照 | [公开数据可行性实测与国服补证范围](../reports/hf_experiment_feasibility_20261111.md) |
 | 哪些事情依赖录像 | [依赖表](VIDEO_AND_OFFLINE_BACKLOG.md) |
 | 宪法原文与执行规则 | [PROJECT_CONSTITUTION](PROJECT_CONSTITUTION.md)、[WORKFLOW](WORKFLOW.md)、[AGENTS](../AGENTS.md) |
