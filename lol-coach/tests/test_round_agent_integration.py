@@ -24,11 +24,16 @@ from test_round_plan import add_fact
 def round_answer(bundle):
     allowed = deepcopy(bundle)
     allowed['frame']['task'].pop('round_comparison')
+    perspective = allowed['frame']['task'].pop('player_perspective', None)
     result = answer_for(allowed)
     first, second = result['options']
     first['id'], second['id'] = 'leave_now', 'help_then_leave'
     result['options'].append(dict(deepcopy(second), id='clear_then_leave'))
     result['options'][-1]['action'] = 'Clear the wave before joining.'
+    if perspective:
+        result['immediate_action'] = 'Check your retreat route before committing.'
+        for option in result['options']:
+            option['actor_id'] = perspective['player_entity_id']
     result['recommendation'].update(preferred_option_id=first['id'], fallback_option_id=second['id'])
     return result
 
@@ -151,13 +156,21 @@ def test_round_cli_from_frozen_bundle_to_three_real_mcp_calls(bundles, tmp_path)
     path.write_text(json.dumps(bundle),encoding='utf-8')
     with TemporaryDirectory(dir=sessions) as parent:
         out = Path(parent)/'result'
-        proc = subprocess.run([interpreter or sys.executable,'-m','scripts.run_review_agent',
+        command = [interpreter or sys.executable,'-m','scripts.run_review_agent',
             '--bundle',str(path),'--lane','mid','--target','dragon','--help-seconds','5',
-            '--backend','probe','--output',str(out)],cwd=root,capture_output=True,timeout=50)
+            '--backend','probe','--output',str(out)]
+        refused = subprocess.run(command,cwd=root,capture_output=True,timeout=50)
+        assert refused.returncode and not out.exists()
+        proc = subprocess.run(command + ['--perspective','comparison'],cwd=root,capture_output=True,timeout=50)
         assert proc.returncode == 0, proc.stderr.decode(errors='replace')
         step, = json.loads((out/'manifest.json').read_bytes())['steps']
         assert step['direct_equals_mcp'] and step['rejected_overrides']==2
+        assert 'SHA-256 ' + 'a'*64 in step['review_scope']
+        assert '对照样例视角' in step['review_scope']
         evidence = json.loads((out/'01/evidence.json').read_bytes())
         assert evidence['compare_round_options']['options'][1]['depart_at']==[13,13]
         assert evidence['review_round_plan']['status']=='no_previous_plan'
+        macro = evidence['review_round_plan']['macro_round_context']
+        assert macro['previous_assessment'] is None and macro['compared_destination'] == 'dragon'
+        assert not (out/'review.md').exists()
         assert 'opponents' in evidence['enemy_sightings']

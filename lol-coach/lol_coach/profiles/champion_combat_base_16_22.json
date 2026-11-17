@@ -1,0 +1,275 @@
+{
+  "schema": "client-combat-base/v1",
+  "build": "16.22.836.1077",
+  "scope": "精确版本英雄定义中的一级值与成长参数。局内面板、装备和增减益须另核。",
+  "fields": {
+    "attack_damage": [
+      "baseDamageModifiable.BaseValue",
+      "damagePerLevelModifiable.BaseValue"
+    ],
+    "armor": [
+      "baseArmorModifiable.BaseValue",
+      "armorPerLevelModifiable.BaseValue"
+    ],
+    "magic_resist": [
+      "baseMR.BaseValue",
+      "mrPerLevel.BaseValue"
+    ],
+    "health": [
+      "baseHPModifiable.BaseValue",
+      "hpPerLevelModifiable.BaseValue"
+    ]
+  },
+  "champions": {
+    "Ahri": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 53.0,
+          "growth": 3.0
+        },
+        "armor": {
+          "level_1": 21.0,
+          "growth": 4.2
+        },
+        "magic_resist": {
+          "level_1": 30.0,
+          "growth": 1.3
+        },
+        "health": {
+          "level_1": 590.0,
+          "growth": 104.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/ahri/ahri.bin",
+        "sha256": "121997c9c4ef2ff0f671b659d64d2e22cb71208216ddcc3c4f552a17f196d2cb",
+        "record": "Characters/Ahri/CharacterRecords/Root"
+      }
+    },
+    "Amumu": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 57.0,
+          "growth": 3.8
+        },
+        "armor": {
+          "level_1": 33.0,
+          "growth": 4.0
+        },
+        "magic_resist": {
+          "level_1": 32.0,
+          "growth": 2.05
+        },
+        "health": {
+          "level_1": 685.0,
+          "growth": 94.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/amumu/amumu.bin",
+        "sha256": "59b659d4f2a03ec51caa610e88b02de0fbb7d346a25619ee9ecbc18e57b30c41",
+        "record": "Characters/Amumu/CharacterRecords/Root"
+      }
+    },
+    "Darius": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 64.0,
+          "growth": 5.0
+        },
+        "armor": {
+          "level_1": 37.0,
+          "growth": 5.2
+        },
+        "magic_resist": {
+          "level_1": 32.0,
+          "growth": 2.05
+        },
+        "health": {
+          "level_1": 652.0,
+          "growth": 114.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/darius/darius.bin",
+        "sha256": "ba0f698f7dc3aa2db0cf42a942327bcbc5b12437aeb021558a9f16057aa69c73",
+        "record": "Characters/Darius/CharacterRecords/Root"
+      }
+    },
+    "Ezreal": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 60.0,
+          "growth": 3.75
+        },
+        "armor": {
+          "level_1": 24.0,
+          "growth": 4.2
+        },
+        "magic_resist": {
+          "level_1": 33.0,
+          "growth": 1.1
+        },
+        "health": {
+          "level_1": 600.0,
+          "growth": 102.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/ezreal/ezreal.bin",
+        "sha256": "0f8dfe8ead7b56f70cbd91731ffa59a4b3c1b389ce393d10987e401d5a88f172",
+        "record": "Characters/Ezreal/CharacterRecords/Root"
+      }
+    },
+    "Jayce": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 59.0,
+          "growth": 4.25
+        },
+        "armor": {
+          "level_1": 22.0,
+          "growth": 5.0
+        },
+        "magic_resist": {
+          "level_1": 30.0,
+          "growth": 1.3
+        },
+        "health": {
+          "level_1": 590.0,
+          "growth": 109.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/jayce/jayce.bin",
+        "sha256": "4499e65f03ecbdc4ae5ce93b8b230a0bbc3ed6baffc90a05ff9739bc820ae7ae",
+        "record": "Characters/Jayce/CharacterRecords/Root"
+      }
+    },
+    "Jhin": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 61.0,
+          "growth": 4.4
+        },
+        "armor": {
+          "level_1": 24.0,
+          "growth": 4.7
+        },
+        "magic_resist": {
+          "level_1": 33.0,
+          "growth": 1.1
+        },
+        "health": {
+          "level_1": 655.0,
+          "growth": 107.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/jhin/jhin.bin",
+        "sha256": "0c007932976c33601cecc97f9d61a2db577d34297e52bd38881ae43ffd34c025",
+        "record": "Characters/Jhin/CharacterRecords/Root"
+      }
+    },
+    "Karma": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 49.0,
+          "growth": 3.0
+        },
+        "armor": {
+          "level_1": 28.0,
+          "growth": 5.0
+        },
+        "magic_resist": {
+          "level_1": 30.0,
+          "growth": 1.3
+        },
+        "health": {
+          "level_1": 630.0,
+          "growth": 109.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/karma/karma.bin",
+        "sha256": "5e90d297a94b40a66fedc3b31154476d09e100238d08750ca045030edda1e428",
+        "record": "Characters/Karma/CharacterRecords/Root"
+      }
+    },
+    "Nautilus": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 58.0,
+          "growth": 3.3
+        },
+        "armor": {
+          "level_1": 39.0,
+          "growth": 4.95
+        },
+        "magic_resist": {
+          "level_1": 32.0,
+          "growth": 2.05
+        },
+        "health": {
+          "level_1": 646.0,
+          "growth": 100.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/nautilus/nautilus.bin",
+        "sha256": "556a4cf9222ce1b6c0763f7c3a586c0ea509f4299f4853182d6ca26ee0265837",
+        "record": "Characters/Nautilus/CharacterRecords/Root"
+      }
+    },
+    "Pantheon": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 64.0,
+          "growth": 3.3
+        },
+        "armor": {
+          "level_1": 40.0,
+          "growth": 4.95
+        },
+        "magic_resist": {
+          "level_1": 28.0,
+          "growth": 2.05
+        },
+        "health": {
+          "level_1": 650.0,
+          "growth": 109.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/pantheon/pantheon.bin",
+        "sha256": "366f02ef3dee9859140fc9faedc120b58b41a913d20c3f23db78b422cceed9ac",
+        "record": "Characters/Pantheon/CharacterRecords/Root"
+      }
+    },
+    "TwistedFate": {
+      "stats": {
+        "attack_damage": {
+          "level_1": 52.0,
+          "growth": 2.5
+        },
+        "armor": {
+          "level_1": 24.0,
+          "growth": 4.35
+        },
+        "magic_resist": {
+          "level_1": 30.0,
+          "growth": 1.3
+        },
+        "health": {
+          "level_1": 604.0,
+          "growth": 108.0
+        }
+      },
+      "source": {
+        "asset": "data/characters/twistedfate/twistedfate.bin",
+        "sha256": "c19202ad548d46a89533e63fd05fe8e968231ec0dc0bbc5b1ee4eb104635393d",
+        "record": "Characters/TwistedFate/CharacterRecords/Root"
+      }
+    }
+  }
+}

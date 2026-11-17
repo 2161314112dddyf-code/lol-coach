@@ -32,7 +32,7 @@ def main():
         kinds[selection['selection_kind']]+=1
         if selection['selected']:
             cid=selection['checkpoint_id'];folder=out/'checkpoints'/cid;folder.mkdir();prepared=prepare_checkpoint(bundle,selection)
-            write(folder/'bundle.json',prepared);write(folder/'messages.json',model_messages(prepared,output_schema()))
+            write(folder/'bundle.json',prepared);write(folder/'messages.json',model_messages(prepared,output_schema(prepared['frame'])))
             selected.append(dict(checkpoint_id=cid,at_seconds=t,path=str(folder.relative_to(out)),frame_id=prepared['frame']['frame_id'],bundle_sha256=sha(folder/'bundle.json')))
         else:
             # Unselected does not mean no real boundary. Preserve for blind labeling.

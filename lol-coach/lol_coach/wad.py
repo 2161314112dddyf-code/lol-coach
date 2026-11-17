@@ -45,6 +45,12 @@ class WadReader:
         key = xxhash.xxh64_intdigest(internal_path.lower().encode("utf-8"))
         if key not in self.entries:
             raise ValueError(f"WAD path not found: {internal_path}")
+        data, evidence = self.extract_hash(key, max_bytes)
+        evidence['internal_path'] = internal_path
+        return data, evidence
+
+    def extract_hash(self, key, max_bytes=16_000_000):
+        """Read a raw/Zstandard entry referenced by a numeric hash in the client config."""
         entry = self.entries[key]
         if not 0 < entry.size <= max_bytes or not 0 < entry.compressed_size <= max_bytes:
             raise ValueError("WAD entry exceeds extraction size limit")
@@ -64,7 +70,7 @@ class WadReader:
         if len(data) != entry.size:
             raise ValueError("WAD decompressed size mismatch")
         evidence = asdict(entry)
-        evidence.update(internal_path=internal_path, path_hash=f"{key:016x}",
+        evidence.update(path_hash=f"{key:016x}",
                         compressed_sha256=hashlib.sha256(packed).hexdigest(),
                         sha256=hashlib.sha256(data).hexdigest(), checksum_status="xxh3_64_verified")
         return data, evidence

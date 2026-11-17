@@ -54,7 +54,7 @@ def manifest(target, inputs, *, authorship):
              'lol_coach/macro_snapshot.py', 'lol_coach/tower_vision.py', 'lol_coach/lane_wave.py',
              'lol_coach/lane_current_state.py', 'lol_coach/lane_dynamics.py', 'lol_coach/lane_tracking.py',
              'lol_coach/profiles/lane_tracking_16_20.json', 'lol_coach/lane_combat.py', 'lol_coach/profiles/lane_combat_16_20.json',
-             'lol_coach/round_chain.py', 'lol_coach/region_vision.py']
+             'lol_coach/round_chain.py', 'lol_coach/region_vision.py', 'lol_coach/replay_pings.py', 'lol_coach/review_pings.py']
     write_json(target/'manifest.json', dict(schema='reasoning-artifacts/v1', inputs=inputs,
         authorship=authorship, network_used=False, model_called=False,
         implementation={p: hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths},
@@ -116,7 +116,9 @@ def main():
     src.add_argument('--replay-id'); src.add_argument('--snapshot',type=Path)
     src.add_argument('--vision-replay', type=Path, help='Build the vision portion of a decision from a reviewed ROFL')
     prep.add_argument('--game-dir', type=Path, help='Matching Game directory, for --vision-replay Faelight geometry')
-    prep.add_argument('--at',type=float); prep.add_argument('--team',type=int,choices=[100,200],default=100)
+    prep.add_argument('--game-log', type=Path, help='Use the verified local player and team for this --vision-replay')
+    prep.add_argument('--download-log', type=Path, help='Optional original LeagueClient download log')
+    prep.add_argument('--at',type=float); prep.add_argument('--team',type=int,choices=[100,200])
     prep.add_argument('--player'); prep.add_argument('--window',type=float,default=30)
     prep.add_argument('--lane-evidence',type=Path)
     prep.add_argument('--lane-combat',type=Path)
@@ -137,13 +139,32 @@ def main():
     chain.add_argument('--output',type=Path,required=True)
     a=p.parse_args()
     if a.command=='prepare':
+        subject = None
+        if a.download_log and not a.game_log:
+            p.error('--download-log requires --game-log')
+        if a.game_log:
+            if not a.vision_replay:
+                p.error('--game-log requires --vision-replay')
+            from lol_coach.review_subject import load_review_subject
+            subject = load_review_subject(a.vision_replay, a.game_log, a.download_log)
+            if a.team is not None and a.team != subject['local_team_id']:
+                p.error('指定队伍与本局开局日志的本人队伍不一致')
+            a.team = subject['local_team_id']
+            if a.player is None:
+                a.player = subject['local_champion']
+        if a.team is None:
+            a.team = 100
         indexes = []
+        ping_index = None
         if a.vision_replay:
             from lol_coach.hero_sight import native_vision_snapshot
             from scripts.export_vision_channels import export
             if a.at is None or a.player is None or a.lane_evidence or a.lane_combat:
                 p.error('--vision-replay requires --at and --player; use a macro snapshot for lane evidence')
-            index = export(a.vision_replay.read_bytes(), game_dir=a.game_dir)
+            from lol_coach.replay_pings import build_ping_index
+            raw_replay = a.vision_replay.read_bytes()
+            index = export(raw_replay, game_dir=a.game_dir)
+            ping_index = build_ping_index(raw_replay)
             s = native_vision_snapshot(index, a.team, a.player, a.at)
             indexes.append(index)
             inputs = [dict(path=str(a.vision_replay.resolve()), sha256=index['source_sha256'])]
@@ -162,7 +183,13 @@ def main():
             raw = path.read_bytes()
             indexes.append(json.loads(raw))
             inputs.append(dict(path=str(path.resolve()), sha256=hashlib.sha256(raw).hexdigest()))
-        bundle=compile_frame(s,max_chars=a.max_chars,vision_indexes=indexes,vision_subjects=a.vision_subject);schema=output_schema()
+        bundle=compile_frame(s,max_chars=a.max_chars,vision_indexes=indexes,vision_subjects=a.vision_subject,
+                             ping_index=ping_index, ping_window_seconds=a.window);schema=output_schema(bundle['frame'])
+        if subject is not None:
+            from lol_coach.review_subject import validate_review_subject
+            validate_review_subject(subject, bundle)
+            bundle['audit']['verified_subject'] = subject
+            inputs.append(dict(path=str(a.game_log.resolve()), sha256=subject['log_sha256']))
         summary = render_frame(bundle)
         target=new_directory(a.output)
         for name,value in [('bundle.json',bundle),('frame.json',bundle['frame']),
@@ -190,7 +217,7 @@ def main():
                 previous.append(None)
                 inputs.append(dict(path=str(path.resolve()),status='unreadable_previous_input'))
         bundle=attach_previous_plan(bundle,*previous,max_chars=a.max_chars)
-        schema=output_schema();target=new_directory(a.output)
+        schema=output_schema(bundle['frame']);target=new_directory(a.output)
         for name,value in [('bundle.json',bundle),('frame.json',bundle['frame']),
                            ('messages.json',model_messages(bundle,schema)),('tools.json',TOOLS),('response.schema.json',schema)]:
             write_json(target/name,value)

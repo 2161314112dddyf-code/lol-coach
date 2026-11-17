@@ -71,6 +71,12 @@ def main():
     c.add_argument('--lane-evidence',type=Path,help='Explicit source-bound lane evidence; otherwise use the available local export')
     c.add_argument('--lane-combat',type=Path,help='Optional source-bound health-loss component evidence')
     sub.add_parser('timeline')
+    c=sub.add_parser('clear-reference', help='Look up an observed jungle clear by its actual conditions')
+    c.add_argument('--build', required=True)
+    c.add_argument('--champion', required=True)
+    c.add_argument('--camp', required=True)
+    c.add_argument('--level', type=int, required=True)
+    c.add_argument('--mode', required=True)
     c=sub.add_parser('travel');c.add_argument('--points',required=True,help='JSON array of [x,z] game coordinates')
     c.add_argument('--speed',type=float,required=True);c.add_argument('--audit-map11',action='store_true',help='Audit against cached Map11 base grid; not a match-map binding')
     for c in sub.choices.values():c.add_argument('--output',type=Path,required=True)
@@ -81,6 +87,26 @@ def main():
     if any(f.exists() for f in outputs):raise ValueError('Choose new output files; existing evidence is never overwritten')
     inputs=[]
     if a.command=='context':data,md,inputs=context(a.replay_id,a.at,a.team,a.player,a.window,a.lane_evidence,a.lane_combat)
+    elif a.command=='clear-reference':
+        library=ROOT/'data/private/jungle-clear-20261116'
+        samples=[]
+        for path in (library/'training/observed-clear.json',library/'ranked-clears.json'):
+            if path.is_file():
+                saved=load(path,inputs)
+                samples.extend(saved if isinstance(saved,list) else [saved])
+        requested={key:getattr(a,key) for key in ('build','champion','camp','level','mode')}
+        matches=[s for s in samples if all(s[key]==v for key,v in requested.items())]
+        data=dict(schema='historical-clear-lookup/v1',filters=requested,
+                  historical_observations=matches,live_clear_prediction_seconds=None)
+        if matches:
+            lines=['# 历史刷野实测']
+            for sample in matches:
+                lo,hi=sample['observed_elapsed_seconds']
+                lines.append(f"{sample['champion']} {sample['level']} 级，{sample['mode']}，"
+                             f"{sample['camp']} 从首次掉血到击杀为 {lo}～{hi} 秒。装备和符文见同名 JSON。")
+            md='\n\n'.join(lines)+'\n'
+        else:
+            md='# 历史刷野实测\n\n'+('没有符合所选条件的实测记录。' if samples else '本机尚无经核验的刷野资料。')+'\n'
     elif a.command=='timeline':
         report=load(ROOT/'reports/movement_video_validation.json',inputs)
         for field,pathkey in [('replay','path'),('video','source')]:

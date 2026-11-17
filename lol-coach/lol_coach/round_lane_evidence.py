@@ -45,10 +45,15 @@ def _attach_allied_path_starts(bundle, raw):
         fid = 'f_' + digest(fact)[:20]
         frame['facts'][fid] = fact
         bundle['audit']['fact_sources'][fid] = dict(basis='first_waypoint_of_last_allied_live_path',
-                                                    source=row['source'], time_seconds=when)
+                                                    source=row['source'], time_seconds=when,
+                                                    packet_path=dict(speed=row['speed'], xz=row['world_waypoints_xz']))
         ids.append(fid)
     frame['allied_path_fact_ids'] = ids
-    frame['input_policy'].append('己方英雄位置是最近一次移动包的起点。保留采样时间和年龄，不能确定现在的位置、正在赶来或在哪个地标。')
+    from .review_pings import attach_own_assist_path
+    attach_own_assist_path(bundle)
+    note = '己方英雄位置是最近一次移动包的起点。保留采样时间和年龄，不能确定现在的位置、正在赶来或在哪个地标。'
+    if note not in frame['input_policy']:
+        frame['input_policy'].append(note)
 
 
 def attach_round_lanes(bundle, raw, *, max_chars=250000):

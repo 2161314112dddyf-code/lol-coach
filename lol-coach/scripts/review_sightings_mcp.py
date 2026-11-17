@@ -33,14 +33,18 @@ class Opponent(TypedDict):
 
 class Sightings(TypedDict):
     frame_id: str
+    player_entity_id: str
     observer_team_id: int
+    visibility_scope: str
+    player_attention: str
     at_seconds: float
     opponents: list[Opponent]
 
 
 TOOL = types.Tool(
     name='enemy_sightings',
-    description=('Read opponent visibility in the locked team/time frame. visible=null means unknown. '
+    description=('Read shared team vision for the locked player and time. The replay does not show '
+                 'whether this player had the opponent on screen or noticed them. visible=null means unknown. '
                  'A path start is the last recorded visible sample, including its age in seconds. '
                  'It cannot establish a hidden position, safe route, or arrival time.'),
     inputSchema={'type': 'object', 'properties': {}, 'additionalProperties': False},

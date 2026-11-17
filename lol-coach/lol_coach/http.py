@@ -1,5 +1,7 @@
 import hashlib
 import json
+import os
+import tempfile
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -8,9 +10,21 @@ from urllib.request import Request, urlopen
 
 
 def save_json(path, value):
+    _replace_bytes(path, (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode('utf-8'))
+
+
+def _replace_bytes(path, body):
+    """Readers of a shared source cache see a complete old or new file."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temp = tempfile.NamedTemporaryFile(dir=path.parent, delete=False)
+    temporary = Path(temp.name)
+    try:
+        with temp:
+            temp.write(body)
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 class EvidenceClient:
@@ -76,7 +90,7 @@ class EvidenceClient:
             relative = "raw/" + digest + ".bin"
             path = self.root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(body)
+            _replace_bytes(path, body)
             record.update(sha256=digest, evidence_path=relative)
         record, data = self._classify(record, body, expect_json)
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f")

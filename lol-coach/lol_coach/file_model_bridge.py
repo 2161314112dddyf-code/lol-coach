@@ -30,8 +30,13 @@ def new_directory(path):
 
 def atomic_json(path, value):
     """Publish complete JSON with an atomic, no-replace hard link."""
-    path = Path(path)
     raw = (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + '\n').encode('utf-8')
+    atomic_bytes(path, raw)
+
+
+def atomic_bytes(path, raw):
+    """Publish an immutable file without exposing a partially written body."""
+    path = Path(path)
     temporary = path.with_name(path.name + '.' + uuid.uuid4().hex + '.tmp')
     try:
         with temporary.open('xb') as stream:

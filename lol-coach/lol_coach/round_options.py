@@ -1,14 +1,78 @@
 """Compare three conditional departures using only a frozen team decision frame."""
-from math import isclose
+from bisect import bisect_right
+from functools import lru_cache
+import json
+from math import dist, isclose
+from pathlib import Path
 
 from .reasoning_frame import FRAME_SCHEMA, digest, number
 from .round_wave_clock import birth_forecast
 
 
 LANES = ('top', 'mid', 'bot', 'single_lane')
+RESOURCE_ORIGINS = (*LANES, 'jungle')
 TIMING_CLOCKS = ('immediate_route_duration', 'route_duration', 'wave_clear_duration',
                  'target_deadline', 'target_work_duration', 'return_duration', 'next_wave_deadline',
                  'target_finish_with_help', 'target_finish_without_help')
+JUNGLE_CLOCKS = tuple(k for k in TIMING_CLOCKS if k not in
+                      ('wave_clear_duration', 'next_wave_deadline', 'return_duration')) + (
+                          'camp_clear_duration', 'return_to_camp_duration')
+
+
+@lru_cache(maxsize=1)
+def _camp_profile():
+    path = Path(__file__).with_name('profiles') / 'camps_map11_16_22.json'
+    return json.loads(path.read_bytes())
+
+
+def _jungle_observation(frame, actor):
+    """Locate the selected player's sampled position with respect to static camps."""
+    profile = _camp_profile()
+    result = dict(camps_by_distance_from_sample=[], path_fact_id=None, sampled_at=None,
+                  age_seconds=None, camp_presence='unknown', current_camp=None,
+                  remaining_clear_seconds=None, gold_or_xp_forgone=None, last_personal_observations=[],
+                  constant_damage_rate_scenario=None,
+                  conditions=['confirm_camp_present_and_contestable', 'check_health_resources_and_smite',
+                              'compare_allies_and_opponents_at_destination'])
+    if frame['decision']['build'] != profile['build']:
+        return result
+    for fid, fact in _checked_facts(frame, 'personal_camp_fact_ids'):
+        if fact['entity_id'] != actor:
+            continue
+        v = fact['value']
+        if (fact['field'] != 'personal_jungle_camp_observation' or fact['temporal_scope'] != 'historical_personal_camp_hud'
+                or v['observer_team_id'] != frame['decision']['observer_team_id']):
+            raise ValueError('invalid_personal_camp_fact')
+        result['last_personal_observations'].append(dict(fact_id=fid, sampled_at=fact['observed_at_seconds'],
+                                                          age_seconds=fact['age_seconds'], **v))
+        if fact['age_seconds'] == 0:
+            result['camp_presence'] = 'engaged_at_sample' if v['state'] == 'engaged' else 'cleared_at_sample'
+            result['current_camp'] = v['camp'] if v['state'] == 'engaged' else None
+            if v['state'] == 'engaged' and 'monster_hp' in v:
+                elapsed = fact['observed_at_seconds'] - v['last_full_at']
+                damage = v['full_hp'] - v['monster_hp']
+                if elapsed >= 2 and damage > 0:
+                    result['constant_damage_rate_scenario'] = dict(
+                        elapsed_seconds=elapsed, damage_since_full=damage,
+                        hp_per_second=round(damage/elapsed, 2),
+                        seconds_if_rate_held=round(v['monster_hp']*elapsed/damage, 2), evidence_id=fid,
+                        assumptions=['uninterrupted_clear', 'same_average_damage_including_pet_and_abilities'],
+                        excludes=['unseen_future_smite', 'future_bursts', 'reset_or_disengage'])
+    for fid, fact in _checked_facts(frame, 'allied_path_fact_ids'):
+        if fact['entity_id'] != actor:
+            continue
+        v = fact['value']
+        if (fact['field'] != 'allied_path_start_sample' or fact.get('unit') != 'map11_world_xz'
+                or fact['temporal_scope'] != 'historical_path_start_sample'
+                or v.get('observer_team_id') != frame['decision']['observer_team_id']
+                or not isinstance(v.get('xz'), list) or len(v['xz']) != 2 or not all(number(x) for x in v['xz'])
+                or result['path_fact_id'] is not None):
+            raise ValueError('invalid_jungle_position_sample')
+        places = [dict(**camp, distance_world=round(dist(v['xz'], camp['xz']), 1)) for camp in profile['camps']]
+        result.update(path_fact_id=fid, sampled_at=fact['observed_at_seconds'], age_seconds=fact['age_seconds'],
+                      map_config_sha256=profile['config_sha256'],
+                      camps_by_distance_from_sample=sorted(places, key=lambda r: r['distance_world'])[:3])
+    return result
 
 
 def _checked_facts(frame, index):
@@ -55,6 +119,33 @@ def _allied_position_samples(units, total, at):
                 older_count=len(times)-recent, unsampled_count=total-len(times))
 
 
+def _allied_birth_cohorts(units, clock, at):
+    """Group still-registered allies by observed spawner starts, independently of their map position."""
+    starts = clock['observed_starts']
+    intervals = clock['sample_intervals_seconds']
+    groups = {}
+    unassigned = 0
+    for unit in units:
+        born = unit.get('born_at')
+        if born is not None and (not number(born) or not 0 <= born <= at):
+            raise ValueError('invalid_lane_unit_birth')
+        index = -1 if born is None else bisect_right(starts, born) - 1
+        # The bounded marker history can begin after an older surviving unit.
+        # A missing later marker cannot extend a wave across an entire observed cadence.
+        if index < 0 or (born > starts[index] and (not intervals or born - starts[index] >= min(intervals))):
+            unassigned += 1
+            continue
+        start = starts[index]
+        group = groups.setdefault(start, dict(first_melee_born_at=start, registered=0,
+                                              registered_siege=0, recent_position_count=0))
+        group['registered'] += 1
+        group['registered_siege'] += int(unit.get('kind') == 'siege')
+        sampled = unit.get('sampled_at')
+        group['recent_position_count'] += int(sampled is not None and sampled >= at - 1)
+    return dict(basis='registered_allies_by_observed_birth_marker', cohorts=[groups[t] for t in sorted(groups)],
+                unassigned_count=unassigned)
+
+
 def _lane_observation(frame, lane):
     at, team = (frame['decision'][k] for k in ('at_seconds', 'observer_team_id'))
     result = None
@@ -95,6 +186,8 @@ def _lane_observation(frame, lane):
             if any(clock.get(k) != value for k, value in projection.items()):
                 raise ValueError('invalid_wave_spawn_forecast')
             result['wave_spawn_clock'] = projection
+            if scope == 'own_team_observed_live_only' and 'units' in v:
+                result['allied_birth_cohorts'] = _allied_birth_cohorts(v['units'], projection, at)
     return result
 
 
@@ -111,7 +204,7 @@ def _timing_clocks(frame, actor, lane, target, help_seconds):
         if (fact['entity_id'], v.get('lane'), v.get('target')) != (actor, lane, target):
             continue
         key, pair = v.get('clock'), v.get('interval')
-        if (key not in TIMING_CLOCKS or not isinstance(pair, list) or len(pair) != 2
+        if (key not in (JUNGLE_CLOCKS if lane == 'jungle' else TIMING_CLOCKS) or not isinstance(pair, list) or len(pair) != 2
                 or not all(number(n) for n in pair) or not 0 <= pair[0] <= pair[1]):
             raise ValueError('invalid_round_timing_interval')
         if key in ('target_finish_with_help', 'target_finish_without_help'):
@@ -173,7 +266,7 @@ def compare_round_options(frame, *, lane, target, help_seconds, actor_id=None):
     actor = d['player_entity_id'] if actor_id is None else actor_id
     if type(team) is not int or team not in (100, 200) or not number(at) or at < 0:
         raise ValueError('invalid_decision_scope')
-    if lane not in LANES or not isinstance(target, str) or not target.strip() or target != target.strip():
+    if lane not in RESOURCE_ORIGINS or not isinstance(target, str) or not target.strip() or target != target.strip():
         raise ValueError('invalid_lane_or_target')
     if not number(help_seconds) or help_seconds < 0:
         raise ValueError('invalid_proposed_help_seconds')
@@ -182,10 +275,13 @@ def compare_round_options(frame, *, lane, target, help_seconds, actor_id=None):
         raise ValueError('actor_outside_observer_team')
 
     clocks, ids = _timing_clocks(frame, actor, lane, target, help_seconds)
-    lane_obs = _lane_observation(frame, lane)
+    jungle = lane == 'jungle'
+    lane_obs = None if jungle else _lane_observation(frame, lane)
+    clear_clock = 'camp_clear_duration' if jungle else 'wave_clear_duration'
+    return_clock = 'return_to_camp_duration' if jungle else 'return_duration'
     base = [at, at]
     durations = [('leave_now', [0, 0]), ('help_then_leave', [help_seconds, help_seconds]),
-                 ('clear_then_leave', clocks.get('wave_clear_duration'))]
+                 ('clear_then_leave', clocks.get(clear_clock))]
     options = []
     for action, delay in durations:
         depart = _sum_windows(base, delay)
@@ -194,27 +290,30 @@ def compare_round_options(frame, *, lane, target, help_seconds, actor_id=None):
             route = 'immediate_route_duration'
         arrive = _sum_windows(depart, clocks.get(route))
         finish = _sum_windows(arrive, clocks.get('target_work_duration'))
-        returned = _sum_windows(finish, clocks.get('return_duration'))
+        returned = _sum_windows(finish, clocks.get(return_clock))
         earliest_departure = depart[0] if depart else at
         earliest_return = (finish or arrive or depart or base)[0]
-        evidence_keys = [route, 'target_deadline', 'target_work_duration', 'return_duration', 'next_wave_deadline']
+        evidence_keys = [route, 'target_deadline', 'target_work_duration', return_clock, 'next_wave_deadline']
         conditions = ['actor_can_act_and_take_route', 'same_origin_path_and_speed_as_clock']
         if action == 'help_then_leave':
             conditions += ['help_possible_from_present_position', 'proposed_hold_does_not_prove_contribution']
         if action == 'clear_then_leave':
-            conditions += ['actor_can_reach_and_clear_this_wave_from_present_position']
-            evidence_keys.append('wave_clear_duration')
+            conditions.append('camp_available_and_actor_can_finish_from_current_state' if jungle
+                              else 'actor_can_reach_and_clear_this_wave_from_present_position')
+            evidence_keys.append(clear_clock)
         route_budget = None
         deadline = clocks.get('target_deadline')
         if deadline is not None and depart is not None:
             route_budget = [deadline[0] - depart[1], deadline[1] - depart[0]]
         options.append(dict(action=action, depart_at=depart, arrive_at=arrive, finish_target_at=finish,
             available_travel_seconds=route_budget,
-            return_to_lane_at=returned, target_window=_by_deadline(arrive, clocks.get('target_deadline'), earliest_departure),
+            return_to_lane_at=None if jungle else returned, target_window=_by_deadline(arrive, clocks.get('target_deadline'), earliest_departure),
             next_wave_window=_by_deadline(returned, clocks.get('next_wave_deadline'), earliest_return),
             conditions=conditions, evidence_ids=[ids[k] for k in evidence_keys if k in ids]))
-    unknowns = [k for k in TIMING_CLOCKS if k not in clocks]
-    if lane_obs is None:
+        if jungle:
+            options[-1]['return_to_camp_at'] = returned
+    unknowns = [k for k in (JUNGLE_CLOCKS if jungle else TIMING_CLOCKS) if k not in clocks]
+    if lane_obs is None and not jungle:
         unknowns.append('lane_observation')
     contribution = None
     with_help, without_help = clocks.get('target_finish_with_help'), clocks.get('target_finish_without_help')
@@ -222,8 +321,11 @@ def compare_round_options(frame, *, lane, target, help_seconds, actor_id=None):
         contribution = dict(estimated_seconds_saved=[without_help[0] - with_help[1], without_help[1] - with_help[0]],
             evidence_ids=[ids['target_finish_with_help'], ids['target_finish_without_help']],
             assumption='only_this_actors_help_changes_other_participants_and_target_are_fixed')
-    return dict(schema='round-options/v1', frame_id=frame['frame_id'], at_seconds=at, observer_team_id=team,
+    result = dict(schema='round-options/v1', frame_id=frame['frame_id'], at_seconds=at, observer_team_id=team,
         actor_id=actor, lane=lane, target=target, proposed_help_seconds=help_seconds,
         lane_observation=lane_obs, clocks=clocks, clock_evidence_ids=ids, options=options, unknowns=unknowns,
         unit='absolute_game_seconds_for_option_windows', actual_arrival=None,
         additional_objective_contribution=contribution, exact_minions_forgone=None)
+    if jungle:
+        result['jungle_observation'] = _jungle_observation(frame, actor)
+    return result

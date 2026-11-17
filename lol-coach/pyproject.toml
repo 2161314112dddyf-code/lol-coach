@@ -11,6 +11,8 @@ dependencies = []
 
 [project.optional-dependencies]
 map = ["xxhash==3.6.0", "zstandard==0.25.0"]
+minimap = ["xxhash==3.6.0", "zstandard==0.25.0", "Pillow>=10.2"]
+hud-analysis = ["numpy>=1.26,<3", "opencv-python-headless>=4.10,<5"]
 review-mcp = ["mcp==1.30.0"]
 
 [tool.setuptools.packages.find]

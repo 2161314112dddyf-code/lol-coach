@@ -108,6 +108,21 @@ def test_repeated_public_kill_of_required_ally_reopens_even_when_value_equal():
     assert 'currently_dead' not in report['allies'][0]
 
 
+def test_new_kill_of_prior_enemy_requires_rechecking_pursuit():
+    old, cur = bundle_at(10), bundle_at(20)
+    card = answer(old)
+    actor = next(h['entity_id'] for h in old['frame']['lineup'] if h['relation']=='enemy')
+    assert any(r['actor_id']==actor for r in card['role_assignments'])
+    fid = add_fact(cur,actor,'public_kill_feed',dict(victim_entity_id=actor,killer_entity_id='self'),
+                   18,'historical_event_not_current_death_state')
+    cur['frame']['recent_public_combat_ids']=[fid]
+    freeze(cur)
+    report = review_round_plan(attach_previous_plan(cur,old,card))
+    assert report['status']=='reopen'
+    assert any(t['kind']=='previous_opponent_killed' and t['current_fact_id']==fid for t in report['triggers'])
+    assert report['player_action_context']['recent_public_kills'][0]['age_seconds']==2
+
+
 def test_prior_kill_or_new_irrelevant_ally_action_does_not_reopen():
     old, cur = bundle_at(10), bundle_at(20)
     kill(cur, 9)

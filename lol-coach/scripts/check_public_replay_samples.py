@@ -35,14 +35,17 @@ def checked_bytes(path, key):
     return data
 
 
-def project(arrays, meta, columns, at, team, source):
+def project(arrays, meta, columns, at, team, source, *, player_id=None):
     """Conservative research projection. No enemy visibility feed or coordinate conversion is available."""
     rows = np.flatnonzero(arrays["t"] == at)
     assert len(rows) == 1
     row = rows.item()
     roster = meta["participants"]
     assert [h["participant_id"] for h in roster] == list(range(1, 11))
-    actor = next(h["participant_id"] for h in roster if h["team"] == team)
+    allies = [h["participant_id"] for h in roster if h["team"] == team]
+    actor = allies[0] if player_id is None else player_id
+    if actor not in allies:
+        raise ValueError("selected player does not belong to the observer team")
     heroes, evidence = [], {}
     for pos, member in enumerate(roster):
         pid = member["participant_id"]

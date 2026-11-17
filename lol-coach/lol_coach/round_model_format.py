@@ -2,7 +2,8 @@
 from copy import deepcopy
 import json
 
-from .decision_contract import SCHEMA, TIME_FIELDS
+from .decision_contract import MACRO_REVIEW, SCHEMA, SUPPORT_LANE_REVIEW, TIME_FIELDS
+from .objective_credit import dragon_kill_events
 from .reasoning_frame import canonical
 
 
@@ -56,15 +57,57 @@ def _answer_grammar(frame, schema):
     fields['schema'] = _choice([SCHEMA])
     fields['frame_id'] = _choice([frame['frame_id']])
     fields['facts_used'] = _refs(facts, 1, 8)
+    if 'lane_plan' in fields:
+        plan = fields['lane_plan']['properties']
+        plan['fact_refs'] = _refs(facts, 1, 16)
+        if 'destination_choice' in plan:
+            choice = plan['destination_choice']['properties']
+            choice['fact_refs'] = _refs(facts, 1, 8)
+            for key in ('why', 'switch_if'):
+                choice[key]['maxLength'] = 160
+        plan['roam']['properties']['option_id'] = _choice(ACTIONS)
+        for key in ('pressure', 'if_open', 'if_denied'):
+            plan[key]['maxLength'] = 120
+        for key in ('wave_condition', 'return_by', 'short_play', 'committed_play'):
+            plan['roam']['properties'][key]['maxLength'] = 120
+        fields['facts_used'] = _refs(facts, 1, 16)
+    if 'macro_round' in fields:
+        macro_fields = fields['macro_round']['properties']
+        changes = frame['task'].get('round_transition', {}).get('changes', {})
+        macro_fields['fact_refs'] = _refs(facts, 1)
+        variants = []
+        for transition in macro_fields['transition']['enum']:
+            if transition == 'close' and not changes:
+                continue
+            branch = deepcopy(macro_fields)
+            branch['transition'] = _choice([transition])
+            if transition in ('start', 'continue'):
+                branch['intent']['enum'].remove('unknown')
+            branch['change_refs'] = _refs(changes, int(transition == 'close'))
+            variants.append(_object(branch))
+        fields['macro_round'] = {'anyOf': variants}
+    if 'objective_kill_claims' in fields:
+        claims = []
+        for fid, event in dragon_kill_events(frame).items():
+            killer = event['killer_entity_id']
+            claims.append(_object({'fact_id': _choice([fid]), 'killer_entity_id': _choice([killer])}))
+        if claims:
+            fields['objective_kill_claims'] = _list({'anyOf': claims}, high=len(claims))
+        else:
+            del fields['objective_kill_claims']
     player = frame['decision']['player_entity_id']
     groups = {'player':[player]}
     for relation in ('ally','enemy'):
         ids = [r['entity_id'] for r in frame['lineup'] if r['relation']==relation and r['entity_id']!=player]
         if ids:
             groups[relation] = ids
+    role_groups = dict(groups)
+    if 'lane_plan' in fields:
+        duo = frame['task']['bottom_lane_actors']
+        role_groups.update(ally=[duo['carry']], enemy=[duo['enemy_carry']], enemy_support=[duo['enemy_support']])
     role_template = fields['role_assignments']['items']
     rows = {}
-    for group, ids in groups.items():
+    for group, ids in role_groups.items():
         role = deepcopy(role_template)
         role['properties'].update(actor_id=_choice(ids), fact_refs=_refs(facts))
         rows[group] = role
@@ -80,6 +123,8 @@ def _answer_grammar(frame, schema):
     for action in ACTIONS:
         props = deepcopy(option_template['properties'])
         del props['id'], props['time_budget']
+        if 'player_perspective' in frame['task']:
+            props['actor_id'] = _choice([player])
         cids = [cid for cid,row in frame['calculations'].items()
                 if row.get('option_id') == action and 'time_budget' in row]
         props.update(calculation_id=_choice([None, *sorted(cids)]), fact_refs=_refs(facts, 1),
@@ -168,12 +213,26 @@ def _next_tools(request, frame):
             if not available:
                 continue
             args['properties'][key] = _choice(sorted(available))
+        elif name == 'get_ability_parameters':
+            args['properties']['champion'] = _choice(sorted({h['champion'] for h in frame['lineup']}))
+        elif name == 'calculate_ability_damage':
+            ref = frame['task'].get('ability_damage_reference')
+            player = frame['task']['player_perspective']['champion']
+            slots = frame['references'][ref]['champions'].get(player, []) if ref else []
+            targets = [h['entity_id'] for h in frame['lineup'] if h['relation'] == 'enemy']
+            if not slots or not targets:
+                continue
+            args['properties']['target_id'] = _choice(targets)
+            args['properties']['hits']['items']['properties']['slot'] = _choice(slots)
         elif name in done and name != 'compare_help_duration':
             continue
         choices.append(_object(dict(id=_choice(['q'+str(n)]), name=_choice([name]), arguments=args)))
     exposed = {tool['function']['name'] for tool in request['tools']}
     mandatory = {'compare_round_options'} & exposed
-    if 'review_round_plan' in exposed and frame['task'].get('previous_plan'):
+    if 'review_round_plan' in exposed and (
+        frame['task'].get('previous_plan') or frame['task'].get('macro_round_review') == MACRO_REVIEW
+        or frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW
+    ):
         mandatory.add('review_round_plan')
     return choices, mandatory - done
 
@@ -204,7 +263,9 @@ def prepare_round_request(request, *, remaining_calls=None):
                     i += 1
                 tool['properties']['id'] = _choice(['q'+str(i)])
                 i += 1
-            batch = dict(type='array', prefixItems=required, items=False,
+            # The fixed length already forbids extra items. Ollama rejects a
+            # boolean schema for items when converting this tuple to a grammar.
+            batch = dict(type='array', prefixItems=required,
                          minItems=len(required), maxItems=len(required))
         branches.append(_object({'tool_requests':batch}))
     elif tools and remaining_calls != 1:
@@ -217,10 +278,13 @@ def prepare_round_request(request, *, remaining_calls=None):
     # complete public frame, plus instructions for the on-wire representation.
     messages[1]['content'] = canonical({'decision_frame':frame})
     instruction = ('这是此轮本地输出格式。一次只发一个工具请求，或发最终 answer。'
-                   'facts_used 只选当前事实 ID。role_assignments 分 player、ally、enemy 三个位置，'
-                   '每组自己选有影响的一人并描述职责。可选 others 补充更多相关英雄。options 是以三个走法 ID 为键的对象。'
+                   'facts_used 只选当前事实 ID。role_assignments 按给定角色位置填写，'
+                   '先写你自己能做什么。队友和对手只写会改变你选择的动作或条件。可选 others 补充相关英雄。options 是以三个走法 ID 为键的对象。'
                    '每种走法自己写行动、得失、条件和理由，calculation_id 选该走法已登记的计算或 null。'
                    '程序只展开你选的事实及时间值。推荐和承接由你自己判断。每段只写一句具体中文。')
+    if frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
+        instruction += ('下路角色按 player（你）、ally（搭档）、enemy（敌方射手）、enemy_support（敌辅）填写。'
+                        '对线施压和给、不给机会分开写。游走候选的收益和搭档代价放到所引走法，写清出发和回线条件。')
     if missing:
         instruction += '答复前仍须取得 ' + '、'.join(sorted(missing)) + '。'
     if remaining_calls == 2 and missing:
@@ -252,6 +316,12 @@ def expand_round_response(request, envelope):
     roster = {r['entity_id']:r['relation'] for r in frame['lineup']}
     player = frame['decision']['player_entity_id']
     wanted = {rel for eid,rel in roster.items() if eid!=player and rel in ('ally','enemy')} | {'player'}
+    lane_roles = None
+    if frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
+        duo = frame['task']['bottom_lane_actors']
+        lane_roles = dict(player=duo['support'], ally=duo['carry'], enemy=duo['enemy_carry'],
+                          enemy_support=duo['enemy_support'])
+        wanted = set(lane_roles)
     if not isinstance(roles,dict):
         raise ValueError('invalid_selected_roles')
     others = roles.pop('others', [])
@@ -259,7 +329,10 @@ def expand_round_response(request, envelope):
         raise ValueError('invalid_selected_roles')
     for group,role in roles.items():
         actor = role['actor_id']
-        if (group=='player' and actor!=player) or (group!='player' and (actor==player or roster.get(actor)!=group)):
+        if lane_roles:
+            if actor != lane_roles[group]:
+                raise ValueError('invalid_selected_actor')
+        elif (group=='player' and actor!=player) or (group!='player' and (actor==player or roster.get(actor)!=group)):
             raise ValueError('invalid_selected_actor')
     answer['role_assignments'] = [*roles.values(), *others]
     options = answer['options']

@@ -1,10 +1,15 @@
 """Reassess a linked decision using only observations on the frozen team's frame."""
+from copy import deepcopy
 from math import hypot
 
-from .reasoning_frame import number
+from .decision_contract import MACRO_REVIEW, SUPPORT_LANE_REVIEW
+from .lane_opportunity import support_lane_opportunity
+from .objective_credit import dragon_kill_events
+from .player_action import actor_context, allied_paths
+from .reasoning_frame import lookup_reference, number
 from .review_sightings import enemy_sightings
 from .round_chain import _check_bundle
-from .round_options import _checked_facts
+from .round_options import LANES, _checked_facts, _lane_observation
 
 
 def _visibility(value, field, team):
@@ -150,17 +155,7 @@ def review_round_plan(bundle):
 
     allies = {}
     player = frame['decision']['player_entity_id']
-    position_samples = {}
-    allied_ids = {h['entity_id'] for h in frame['lineup'] if h['relation'] == 'ally'}
-    for fid, fact in _checked_facts(frame, 'allied_path_fact_ids'):
-        actor, value = fact['entity_id'], fact['value']
-        if (actor not in allied_ids or actor in position_samples or fact['field'] != 'allied_path_start_sample'
-                or fact.get('unit') != 'map11_world_xz' or fact['temporal_scope'] != 'historical_path_start_sample'
-                or value.get('observer_team_id') != team or not isinstance(value.get('xz'), list)
-                or len(value['xz']) != 2 or not all(number(x) for x in value['xz'])):
-            raise ValueError('invalid_allied_path_sample')
-        position_samples[actor] = dict(xz=list(value['xz']), sampled_at=fact['observed_at_seconds'],
-                                       age_seconds=fact['age_seconds'], fact_id=fid)
+    position_samples = allied_paths(frame)
     for hero in frame['lineup']:
         actor = hero['entity_id']
         if hero['relation'] != 'ally' or actor == frame['decision']['player_entity_id']:
@@ -214,13 +209,19 @@ def review_round_plan(bundle):
     # New public kills can repeat with the same victim and killer. Scan the feed
     # itself: a value-only transition would miss that second event.
     latest_kill = {}
+    prior_roles = {r['actor_id'] for r in card.get('role_assignments', [])}
+    opponents = {h['entity_id'] for h in frame['lineup'] if h['relation'] == 'enemy'}
     for fid in frame.get('recent_public_combat_ids', []):
         fact = facts[fid]
         actor = fact['entity_id']
-        if (actor not in allies or fact['field'] != 'public_kill_feed'
+        if (fact['field'] != 'public_kill_feed'
                 or fact['temporal_scope'] != 'historical_event_not_current_death_state'
                 or fact['value'].get('victim_entity_id') != actor
                 or since is None or fact['observed_at_seconds'] <= since):
+            continue
+        if actor in opponents and actor in prior_roles:
+            signal('previous_opponent_killed', actor, fid, 'reassess_prior_engagement_before_pursuing')
+        if actor not in allies:
             continue
         latest_kill[actor] = max(latest_kill.get(actor, -1), fact['observed_at_seconds'])
         requirements = allies[actor]['requirements']
@@ -256,6 +257,7 @@ def review_round_plan(bundle):
                 signal('required_action_observed', actor, matched['fact_id'],
                        'recheck_option_with_observed_response', [need['option_id']])
 
+    objective_events = dragon_kill_events(frame)
     if prior:
         # A public kill ends the live-objective window only for options which
         # actually depended on that objective in the preceding card.
@@ -264,12 +266,13 @@ def review_round_plan(bundle):
             if fact['observed_at_seconds'] <= since:
                 continue
             affected = []
-            if fact['field'] == 'allied_dragon_kill':
+            if fid in objective_events:
                 affected = [o['id'] for o in options if any(
                     prior['historical_facts'].get(hid, {}).get('field') == 'dragon_pit_observation'
                     for hid in o['fact_refs'])]
                 if affected:
-                    signal('objective_secured', fact['entity_id'], fid, 'close_prior_live_objective_window', affected)
+                    signal('objective_secured', objective_events[fid]['objective_kind'], fid,
+                           'close_prior_live_objective_window', affected)
             elif old_id and fact['field'] in ('tower_health','health') and fact['value'] == 0:
                 old = prior['historical_facts'][old_id]
                 affected = [o['id'] for o in options if old_id in o['fact_refs']]
@@ -296,11 +299,64 @@ def review_round_plan(bundle):
     reopens_preferred = any(not t['option_ids'] or preferred in t['option_ids'] or preferred is None
                             for t in triggers)
     triggers.sort(key=lambda t: (t['observed_at_seconds'], t['entity_id'], t['kind']))
-    return dict(schema='round-plan-review/v1', frame_id=frame['frame_id'], at_seconds=at,
-                observer_team_id=team, prior_frame_id=prior_id, goal=card.get('objective'),
+    report = dict(schema='round-plan-review/v1', frame_id=frame['frame_id'], at_seconds=at,
+                observer_team_id=team, player_entity_id=player, prior_frame_id=prior_id, goal=card.get('objective'),
                 status=('no_previous_plan' if not prior else 'reopen' if reopens_preferred else 'monitor'),
                 preferred_option_id=preferred, previous_action_execution='unknown',
                 switch_conditions=list(card.get('recommendation', {}).get('switch_conditions', [])),
-                triggers=triggers, player_last_observed_path_start=position_samples.get(player),
+                triggers=triggers, objective_kill_events=objective_events,
+                player_last_observed_path_start=position_samples.get(player),
+                player_action_context=actor_context(frame, sightings, position_samples),
                 allies=list(allies.values()), opponents=sightings['opponents'],
                 engagement=_engagement(frame, sightings))
+    if task.get('macro_round_review') == MACRO_REVIEW:
+        lanes = []
+        for lane in LANES:
+            observed = _lane_observation(frame, lane)
+            if observed is not None:
+                lanes.append({key: observed[key] for key in
+                              ('lane', 'fact_id', 'counts', 'count_scope', 'enemy_minions')})
+        previous_read = card.get('macro_round')
+        previous_refs = set(previous_read['fact_refs']) if previous_read else set()
+        report['macro_round_context'] = dict(
+            compared_destination=task['round_comparison']['target'],
+            previous_assessment=deepcopy(previous_read),
+            changes_to_previous_evidence=[
+                dict(change_id=cid, historical_fact_id=old_id, current_fact_id=fid)
+                for fid, (cid, old_id) in changes.items() if old_id in previous_refs],
+            observed_lanes=lanes,
+            interpretation='上一张卡是对地图计划的判断。采样变化只提示重新评估。各路兵数仅限列出的覆盖范围。')
+    if task.get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
+        report['support_lane_opportunity'] = support_lane_opportunity(
+            frame, sightings, position_samples, report['engagement'], allies=report['allies'], triggers=triggers,
+            player_context=report['player_action_context'])
+    if ref := task.get('external_data_reference'):
+        report['external_data'] = lookup_reference(bundle, ref)
+    if ref := task.get('combat_reference'):
+        pack = lookup_reference(bundle, ref)
+        report['combat_preload'] = dict(
+            build=pack['build'], static_release=pack['static_release'], reference_id=ref,
+            catalog_sha256=pack['catalog_sha256'],
+            runes={i: row['name'] for i, row in pack['runes'].items()}, shard_ids=pack['shard_ids'],
+            items={i: row['name'] for i, row in pack['items'].items()},
+            inventory_observed=pack['inventory_observed'], missing_rune_ids=pack['missing_runes'],
+            missing_item_ids=pack['missing_items'],
+            exact_build_rune_rules_loaded=pack['rune_rules'] is not None)
+    if ref := task.get('ability_damage_reference'):
+        player = task['player_perspective']['champion']
+        abilities = lookup_reference(bundle, ref)['champions'].get(player, {})
+        if abilities:
+            report['personal_spell_damage'] = dict(
+                champion=player, reference_id=ref,
+                components={slot: list(profile['components']) for slot, profile in abilities.items()},
+                tools=['get_ability_parameters', 'calculate_ability_damage'],
+                usage='先用本人当帧属性计算，另列目标抗性或命中区域变化的假设。')
+    if 'recent_team_pings' in frame:
+        from .review_pings import assist_distances, player_ping_context
+        report['team_pings'] = player_ping_context(frame)
+        geometry = assist_distances(report['team_pings'], frame['lineup'], position_samples, sightings['opponents'],
+                                    frame=frame, external=report.get('external_data'),
+                                    self_state=report['player_action_context']['self_state'])
+        if geometry is not None:
+            report['team_pings']['assist_distances'] = geometry
+    return report

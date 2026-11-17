@@ -93,6 +93,23 @@ def test_allied_last_path_start_counts_use_each_units_timestamp(frame):
     assert obs['enemy_minions']['observed_count'] is None
 
 
+def test_registered_waves_keep_older_survivors_and_new_reinforcements_separate(frame):
+    units = [dict(entity_id=str(i), born_at=b, kind=k, sampled_at=7, last_xz=[1, 2])
+             for i, (b, k) in enumerate([(0, 'melee'), (1, 'melee'), (2, 'siege'),
+                                          (4, 'melee'), (4.5, 'ranged'), (7.5, 'ranged')])]
+    add_fact(frame, 'lane_fact_ids', entity='lane:mid', field='lane_current_units_and_groups',
+             value=dict(lane='mid', count_scope='own_team_observed_live_only', units=units,
+                        wave_spawn_clock=birth_forecast([1, 4], 8),
+                        counts=[dict(team_id=100, kind=k, count=n) for k,n in [('melee', 3), ('siege', 1), ('ranged', 2)]]),
+             unit=None, scope='queried_at_decision_time')
+    obs = compare(frame)['lane_observation']
+    parts = obs['allied_birth_cohorts']
+    assert [(g['first_melee_born_at'], g['registered'], g['registered_siege'])
+            for g in parts['cohorts']] == [(1, 2, 1), (4, 2, 0)]
+    assert parts['unassigned_count'] == 2
+    assert obs['enemy_minions']['observed_count'] is None
+
+
 @pytest.mark.parametrize('unit', [
     dict(entity_id='a', sampled_at=8.1, last_xz=[1, 2]),
     dict(entity_id='a', sampled_at=8, last_xz=None)])
@@ -177,3 +194,42 @@ def test_same_clock_twice_and_tampered_frames_are_refused(frame):
     frame['decision']['at_seconds'] += 2
     with pytest.raises(ValueError, match='invalid_frozen_frame'):
         compare(frame)
+
+
+def test_jungle_scopes_clear_and_return_clocks_to_camp(frame):
+    clock(frame, 'wave_clear_duration', [1, 2], lane='mid')
+    clock(frame, 'next_wave_deadline', [12, 12], lane='mid')
+    no_clock = compare(frame, lane='jungle')
+    assert no_clock['lane_observation'] is None
+    assert no_clock['options'][2]['depart_at'] is None
+    assert no_clock['jungle_observation']['current_camp'] is None
+    for key, pair in [('camp_clear_duration', [4, 6]), ('route_duration', [3, 5]),
+                      ('target_work_duration', [1, 2]), ('return_to_camp_duration', [3, 4])]:
+        clock(frame, key, pair, lane='jungle')
+    cleared = compare(frame, lane='jungle')['options'][2]
+    assert cleared['depart_at'] == [12, 14] and cleared['return_to_camp_at'] == [19, 25]
+    assert cleared['return_to_lane_at'] is None and cleared['next_wave_window'] == 'unknown'
+
+
+def test_jungle_nearest_camp_is_only_geometry(frame):
+    frame['decision']['build'] = '16.22.836.1077'
+    fid = add_fact(frame, 'allied_path_fact_ids', entity='self', field='allied_path_start_sample',
+                   value={'xz': [9866, 4414], 'observer_team_id': 100},
+                   scope='historical_path_start_sample', unit='map11_world_xz', when=2)
+    camp = compare(frame, lane='jungle')['jungle_observation']
+    assert camp['camps_by_distance_from_sample'][0]['locator'] == 'Dragon'
+    assert camp['path_fact_id'] == fid and camp['age_seconds'] == 6
+    assert camp['current_camp'] is None and camp['camp_presence'] == 'unknown'
+
+
+@pytest.mark.parametrize('when,expected', [(7, None), (8, 12.0)])
+def test_only_current_hud_can_project_constant_damage_scenario(frame,when,expected):
+    frame['decision']['build'] = '16.22.836.1077'
+    add_fact(frame,'personal_camp_fact_ids',entity='self',field='personal_jungle_camp_observation',
+             value=dict(camp='gromp',state='engaged',observer_team_id=100,full_hp=2000,monster_hp=1500,last_full_at=4),
+             unit=None,scope='historical_personal_camp_hud',when=when)
+    result = compare(frame,lane='jungle')
+    scenario = result['jungle_observation']['constant_damage_rate_scenario']
+    assert (scenario['seconds_if_rate_held'] if scenario else None)==expected
+    assert result['options'][2]['depart_at'] is None
+    assert result['jungle_observation']['remaining_clear_seconds'] is None

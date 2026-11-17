@@ -25,7 +25,7 @@ def main():
         if sha(original)!=row['bundle_sha256']:raise ValueError('Scheduled input changed')
         b=attach_lineup_references(json.loads(original.read_bytes()),mechanisms);_check_bundle(b)
         for rid in b['frame']['references']:lookup_reference(b,rid)
-        folder=out/row['checkpoint_id'];folder.mkdir();write(folder/'bundle.json',b);write(folder/'messages.json',model_messages(b,output_schema()))
+        folder=out/row['checkpoint_id'];folder.mkdir();write(folder/'bundle.json',b);write(folder/'messages.json',model_messages(b,output_schema(b['frame'])))
         jobs.append(dict(at_seconds=row['at_seconds'],checkpoint_id=row['checkpoint_id'],bundle=str(folder/'bundle.json'),bundle_sha256=sha(folder/'bundle.json'),frame_id=b['frame']['frame_id']))
         if coverage is None:
             heroes=[];principles=[]

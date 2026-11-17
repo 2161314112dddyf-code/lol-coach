@@ -9,8 +9,17 @@ import json
 import math
 import re
 
+from .objective_credit import DRAGON_DISPLAY_NAMES, dragon_kill_events
+
 
 SCHEMA = 'round-decision/v1'
+MACRO_REVIEW = 'macro-round/v1'
+SUPPORT_LANE_REVIEW = 'support-lane/v1'
+ROAM_DESTINATIONS = {'hold_bot': '照应下路', 'river_jungle': '接应打野', 'mid_lane': '支援中路', 'top_lane': '支援上路'}
+MACRO_TRANSITIONS = {'start': '提出本轮计划', 'continue': '延续上一轮',
+                     'close': '结束上一轮，重新部署', 'unknown': '回合交接待定'}
+MACRO_INTENTS = {'pressure': '主动施压', 'defend': '防守掩护', 'trade': '交换资源',
+                 'develop': '发育', 'reset': '回补整备', 'unknown': '方向待定'}
 _TEXT = {'type': 'string', 'minLength': 1}
 _TEXTS = {'type': 'array', 'items': _TEXT}
 _RANGE = {'anyOf': [
@@ -26,7 +35,7 @@ def _object(properties):
             'required': list(properties), 'additionalProperties': False}
 
 
-def output_schema():
+def output_schema(frame=None):
     """Return a fresh JSON Schema; semantic cross-field checks run separately."""
     refs = deepcopy(_TEXTS)
     nonempty_refs = {**deepcopy(_TEXTS), 'minItems': 1}
@@ -52,6 +61,12 @@ def output_schema():
         'abort_signals': {**deepcopy(_TEXTS), 'minItems': 1},
         'assumptions': _TEXTS,
     })
+    task = frame.get('task') if isinstance(frame, dict) else None
+    personal = isinstance(task, dict) and 'player_perspective' in task
+    if isinstance(frame, dict):
+        option['properties']['actor_id'] = deepcopy(_TEXT)
+        if personal:
+            option['required'].append('actor_id')
     root = _object({
         'schema': {'const': SCHEMA}, 'frame_id': _TEXT, 'objective': _TEXT,
         'facts_used': {'type': 'array', 'minItems': 1,
@@ -78,6 +93,46 @@ def output_schema():
     # Old standalone answers remain valid. The frozen frame determines whether
     # this optional structural field is semantically required or forbidden.
     root['required'].remove('continuation')
+    if personal:
+        root['properties']['immediate_action'] = deepcopy(_TEXT)
+        root['required'].append('immediate_action')
+    if isinstance(task, dict) and task.get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
+        root['properties']['lane_plan'] = _object({
+            'pressure': _TEXT, 'if_open': _TEXT, 'if_denied': _TEXT, 'fact_refs': nonempty_refs,
+            'roam': _object({
+                'option_id': _TEXT, 'wave_condition': _TEXT, 'return_by': _TEXT,
+                'short_play': _TEXT, 'committed_play': _TEXT,
+                # A spawn prefix and sampled minion positions do not identify the
+                # numbered lane wave on which the carry can be left alone.
+                'wave_number': {'type': 'null'},
+            }),
+        })
+        root['required'].append('lane_plan')
+        if task.get('roam_actors'):
+            plan = root['properties']['lane_plan']
+            destinations = [k for k in ROAM_DESTINATIONS if k != 'top_lane' or 'ally_top' in task['roam_actors']]
+            plan['properties']['destination_choice'] = _object({
+                'preferred': {'enum': destinations}, 'alternative': {'enum': destinations},
+                'why': _TEXT, 'switch_if': _TEXT, 'fact_refs': nonempty_refs})
+            plan['required'].append('destination_choice')
+    if isinstance(task, dict) and task.get('macro_round_review') == MACRO_REVIEW:
+        previous = task.get('previous_plan')
+        card = previous.get('decision_card') if isinstance(previous, dict) else None
+        prior = card.get('macro_round') if isinstance(card, dict) else None
+        has_plan = isinstance(prior, dict) and isinstance(prior.get('intent'), str) and (
+            prior['intent'] in MACRO_INTENTS and prior['intent'] != 'unknown')
+        transitions = ['continue', 'close', 'unknown'] if has_plan else ['start', 'unknown']
+        root['properties']['macro_round'] = _object({
+            'transition': {'enum': transitions}, 'intent': {'enum': list(MACRO_INTENTS)},
+            'map_goal': _TEXT, 'enabling_condition': _TEXT, 'opponent_reply': _TEXT,
+            'fact_refs': nonempty_refs, 'change_refs': refs,
+        })
+        root['required'].append('macro_round')
+    if isinstance(task, dict) and (task.get('require_objective_credit') is True
+                                   or task.get('macro_round_review') == MACRO_REVIEW):
+        root['properties']['objective_kill_claims'] = {
+            'type': 'array', 'items': _object({
+                'fact_id': _TEXT, 'killer_entity_id': {'type': ['string', 'null'], 'minLength': 1}})}
     root['$schema'] = 'https://json-schema.org/draft/2020-12/schema'
     root['title'] = SCHEMA
     return deepcopy(root)
@@ -112,6 +167,60 @@ def _json_equal(a, b):
     if isinstance(a, list):
         return len(a) == len(b) and all(_json_equal(x, y) for x, y in zip(a, b))
     return a == b
+
+
+def observation_value(fact):
+    """Compare the sighting itself; the age of an unchanged sample grows at every scan."""
+    value = fact['value']
+    if fact['field'] == 'observer_visibility' and isinstance(value, dict):
+        sample = value.get('last_observed_position')
+        if isinstance(sample, dict) and 'age_seconds' in sample:
+            return dict(value, last_observed_position={k: v for k, v in sample.items() if k != 'age_seconds'})
+    return value
+
+
+def _live_dragon_in_pit(fact):
+    value = fact.get('value')
+    return fact.get('field') == 'dragon_pit_observation' and (
+        (isinstance(value, dict) and value.get('alive') is True)
+        or (isinstance(value, str) and value.startswith('龙坑内亚龙仍存活')))
+
+
+def _dragon_completion_changes(previous, frame, changes):
+    """Recognise the live-pit capture and its later public finish in scoped replay inputs.
+
+    Team announcements can close the objective window regardless of whether
+    anyone has independently identified the player who secured it.
+    """
+    card = previous.get('decision_card') or {}
+    macro = card.get('macro_round') or {}
+    cited = macro.get('fact_refs', [])
+    if macro.get('intent') != 'pressure' or len(cited) != 1:
+        return set()
+    pit = previous.get('historical_facts', {}).get(cited[0], {})
+    since = previous.get('previous_at_seconds')
+    if not _live_dragon_in_pit(pit) or not _number(since):
+        return set()
+    facts, at = frame['facts'], frame['decision']['at_seconds']
+    events = dragon_kill_events(frame)
+    announced, hud = set(), set()
+    for change_id, change in changes.items():
+        if not isinstance(change, dict):
+            continue
+        fact = facts.get(change.get('current_fact_id'), {})
+        when = fact.get('observed_at_seconds')
+        available = fact.get('available_at_seconds', when)
+        if not (_number(when) and _number(available) and since < when <= available <= at):
+            continue
+        value = fact.get('value')
+        if change.get('current_fact_id') in events:
+            announced.add(change_id)
+        elif (fact.get('field') == 'dragon_pit_observation' and fact.get('entity_id') == pit.get('entity_id')
+              and fact.get('temporal_scope') == 'player_view_at_video_frame'
+              and isinstance(value, str) and value.startswith('玩家画面出现“我方队伍已经击杀了')
+              and '亚龙' in value):
+            hud.add(change_id)
+    return announced | hud
 
 
 def _check_json(value, path, errors):
@@ -180,6 +289,55 @@ def _validate_shape(value, schema, path, errors):
                 _validate_shape(item, properties[key], f'{path}.{key}', errors)
 
 
+def _check_lane_plan(answer, frame, facts, actors, player, fail):
+    """Check the four players, cited lane evidence and the linked counterfactual."""
+    lane = answer['lane_plan']
+    roam = lane['roam']
+    quartet = frame['task'].get('bottom_lane_actors')
+    relations = {'support': 'ally', 'carry': 'ally', 'enemy_support': 'enemy', 'enemy_carry': 'enemy'}
+    if (not isinstance(quartet, dict) or quartet.keys() != relations.keys()
+            or any(not isinstance(v, str) for v in quartet.values())
+            or len(set(quartet.values())) != 4 or quartet['support'] != player
+            or any(actors.get(quartet[k], {}).get('relation') != rel for k, rel in relations.items())):
+        fail('frame.task.bottom_lane_actors', '下路计划需要已核实的本人、己方射手和敌方双人组。')
+        return
+    role_actors = {row['actor_id'] for row in answer['role_assignments']}
+    if not set(quartet.values()).issubset(role_actors):
+        fail('$.role_assignments', '请说明双方下路四人的职责或仍待确认的配合与反制。')
+    if len({lane[k].strip().casefold() for k in ('pressure', 'if_open', 'if_denied')}) != 3:
+        fail('$.lane_plan', '施压思路、对手给机会时的行动和不给机会时的行动需分别说明。')
+    if roam['short_play'].strip().casefold() == roam['committed_play'].strip().casefold():
+        fail('$.lane_plan.roam', '短离线与实际支援中野需分别写出目的地、收益和折返条件。')
+    # This producer can distinguish relative wave conditions and allied births,
+    # but cannot label the safe outing "wave N" from either observation.
+    ordinal_go = (r'第\s*[0-9一二两三四五六七八九十百]+\s*波[，, ]*'
+                  r'(?:直接|马上|就能|可以|就|可|能)?(?:离线|游走|出发|走人|走中|走)'
+                  r'|\b(?:roam|leave)\s+(?:on\s+)?wave\s*#?\s*\d+\b')
+    if re.search(ordinal_go, roam['wave_condition'] + ' ' + roam['return_by'], re.IGNORECASE):
+        fail('$.lane_plan.roam.wave_condition', '请用兵线落点或下一批交汇等可复查条件描述窗口，本帧无法给出可离线的绝对波序。')
+    fact_ids = set(lane['fact_refs'])
+    bottom_facts = {fid for fid, f in facts.items() if f.get('field') == 'lane_current_units_and_groups'
+                    and f.get('entity_id') == 'lane:bot' and isinstance(f['value'], dict)
+                    and f['value'].get('lane') == 'bot'
+                    and f.get('observed_at_seconds') == frame['decision']['at_seconds']}
+    if bottom_facts and fact_ids.isdisjoint(bottom_facts):
+        fail('$.lane_plan.fact_refs', '此帧已有下路兵线观测，需引用它评估离线条件。')
+    if not any(isinstance(facts.get(fid, {}).get('entity_id'), str)
+               and facts[fid]['entity_id'].removeprefix('entity:') in quartet.values() for fid in fact_ids):
+        fail('$.lane_plan.fact_refs', '对线判断需要至少一条属于本场下路四人之一的本人或对手、队友依据。')
+    option = next((o for o in answer['options'] if o['id'] == roam['option_id']), None)
+    if option is None:
+        fail('$.lane_plan.roam.option_id', '游走得失须引用本卡实际比较的一条出发路线。')
+    elif not option['gains']:
+        fail('$.lane_plan.roam.option_id', '所引用的路线需写出离开下路可能换来的具体收益。')
+    elif option['status'] == 'supported' and not any(
+            facts[fid]['value'].get('count_scope') == 'observer_filtered_visible_units'
+            for fid in bottom_facts & fact_ids):
+        fail('$.lane_plan.roam.option_id', '下路兵线缺失或只有己方兵时，可离线的窗口只能给条件判断。')
+    if not answer['open_questions']:
+        fail('$.open_questions', '请指出影响离线或交手的未确认信息，以及玩家如何复查。')
+
+
 def validate_decision(answer, frame):
     """Check an answer against its frozen frame, without a model call.
 
@@ -189,12 +347,14 @@ def validate_decision(answer, frame):
     Round-specific records are bound to the corresponding action as well.
     """
     errors = []
+    reader = None
 
     def fail(path, message):
         errors.append({'path': path, 'message': message})
 
     def result():
-        return {'status': 'FAIL' if errors else 'PASS', 'errors': errors,
+        return {**({'player_perspective': reader} if reader is not None and not errors else {}),
+                'status': 'FAIL' if errors else 'PASS', 'errors': errors,
                 'tactical_quality': 'not_evaluated',
                 'answer_sha256': _fingerprint(answer),
                 'limitations': ['仅检查结构、引用、数值一致性与显式条件；不证明文字由引用推出。',
@@ -204,17 +364,20 @@ def validate_decision(answer, frame):
     _check_json(answer, '$', errors)
     if errors:
         return result()
-    _validate_shape(answer, output_schema(), '$', errors)
     if not isinstance(frame, dict) or frame.get('schema') != 'decision-frame/v1':
         fail('frame', '需要 decision-frame/v1 输入。')
         return result()
+    if not isinstance(frame.get('task', {}), dict):
+        fail('frame.task', '帧的复盘任务无效。')
+        return result()
+    _validate_shape(answer, output_schema(frame), '$', errors)
     decision = frame.get('decision')
     facts = frame.get('facts')
     lineup = frame.get('lineup')
     references = frame.get('references')
     calculations = frame.get('calculations')
     if (not isinstance(decision, dict) or not _number(decision.get('at_seconds'))
-            or not isinstance(facts, dict) or not isinstance(lineup, list)
+            or not isinstance(facts, dict) or not isinstance(lineup, list) or not isinstance(frame.get('task', {}), dict)
             or not isinstance(references, dict) or not isinstance(calculations, dict)
             or any(not isinstance(x, dict) or not isinstance(x.get('entity_id'), str)
                    for x in lineup)
@@ -229,6 +392,26 @@ def validate_decision(answer, frame):
         fail('frame.lineup', '输入帧的英雄 ID 重复。')
     if answer['frame_id'] != frame.get('frame_id'):
         fail('$.frame_id', '答案不属于此冻结时刻；禁止复用其他帧的答案。')
+    player = decision.get('player_entity_id')
+    if not isinstance(player, str) or not player.strip():
+        fail('frame.decision.player_entity_id', '需指定一名被复盘的玩家。')
+        return result()
+    task = frame.get('task', {})
+    if 'player_perspective' in task:
+        pov = task['player_perspective']
+        hero = actors.get(player, {})
+        team = decision.get('observer_team_id')
+        if (not isinstance(pov, dict) or pov.get('player_entity_id') != player
+                or type(team) is not int or team not in (100, 200) or not _json_equal(pov.get('observer_team_id'), team)
+                or hero.get('relation') != 'ally' or 'champion' not in pov
+                or pov['champion'] != hero.get('champion')
+                or (pov['champion'] is not None and not isinstance(pov['champion'], str))):
+            fail('frame.task.player_perspective', '复盘对象须是当前观察方阵容中的指定玩家。')
+        else:
+            reader = dict(player_entity_id=player, champion=hero.get('champion'), observer_team_id=team, at_seconds=at)
+            comparison = task.get('round_comparison')
+            if 'macro_round' in answer and isinstance(comparison, dict) and isinstance(comparison.get('target'), str):
+                reader['route_target'] = comparison['target']
     if 'round_comparison' in frame.get('task', {}):
         if {o['id'] for o in answer['options']} != {'leave_now','help_then_leave','clear_then_leave'}:
             fail('$.options', '本次回合需逐项比较立即走、协助后走、清线后走。')
@@ -236,6 +419,16 @@ def validate_decision(answer, frame):
         if len(set(actions)) != len(actions):
             fail('$.options', '三种走法需分别说明玩家可以执行的第一步。')
         prose = [('objective', answer['objective']), ('recommendation.why', answer['recommendation']['why'])]
+        if 'macro_round' in answer:
+            prose.extend(('macro_round.' + key, answer['macro_round'][key])
+                         for key in ('map_goal', 'enabling_condition', 'opponent_reply'))
+        if 'lane_plan' in answer:
+            lane = answer['lane_plan']
+            prose.extend(('lane_plan.' + key, lane[key]) for key in ('pressure', 'if_open', 'if_denied'))
+            prose.extend(('lane_plan.roam.' + key, lane['roam'][key])
+                         for key in ('wave_condition', 'return_by', 'short_play', 'committed_play'))
+        if reader:
+            prose.append(('immediate_action', answer['immediate_action']))
         prose.extend(('recommendation.switch_conditions', s) for s in answer['recommendation']['switch_conditions'])
         for i, option in enumerate(answer['options']):
             if re.fullmatch(r'(?:走法|选项|方案|option|action|plan)\s*[-#._]?\s*(?:[a-z]|[0-9]+|[一二三甲乙丙])',
@@ -275,8 +468,102 @@ def validate_decision(answer, frame):
         if fid in facts and not _json_equal(used['value'], facts[fid]['value']):
             fail(f'$.facts_used[{i}].value', '事实值与输入不一致，不能修改数值或类型。')
 
-    task = frame.get('task', {})
     previous = task.get('previous_plan') if isinstance(task, dict) else None
+    require_credit = task.get('require_objective_credit') is True
+    if require_credit or answer.get('objective_kill_claims'):
+        events = dragon_kill_events(frame)
+        claimed = set()
+        credit_lines = []
+        for i, claim in enumerate(answer.get('objective_kill_claims', [])):
+            fid = claim['fact_id']
+            path = f'$.objective_kill_claims[{i}]'
+            event = events.get(fid)
+            if fid in claimed:
+                fail(path + '.fact_id', '同一击杀依据重复提交。')
+            claimed.add(fid)
+            if fid not in seen_facts or event is None:
+                fail(path + '.fact_id', '目标击杀须引用当时可知的击杀事件并列入 facts_used。')
+            elif claim['killer_entity_id'] != event['killer_entity_id']:
+                fail(path + '.killer_entity_id', '个人击杀须有明确署名并与本局阵容一致的击杀记录。')
+            else:
+                side = '蓝方' if event['credited_team_id'] == 100 else '红方'
+                name = DRAGON_DISPLAY_NAMES.get(event['objective_name'], event['objective_name'])
+                killer = event['killer_entity_id']
+                if killer is None:
+                    credit_lines.append(f'{name}由{side}击杀。这条公告能确认队伍，个人击杀者未知。')
+                else:
+                    champion = actors[killer].get('champion') or killer
+                    credit_lines.append(f'{name}的击杀记在{side} {champion} 名下。')
+        if require_credit and seen_facts.intersection(events) - claimed:
+            fail('$.objective_kill_claims', '引用目标击杀事件时，须逐条核对队伍及可证实的个人归属。')
+        if reader is not None and credit_lines:
+            reader['objective_credit_lines'] = list(dict.fromkeys(credit_lines))
+    transitions = task.get('round_transition')
+    changes = transitions.get('changes', {}) if isinstance(transitions, dict) else {}
+
+    def cited_transition(current_refs, change_refs, path, evidence_key):
+        fact_refs(current_refs, path + '.' + evidence_key)
+        for i, fid in enumerate(current_refs):
+            if fid not in seen_facts:
+                fail(f'{path}.{evidence_key}[{i}]', '判断依据必须同时列入 facts_used 并核对当前值。')
+        for i, change_id in enumerate(change_refs):
+            change = changes.get(change_id) if isinstance(changes, dict) else None
+            if not isinstance(change, dict):
+                fail(f'{path}.change_refs[{i}]', '变化引用不在本帧 round_transition.changes 中。')
+                continue
+            if change.get('current_fact_id') not in current_refs:
+                fail(f'{path}.change_refs[{i}]', f'引用变化对应的 current_fact_id 必须列入 {evidence_key}。')
+
+    if 'lane_plan' in answer:
+        lane_refs = answer['lane_plan']['fact_refs']
+        cited_transition(lane_refs, [], '$.lane_plan', 'fact_refs')
+        _check_lane_plan(answer, frame, facts, actors, player, fail)
+        choice = answer['lane_plan'].get('destination_choice')
+        if choice:
+            path = '$.lane_plan.destination_choice'
+            cited_transition(choice['fact_refs'], [], path, 'fact_refs')
+            if choice['preferred'] == choice['alternative']:
+                fail(path, '请比较两个不同去处，并给出会改选的信号。')
+            roles = ['ally_mid', 'ally_jungle']
+            if 'top_lane' in (choice['preferred'], choice['alternative']):
+                roles.append('ally_top')
+            for role in roles:
+                actor = task['roam_actors'].get(role)
+                samples = {fid for fid in frame.get('allied_path_fact_ids', [])
+                           if facts.get(fid, {}).get('entity_id') == actor and actor is not None}
+                if samples and samples.isdisjoint(choice['fact_refs']):
+                    fail(path + '.fact_refs', '比较去处时须核对相应队友的位置采样与信息年龄。')
+    if 'macro_round' in answer:
+        macro = answer['macro_round']
+        cited_transition(macro['fact_refs'], macro['change_refs'], '$.macro_round', 'fact_refs')
+        # A calculator destination is just a hypothetical trip. Only label the
+        # card with the pit when this plan cites the player's current live view.
+        if (reader and reader.get('route_target') == 'dragon'
+                and macro['transition'] in ('start', 'continue') and macro['intent'] == 'pressure'
+                and any(_live_dragon_in_pit(facts.get(fid, {}))
+                        and facts[fid].get('observed_at_seconds') == at
+                        and facts[fid].get('temporal_scope') == 'player_view_at_video_frame'
+                        for fid in macro['fact_refs'])):
+            reader['live_dragon_context'] = True
+        if macro['transition'] == 'close' and not macro['change_refs']:
+            fail('$.macro_round.change_refs', '结束上一轮须引用使地图计划改变的当时观测变化。')
+        # A frozen linked frame can predate the age filter in the linker.
+        if macro['transition'] == 'close' and isinstance(previous, dict) and isinstance(changes, dict):
+            finishes = _dragon_completion_changes(previous, frame, changes)
+            if finishes and finishes.isdisjoint(macro['change_refs']):
+                fail('$.macro_round.change_refs', '上一轮施压依据为仍存活的亚龙，收尾须引用本帧已公开的击杀公告对应的变化。')
+            history = previous.get('historical_facts', {})
+            for change_id in macro['change_refs']:
+                change = changes.get(change_id)
+                if not isinstance(change, dict):
+                    continue  # the missing change has already been reported
+                old = history.get(change.get('historical_fact_id')) if isinstance(history, dict) else None
+                new = facts.get(change.get('current_fact_id'))
+                if isinstance(old, dict) and isinstance(new, dict) and old.get('field') == new.get('field') == 'observer_visibility':
+                    if 'value' in old and _json_equal(observation_value(old), observation_value(new)):
+                        fail('$.macro_round.change_refs', '上次出现的位置仅信息年龄增加，不能当作新地图观测。')
+        if macro['transition'] in ('start', 'continue') and macro['intent'] == 'unknown':
+            fail('$.macro_round.intent', '提出或延续地图计划时要说明本人当前目的。')
     continuation = answer.get('continuation')
     if previous is None:
         if continuation is not None:
@@ -291,24 +578,9 @@ def validate_decision(answer, frame):
         path = '$.continuation'
         if continuation['previous_frame_id'] != previous['previous_frame_id']:
             fail(path + '.previous_frame_id', '承接引用的上一决策帧不匹配。')
-        current_refs = continuation['current_fact_refs']
-        fact_refs(current_refs, path + '.current_fact_refs')
-        for i, fid in enumerate(current_refs):
-            if fid not in seen_facts:
-                fail(f'{path}.current_fact_refs[{i}]', '承接依据必须同时列入 facts_used 并核对当前值。')
-        change_refs = continuation['change_refs']
-        if continuation['disposition'] in ('revise', 'cancel') and not change_refs:
+        cited_transition(continuation['current_fact_refs'], continuation['change_refs'], path, 'current_fact_refs')
+        if continuation['disposition'] in ('revise', 'cancel') and not continuation['change_refs']:
             fail(path + '.change_refs', '改选或取消上一计划必须引用至少一条当前变化。')
-        transition = task.get('round_transition', {})
-        changes = transition.get('changes', {}) if isinstance(transition, dict) else {}
-        for i, change_id in enumerate(change_refs):
-            change = changes.get(change_id) if isinstance(changes, dict) else None
-            if not isinstance(change, dict):
-                fail(f'{path}.change_refs[{i}]', '变化引用不在本帧 round_transition.changes 中。')
-                continue
-            current_id = change.get('current_fact_id')
-            if not isinstance(current_id, str) or current_id not in current_refs:
-                fail(f'{path}.change_refs[{i}]', '引用变化对应的 current_fact_id 必须列入 current_fact_refs。')
 
     role_actors = []
     for i, role in enumerate(answer['role_assignments']):
@@ -319,7 +591,6 @@ def validate_decision(answer, frame):
         fact_refs(role['fact_refs'], f'$.role_assignments[{i}].fact_refs')
     if len(role_actors) != len(set(role_actors)):
         fail('$.role_assignments', '英雄职责记录重复。')
-    player = decision.get('player_entity_id')
     if player not in role_actors:
         fail('$.role_assignments', '必须说明被复盘玩家的职责，包括职责未知的情况。')
     for relation, label in [('ally', '队友'), ('enemy', '对手')]:
@@ -334,6 +605,8 @@ def validate_decision(answer, frame):
         if option['id'] in options:
             fail(path + '.id', '候选行动 ID 重复。')
         options[option['id']] = option
+        if 'actor_id' in option and option['actor_id'] != player:
+            fail(path + '.actor_id', '每种候选动作都须由本次被复盘的玩家执行。')
         fact_refs(option['fact_refs'], path + '.fact_refs')
         for j, rid in enumerate(option['reference_refs']):
             if rid not in references:
@@ -393,6 +666,17 @@ def validate_decision(answer, frame):
 
     rec = answer['recommendation']
     preferred, fallback = rec['preferred_option_id'], rec['fallback_option_id']
+    if reader and 'round_comparison' in task and preferred in options:
+        # This index contains sampled start positions, including each ally's.
+        # A teammate's sample does not locate the player choosing a route.
+        indexes = frame.get('allied_path_fact_ids', [])
+        if not isinstance(indexes, list) or not all(isinstance(fid, str) for fid in indexes):
+            fail('frame.allied_path_fact_ids', '己方英雄位置样本索引无效。')
+        else:
+            own_paths = {fid for fid in indexes if fid in facts and facts[fid].get('entity_id') == player
+                         and facts[fid].get('field') == 'allied_path_start_sample'}
+            if own_paths and not own_paths.intersection(options[preferred]['fact_refs']):
+                fail('$.recommendation.preferred_option_id', '移动首选需引用本人最近的位置样本，才能从你的出发点比较走法。')
     if preferred is not None and fallback is None:
         fail('$.recommendation.fallback_option_id', '给出首选时必须提供退路。')
     if preferred is not None and preferred == fallback:
@@ -418,7 +702,111 @@ def validate_decision(answer, frame):
     return result()
 
 
-def render_decision(answer, validation):
+def _macro_lines(answer):
+    macro = answer.get('macro_round')
+    if macro is None:
+        return []
+    return [f"## 地图计划 · {MACRO_TRANSITIONS[macro['transition']]}", '',
+            f"**{MACRO_INTENTS[macro['intent']]}**　{macro['map_goal']}", '',
+            f"**这一手的条件**　{macro['enabling_condition']}", '',
+            f"**对方可能怎么走**　{macro['opponent_reply']}", '']
+
+
+def _lane_lines(answer, options):
+    plan = answer.get('lane_plan')
+    if plan is None:
+        return []
+    roam = plan['roam']
+    option = options[roam['option_id']]
+    status = {'conditional': '等条件满足再走', 'ruled_out': '当前排除', 'supported': '当前可考虑'}
+    choice = plan.get('destination_choice')
+    comparison = ([f"**这一拍先选{ROAM_DESTINATIONS[choice['preferred']]}**　{choice['why']}", '',
+                   f"**何时改选{ROAM_DESTINATIONS[choice['alternative']]}**　{choice['switch_if']}", '']
+                  if choice else [])
+    return ['## 下路怎么打', '', plan['pressure'], '',
+            '**对手给机会**　' + plan['if_open'], '',
+            '**对手不给机会**　' + plan['if_denied'], '',
+            '## 哪一波能离线', '', roam['wave_condition'], '', *comparison,
+            '**短离线**　' + roam['short_play'], '',
+            '**支援中野**　' + roam['committed_play'], '',
+            f"**{status[option['status']]}**　{option['action']}", '',
+            '**游走能换来什么**　' + '；'.join(option['gains']), '',
+            '**搭档独自留线的代价**　' + '；'.join(option['costs']), '',
+            '**取消条件**　' + '；'.join(option['abort_signals']), '',
+            '**什么时候回下路**　' + roam['return_by'], '']
+
+
+def review_scope(bundle, source_name=None):
+    """Label a reviewed perspective. The host supplies a source name only after binding the input."""
+    frame = bundle['frame']
+    decision = frame['decision']
+    player = decision['player_entity_id']
+    hero = next(h for h in frame['lineup'] if h['entity_id'] == player)
+    team = {100: '蓝方', 200: '红方'}[decision['observer_team_id']]
+    if not source_name:
+        digest = bundle['audit'].get('source_replay_sha256')
+        source_name = 'SHA-256 ' + digest if digest else '来源未标记'
+    parts = ['回放 ' + source_name]
+    if (decision.get('map_mode') == 'practice_tool'
+            and decision.get('environment_status') == 'practice_tool_controls_on_player_screen'):
+        parts.append('训练模式')
+    elif len(frame['lineup']) == 10:
+        parts.append('十人阵容')
+    parts.append(f"选定视角为{team} {hero['champion'] or player}")
+    return ' · '.join(parts)
+
+
+def _render_player_card(answer, reader, review_scope_label=None):
+    options = {option['id']: option for option in answer['options']}
+    rec = answer['recommendation']
+    best = options.get(rec['preferred_option_id'])
+    fallback = options.get(rec['fallback_option_id'])
+    clock = int(reader['at_seconds'])
+    route_heading = '小龙在场时怎么选' if reader.get('live_dragon_context') else '接下来怎么选'
+    lines = [f"# {clock//60:02}:{clock%60:02} · 你的 {reader['champion'] or reader['player_entity_id']} 复盘", '',
+             *([review_scope_label, ''] if review_scope_label else []),
+             *reader.get('objective_credit_lines', []), *([''] if reader.get('objective_credit_lines') else []),
+             answer['objective'], '', '## 你现在的第一步', '', answer['immediate_action'], '',
+             *_lane_lines(answer, options), *_macro_lines(answer), '## ' + route_heading, '']
+    if best:
+        lines += [best['action'], '', rec['why'], '']
+        if best['preconditions']:
+            lines += ['动手前先确认', '', *['- ' + s for s in best['preconditions']], '']
+        lines += ['你要承担的代价', '', *['- ' + s for s in best['costs']], '']
+        if best['ally_requirements']:
+            lines += ['这一步需要的队友配合', '']
+            for need in best['ally_requirements']:
+                state = '已观测到动作' if need['status'] == 'observed' else '待确认'
+                lines.append(f"- {need['required_action']}（{state}）")
+            lines.append('')
+        lines += ['对手可能怎么应对', '', *['- ' + s for s in best['enemy_responses']], '',
+                  '**如果这一步做成**　' + best['end_state'], '']
+    else:
+        lines += ['现有信息不足以为你选定首选。', '', rec['why'], '']
+    if fallback:
+        lines += ['## 你的备选', '', fallback['action'], '']
+        if fallback['preconditions']:
+            lines += ['这条路的前提', '', *['- ' + s for s in fallback['preconditions']], '']
+    for option in answer['options']:
+        if option is not best and option is not fallback:
+            label = '已排除' if option['status'] == 'ruled_out' else '其他走法'
+            lines += [f"**{label}**　{option['action']}", '']
+    signals = [*(best['abort_signals'] if best else []), *rec['switch_conditions']]
+    lines += ['## 你看到什么时该改', '', *['- ' + s for s in dict.fromkeys(signals)], '']
+    if 'continuation' in answer:
+        continuation = answer['continuation']
+        action = {'retain': '保留', 'revise': '调整', 'cancel': '取消'}[continuation['disposition']]
+        lines += [f"**{action}上次建议的依据**　{continuation['reason']}", '',
+                  '你当时是否执行了上次建议，尚无操作证据。', '']
+    if answer['open_questions']:
+        lines += ['仍需确认', '', *['- ' + s for s in answer['open_questions']], '']
+    if any(isinstance(f['value'], dict) and f['value'].get('count_scope') == 'own_team_observed_live_only'
+           for f in answer['facts_used']):
+        lines += ['这份兵线记录只覆盖己方小兵。你当时能否看到敌兵、能补几只仍未知。', '']
+    return '\n'.join(lines)
+
+
+def render_decision(answer, validation, *, review_scope_label=None):
     """Render only a contract-checked answer; never polish invalid output."""
     valid_result = (isinstance(validation, dict) and validation.get('status') == 'PASS'
                     and validation.get('answer_sha256') is not None
@@ -431,6 +819,8 @@ def render_decision(answer, validation):
             if isinstance(error, dict):
                 lines.append(f"- {error.get('path', '?')}：{error.get('message', '检查失败')}")
         return '\n'.join(lines) + '\n'
+    if 'player_perspective' in validation:
+        return _render_player_card(answer, validation['player_perspective'], review_scope_label)
     rec = answer['recommendation']
     options = {o['id']: o for o in answer['options']}
     best = options.get(rec['preferred_option_id'])
@@ -440,7 +830,7 @@ def render_decision(answer, validation):
     lines = ['# 本回合决策卡', '', f"目标：{answer['objective']}", '',
              f"结论：{levels[rec['confidence']]}",
              f"首选：{best['action'] if best else '现有信息不足以确定首选'}", '',
-             rec['why'], '']
+             rec['why'], '', *_lane_lines(answer, options), *_macro_lines(answer)]
     if any(isinstance(fact['value'], dict) and fact['value'].get('count_scope') == 'own_team_observed_live_only'
            for fact in answer['facts_used']):
         lines += ['兵线依据只覆盖己方小兵。该记录无法确定当时玩家能否看见敌兵、能补几个或多久清完。', '']

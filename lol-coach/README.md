@@ -1,24 +1,112 @@
 # 项目运行手册
 
-复盘实验入口更新于 2026-11-12。能力边界见[项目现状](docs/PROJECT_SUMMARY.md)，执行顺序见[当前接管点](docs/CURRENT_TASK.md)，全部资料见[文档索引](docs/INDEX.md)。以下命令在`lol-coach/`执行，输出路径使用尚不存在的新文件/目录。
+复盘实验入口更新于 2026-11-17。最新的个人复盘给出潘森一次下路支援的进场条件、伤害缺口和落地退路。[07:28 实战答卷](reports/潘森交战判断_20261117.md) · [项目现状](docs/PROJECT_SUMMARY.md) · [当前接管点](docs/CURRENT_TASK.md) · [文档索引](docs/INDEX.md)。以下命令在`lol-coach/`执行，输出路径使用尚不存在的新文件/目录。
+
+### 更新复盘使用的公开数据
+
+在 PowerShell 进入 `lol-coach`，把 `$log` 指向该场游戏开局的 `r3dlog.txt`。下面第一条同步命令固定历史版本。刷新器从日志认出英雄及双方分路，向 Riot 和腾讯发送版本、英雄和分路参数，本机玩家身份与回放保存在本地。
+
+```powershell
+$log = 'D:/WeGameApps/英雄联盟/Game/Logs/GameLogs/2026-11-12T13-36-20/2026-11-12T13-36-20_r3dlog.txt'
+.venv/Scripts/python.exe -m scripts.refresh_review_sources --version 16.22.1 --game-log $log --lane-profiles
+```
+
+要跟踪这组英雄在后续补丁的变化，运行以下命令。每六小时按 Riot 官方版本目录取当前补丁，同步本阵容的新版数据。前台运行可按 Ctrl+C 停止。临时需要重取可单次加 `--force`。腾讯统计有自己的数据日，轮询频率不代表统计按小时发布。
+
+```powershell
+.venv/Scripts/python.exe -m scripts.refresh_review_sources --version current --game-log $log --lane-profiles --interval-minutes 360
+```
+
+本机已在 2026-11-13 启动该阵容的六小时后台轮询，运行记录在 `data/private/review_sources/poller-20261113/stdout.jsonl`，错误单记在 `stderr.jsonl`。从项目目录运行下面一行即可停止这一次后台进程。关机后需重新启动同步命令。
+
+```powershell
+New-Item -ItemType File -Force data/private/review_sources/poller-20261113/STOP
+```
+
+完整批次保存在 `data/private/review_sources/snapshots/<补丁>/`，原始 HTTP 响应与访问记录在同目录树的 `evidence/`。任一请求失败会报告错误并保留上一份完整快照。默认六小时内同范围复用成功结果。换对局可传新日志，手选范围可用 `--champions` 和可重复的 `--matchup 分路 己方英雄 对手英雄`。
+
+按下节运行个人复盘即可离线读取本地快照。英雄技能按回放补丁和场上阵容选取，群体统计按已核实的分路和开局时间选取，来源没列出的对位保留缺项。双帧或多帧共用同一份引用。已有另一份资料库时向复盘命令传 `--external-data-dir 路径`，做对照时传 `--no-external-data`。查看每帧的 `evidence.json → review_round_plan.external_data` 可见实际采用的资料范围及缺项原因。
+
+### 查一帧的技能射程和伤害
+
+在复盘前运行一次下面的更新命令。程序从 ROFL 取十人阵容和四段客户端构建号，从 Riot 选同补丁的 Data Dragon 发布版，还会按 SHA-256 核对并保存本场已审过的游戏资源。省略 `--game-dir` 可以只更新公开资料与已有规则。新构建尚无已核规则时，复盘工具会标记缺项。相同范围默认六小时复用，可加 `--force` 重新同步。一次更新失败仍可使用历史快照。
+
+```powershell
+$r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'League of Legends/Replays/HN1-11468661236.rofl'
+.venv/Scripts/python.exe -m scripts.refresh_review_sources --replay $r --game-dir 'D:/WeGameApps/英雄联盟/Game'
+```
+
+按下节运行个人复盘时，会话从本地固定一份版本快照，每帧取本人的六枚符文、三枚碎片和当时装备。下列命令可用现成的 07:28 冻结帧，查询潘森 R 中心命中烬的条件伤害。省略 `--target` 和 `--hit` 可单查技能。传 `--assumptions-file` 可另算假设，例如 `{"effective_magic_resist":40,"target_health_fraction":0.3999}`。血量比例取命中前，0.4 表示恰好 40%。
+
+```powershell
+$frame = 'data/private/reasoning_sessions/combat-runes-20261116-release/01/bundle.json'
+data/private/agent_study_current/mcp-env/Scripts/python.exe -m scripts.inspect_ability --bundle $frame --slot R --target Jhin --hit R.landing_center
+```
+
+输出的 `frame_inputs_only.rune_damage` 是含施法者符文的主结果。查看 `parts`、`blockers` 和 `missing_inputs` 可知哪一击、哪枚符文或哪项抗性影响答案。单一情景的抗性后数值在 `after_resistance_total`，上下界在 `after_resistance_total_interval`。旧字段 `damage` 保留技能本体小计。[本局符文、公式与验收](reports/符文伤害与本地预加载_20261116.md) · [技能数值原件](reports/pantheon_damage_sources_20261116.md)
 
 ### 运行 2026-11-12 复盘 Agent 实验
 
+**从开局连续复盘一名玩家。** 以红方打野潘森这场十人局为例，下面的命令先准备同局同人的有序时刻，再通过正式 Agent 逐帧调用只读 MCP。默认每 150 秒取一次，另在本人请求协助后两次重看。每个时刻只是一个暂停点，是否换回合由前面的计划和本帧的新证据判断。
+
+```powershell
+$r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'League of Legends/Replays/HN1-11468661236.rofl'
+$game = 'D:/WeGameApps/英雄联盟/Game'
+$log = Join-Path $game 'Logs/GameLogs/2026-11-14T20-24-44/2026-11-14T20-24-44_r3dlog.txt'
+$frames = 'data/private/reasoning/match-' + (New-Guid)
+$out = 'data/private/reasoning_sessions/match-' + (New-Guid)
+.venv/Scripts/python.exe -m scripts.prepare_personal_match --replay $r --game-dir $game --game-log $log --output $frames
+.venv/Scripts/python.exe -m scripts.run_review_agent --sequence "$frames/sequence.json" --subject-replay $r --game-log $log --lane jungle --target dragon --help-seconds 5 --backend probe --output $out
+```
+
+安装依赖使用下节的 `.[review-mcp,map]`。上面第二条命令生成工具证据。要让模型作答，另选新的输出目录，用 `--backend file --catalog-history` 接文件交换读者，或用 `--backend ollama --model 模型名称` 接本机模型。前一帧的建议通过校验后随下一帧提供。具体实战见[红方打野潘森的逐回合复盘](reports/红方打野潘森逐回合复盘_20261116.md)。
+
+本机这局已归档公开击杀和个人状态。在另一台有同构建客户端的机器上，可先按以下命令从同一局重新生成这两种来源，再准备冻结帧。公开播报采集器用隔离的回放进程连续播放，需几分钟。若已有 2999 服务，它会退出。每次审计输出指定新文件名，同一份审计可反复导入；需要比对两次独立播放的观察时间时可用 `--root` 单存核对副本。
+
+```powershell
+$eventAudit = 'data/private/native-events-' + (New-Guid) + '.json'
+.venv/Scripts/python.exe -m scripts.audit_native_match_events $r --game-dir $game --output $eventAudit
+.venv/Scripts/python.exe -m scripts.publish_native_kill_feed $eventAudit
+.venv/Scripts/python.exe -m scripts.sample_native_player $r --game-dir $game --team 200 --champion Pantheon --at 300 448 463 750 1335 1350
+```
+
+客户端白名单状态和原生 HUD 的血蓝条、R 图标是两种采样，单跑客户端命令不会凭空生成图像读数。原生取样与使用边界见[本人状态报告](reports/player_state_20261116.md)。
+
+正式复盘默认给本机玩家。指定本场原始 ROFL 和开局的 `r3dlog.txt`，程序核对对局、阵营和玩家。准备冻结帧时传 `--game-log` 就能自动选本机英雄和队伍。研究队友时显式用 `--perspective comparison`，复盘自己的一场训练用 `--perspective practice`。游戏终局的小龙数用于赛后核对，随时间给模型的事实保留当时的可见范围。
+
+连续时刻共用一份地图计划。每次暂停，先结合上轮计划和本队可知的变化，判断这名玩家应继续做什么、改哪一步、或为何结束上轮。`--target` 指定用于计算三种走法代价的候选地点，玩家仍可选择守线、换边或回补。会话有通过校验的答卷时，打开输出目录的 `review.md` 看整段；逐帧细节在 `01/answer.md` 等文件中。[卡牌守中与潘森收龙的实跑和复现](reports/macro_round_pipeline_20261112.md)
+
 宿主为每个冻结时刻启动 `lol-round-review` 只读 stdio 服务。工具包括 `enemy_sightings`、`compare_round_options`、`compare_help_duration`、`review_round_plan`、`get_reference` 和 `read_history`。例如在同一帧调用 `compare_help_duration` 并传 `{"help_seconds":9}`，可以检查多等四秒是否错过目标。原题、玩家、时刻和观察队伍保持绑定。己方兵样本另报最近一秒采到位置的数量，敌兵未被来源覆盖时保留未知。
+
+本人是辅助且选择 `--lane bot` 时，宿主按开局日志的下路分工绑定双方四人。`review_round_plan` 会给出对线组合、射手附近本队能看见的敌人、按出生批次拆开的己方兵，以及离线往返的条件。打开玩家卡先看怎么打这一波，再看短走或跨线支援能换什么。本轮有版本化机制的完整对位为 16.22 的潘森、女警对塔姆、大嘴。[对线判断与实战](docs/回合复盘方案_v0.1/阵容和强势期怎样进入判断_20261113.md)
+
+同局开局日志可核实中野分工时，工具还会生成 `support_lane_opportunity.destination_comparison`。比较照应射手、接应打野、帮中单；能核实己方上单时也比较支援上路。每个去处保留各自的参与者、可见采样、额外收益、撤销信号和适用时钟。答卷的 `destination_choice` 给出当前首选及改选另一处的条件。保留 `--target dragon` 也能发现其他去处。[主播实例与判断依据](docs/回合复盘方案_v0.1/辅助游走目的地与收益.md)
 
 公开克隆可先安装 `pytest` 和本页列出的项目依赖，再运行 `.venv/Scripts/python.exe -m pytest -q tests/test_round_agent_integration.py`。该组测试在本地生成合成输入，包括启动真实 MCP 子进程，无需私人回放。
 
-**逐回合比较**已接入本地 MCP。以下示例使用同局蓝方 05:00、05:20 及原始 ROFL。若本机还没有这两份冻结输入，可用后文的 `scripts.reasoning prepare --vision-replay` 指定 `--player TwistedFate` 和时刻生成，并把命令中的 bundle 路径换成生成目录。
+在已核验的 16.22 回放上，`review_round_plan.team_pings.events` 默认给出最近 30 秒内本人发出的信号。要查队友在频道里发了什么，用 `get_reference` 读取 `team_channel_lookup.reference_id`。本队八类轮盘信号包括撤退、推进、正在路上、全力进攻、协助我、需要视野、敌人不见踪影和敌方视野。个人是否收到、注意或作出回应均需另有证据。可用原版 HUD 复核个别落点，通用二进制坐标字段尚待核实。同构建新文件可运行 `scripts.audit_replay_pings` 做离线核对。[国服实战与复跑命令](reports/replay_pings_20261115.md) · [Riot 的 Smart Ping 说明](https://support.riotgames.com/en-us/league-of-legends/gameplay/smart-ping)
+
+**从本机玩家的第一帧复跑。** 以下例子使用十人实战蓝方辅助潘森的 05:00。若需连续复盘，可在新时刻再次准备冻结帧，并把新的 `--bundle` 依时间追加到最后一条命令。
 
 ```powershell
 .venv/Scripts/python.exe -m pip install ".[review-mcp,map]"
 $rofl = "$env:USERPROFILE/Documents/League of Legends/Replays/HN1-11461276459.rofl"
-$b = 'data/private/reasoning'
+$log = 'D:/WeGameApps/英雄联盟/Game/Logs/GameLogs/2026-11-12T13-36-20/2026-11-12T13-36-20_r3dlog.txt'
+$frame = 'data/private/reasoning/personal-' + (New-Guid)
 $out = 'data/private/reasoning_sessions/round-' + (New-Guid)
-.venv/Scripts/python.exe -m scripts.run_review_agent --bundle "$b/round-framework-tf-300-v1/bundle.json" --bundle "$b/round-framework-tf-320-v1/bundle.json" --lane-replay $rofl --lane mid --target dragon --help-seconds 5 --backend probe --output $out
+.venv/Scripts/python.exe -m scripts.reasoning prepare --vision-replay $rofl --game-log $log --at 300 --output $frame
+.venv/Scripts/python.exe -m scripts.run_review_agent --bundle "$frame/bundle.json" --lane-replay $rofl --game-log $log --lane bot --target dragon --help-seconds 5 --backend probe --output $out
 ```
 
-`probe` 输出每帧的 `evidence.md` 和 `evidence.json`。要让模型给建议，可用已启动的本机 Ollama 配 `--backend ollama --model <本机模型名>`，或用 `--backend file` 接入读取请求并按契约回写的模型宿主。每次选择新输出目录。模型通过校验后才生成 `answer.md` 并向下一帧传递计划，原始调用记录保存在 `result.json`。`--catalog-history` 将上一帧事实正文改为可按 ID 取回的目录。`--previous-bundle` 和 `--previous-answer` 用于从指定前卡继续。[真实输入、对照和验收结果](reports/round_agent_acceptance_20261112.md)
+复用本机 12:20、12:35 两份已带兵线的输入时，沿用上面的 `$rofl`、`$log`，运行以下命令。每帧的 `evidence.json` 包含按目的地计算的结果。
+
+```powershell
+$pair = 'data/private/reasoning_sessions/roam-destinations-1220-1235'
+$out = 'data/private/reasoning_sessions/roam-recheck-' + (New-Guid)
+data/private/agent_study_current/mcp-env/Scripts/python.exe -m scripts.run_review_agent --bundle "$pair/01/bundle.json" --bundle "$pair/02/bundle.json" --subject-replay $rofl --game-log $log --lane bot --target dragon --help-seconds 5 --backend probe --output $out
+```
+
+`--lane-replay` 从同源回放补入己方兵与移动采样。复用已经带兵线的冻结包时，改传 `--subject-replay $rofl`。`probe` 输出每帧的 `evidence.md` 和 `evidence.json`。要让模型给建议，可用已启动的本机 Ollama 配 `--backend ollama --model <本机模型名>`，或用 `--backend file` 接入读取请求并按契约回写的模型宿主。每次选择新输出目录。模型通过校验后才生成 `answer.md` 并向下一帧传递计划，原始调用记录保存在 `result.json`。`--catalog-history` 将上一帧事实正文改为可按 ID 取回的目录。`--previous-bundle` 和 `--previous-answer` 用于从指定前卡继续。[真实输入、对照和验收结果](reports/round_agent_acceptance_20261112.md)
 
 在含原有项目依赖的 Python 环境中，可按需加装本地协议 SDK。以下用仓库已有的私有冻结帧运行。每次探测会启动独立的 stdio 服务，核对业务返回，并验证工具拒绝时间、视角覆盖。方法与读数见[调研结论](docs/回合复盘方案_v0.1/自建复盘Agent_20261112.md)。
 
@@ -46,11 +134,27 @@ $frame = "data/private/reasoning/agent-study-320-$(New-Guid)"
 .venv/Scripts/python.exe -m pytest -q tests/test_review_sightings.py -p no:cacheprovider --basetemp "data/private/review-tests-$(New-Guid)"
 ```
 
+### 把本人复盘帧画在游戏小地图上
+
+首版做了 16.22 蓝方潘森开局地形的两次暂停，[05:00](data/private/minimap-20261113/05-00/minimap.png) 和 [05:20](data/private/minimap-20261113/05-20/minimap.png)。取本机客户端原版纹理和 16 个营地坐标。兵线用本队真实采样，野怪存活和敌兵数量未接入。以下示例沿用上文的 `$rofl`、`$log`、`$frame`。含兵线的会话需要 `--lane-replay`。绘图时核验会话、开局日志和地图皮肤。
+
+```powershell
+.venv/Scripts/python.exe -m pip install ".[minimap,review-mcp]"
+$game = 'D:/WeGameApps/英雄联盟/Game'
+$assets = 'data/private/minimap-20261113'
+.venv/Scripts/python.exe -m lol_coach.minimap_assets --game-dir $game --output $assets
+$out = 'data/private/reasoning_sessions/map-' + (New-Guid)
+.venv/Scripts/python.exe -m scripts.run_review_agent --bundle "$frame/bundle.json" --lane-replay $rofl --game-log $log --lane bot --target dragon --help-seconds 5 --backend probe --output $out
+.venv/Scripts/python.exe -m scripts.render_review_minimap --bundle "$out/01/bundle.json" --assets "$assets/assets.json" --game-log $log --icons "$assets/icons" --output ("$assets/map-" + (New-Guid))
+```
+
+产物为一张 PNG 和一份可追溯到当时帧的坐标清单。本机有十人的 16.22.1 官方头像缓存，缺头像时以首字母标出。底图同真实训练 HUD 做了[方向与两处资源坑的对齐检查](data/private/minimap-20261113/texture-hud-alignment.json)。实现时参考了 [LeagueToolkit 的地图资产与坐标映射调查](https://github.com/LeagueToolkit/ltk-manager/issues/638)和[开源回放查看器的底图、时间线分层方式](https://github.com/chdoyle1/lol-replay-viewer)。
+
 ## 1. 安装和公开离线检查
 
 ```powershell
 python -m venv .venv
-.venv/Scripts/python.exe -m pip install -r requirements-dev.txt -r requirements-map.txt
+.venv/Scripts/python.exe -m pip install -r requirements-dev.txt -r requirements-video.txt ".[minimap,review-mcp]"
 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --basetemp .test-tmp-public-new
 .venv/Scripts/python.exe -m lol_coach --help
 .venv/Scripts/python.exe scripts/reasoning.py --help

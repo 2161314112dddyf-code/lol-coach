@@ -19,7 +19,7 @@ def setup(*, prior=False):
         old = bundle_at(10)
         b = attach_previous_plan(b, old, answer_for(old))
     b = bind_round(b, 'mid', 'dragon', 5)
-    schema = output_schema()
+    schema = output_schema(b['frame'])
     return b, dict(messages=model_messages(b, schema), tools=ROUND_TOOLS, response_schema=schema)
 
 
@@ -53,6 +53,17 @@ def test_first_query_bound_to_advertised_tools_and_ids():
     assert calls['get_reference']['arguments']['properties']['reference_id']['enum'] == ['rule1']
     assert json.loads(messages[1]['content'])['decision_frame'] == json.loads(req['messages'][1]['content'])['decision_frame']
     assert 'output_schema' not in json.loads(messages[1]['content'])
+
+
+def test_tagged_local_model_has_one_actor_for_all_options_and_an_independent_first_action():
+    bundle, req = setup()
+    record(req, 'compare_round_options')
+    _, fmt = prepare_round_request(req, remaining_calls=1)
+    answer = fmt['properties']['answer']
+    assert 'immediate_action' in answer['required']
+    for row in answer['properties']['options']['properties'].values():
+        for variant in row['anyOf']:
+            assert variant['properties']['actor_id']=={'enum':[bundle['frame']['decision']['player_entity_id']]}
 
 
 @pytest.mark.parametrize('linked',[True,False])
@@ -154,7 +165,7 @@ def test_last_query_slot_batches_both_outstanding_tools_for_a_linked_frame():
     record(req,'get_reference','q2',reference_id='rule1')
     _, fmt = prepare_round_request(req,remaining_calls=2)
     spec = fmt['properties']['tool_requests']
-    assert spec['minItems'] == spec['maxItems'] == 2 and spec['items'] is False
+    assert spec['minItems'] == spec['maxItems'] == 2 and 'items' not in spec
     two = [p['properties'] for p in spec['prefixItems']]
     assert [p['name']['enum'][0] for p in two] == ['compare_round_options','review_round_plan']
     assert [p['id']['enum'][0] for p in two] == ['q1','q3']

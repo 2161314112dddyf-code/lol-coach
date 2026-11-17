@@ -13,7 +13,9 @@
 
 项目主体在`lol-coach/`。仓库根目录的分包器、移动解码器和冻结字节映射仍是依赖，不能只复制子目录。最初的FIRST_TASK仅是历史任务。
 
-## 当前能力（2026-11-12）
+## 当前能力（2026-11-17）
+
+红方打野潘森在 07:28 能用大招飞到下路。复盘把问题继续算到落地之后：假设烬还有 700 血和 100 盾，即使 R 中心、W 本体和普通 Q 都命中，烬仍剩约 408 血。泰坦能否留住烬，会直接改变潘森该不该飞。[本回合的玩家建议、算例和验收](lol-coach/reports/潘森交战判断_20261117.md)
 
 | 层 | 已有能力 | 仍有限制 |
 | --- | --- | --- |
@@ -25,7 +27,7 @@
 | 新版兼容 | 16.21.829.9102容器已完整分包 | 游戏字段语义尚未适配，不能套旧opcode/字节表 |
 | 国服 16.22 与逐回合复盘 | 已核三份召唤师峡谷原件。真实 MCP 按时刻和队伍查询视野、比较离线方案、重评前卡，可在同一帧改变拟停留秒数 | 十人局样例缺实测清线、到龙和返线时长。仅己方兵来源无法确定敌兵。战术质量尚待教练盲评 |
 
-[最新离线交付](lol-coach/docs/OFFLINE_FINISH_RESULTS.md)包含两次实际宿主分析、修订及限制；[同步检查记录](lol-coach/reports/github_sync_20261101.md)记录本次公开源码验证。不含私人回放和缓存的公开源码副本已实际通过1223项测试；真实数据和战术效果按各自证据另判。
+早期离线验收保留了两次宿主分析和当时的公开源码测试记录。本次发布的验证结果见上方的 07:28 报告。[早期离线交付](lol-coach/docs/OFFLINE_FINISH_RESULTS.md) · [11 月 1 日同步记录](lol-coach/reports/github_sync_20261101.md)
 
 ## 安装和不依赖私人素材的检查
 
@@ -34,7 +36,7 @@
 ```powershell
 cd lol-coach
 python -m venv .venv
-.venv/Scripts/python.exe -m pip install -r requirements-dev.txt -r requirements-map.txt
+.venv/Scripts/python.exe -m pip install -r requirements-dev.txt -r requirements-video.txt ".[minimap,review-mcp]"
 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --basetemp .test-tmp-public-new
 .venv/Scripts/python.exe -m lol_coach --help
 .venv/Scripts/python.exe scripts/reasoning.py --help

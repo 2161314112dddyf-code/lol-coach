@@ -6,7 +6,7 @@ Previous advice never becomes execution evidence. History stays outside facts.
 from copy import deepcopy
 import math
 
-from .decision_contract import validate_decision
+from .decision_contract import MACRO_REVIEW, observation_value, validate_decision
 from .reasoning_frame import canonical, digest
 
 
@@ -135,6 +135,15 @@ def attach_previous_plan(current_bundle, previous_bundle=None, previous_answer=N
 
         card = {key: deepcopy(previous_answer[key]) for key in (
             'objective', 'role_assignments', 'options', 'recommendation', 'open_questions')}
+        if 'macro_round' in previous_answer:
+            # The older change IDs belong to the pair of frames before this
+            # one. Carry the conclusion and its evidence from the previous
+            # frame only; remap its fact_refs alongside the route evidence.
+            card['macro_round'] = {key: deepcopy(value) for key, value in previous_answer['macro_round'].items()
+                                   if key != 'change_refs'}
+        if ('lane_plan' in previous_answer and task.get('bottom_lane_actors') is not None
+                and task['bottom_lane_actors'] == prior['task'].get('bottom_lane_actors')):
+            card['lane_plan'] = deepcopy(previous_answer['lane_plan'])
 
         def remap(node):
             if isinstance(node, list):
@@ -153,7 +162,10 @@ def attach_previous_plan(current_bundle, previous_bundle=None, previous_answer=N
             old_id, old_fact = old_by_key[key]
             new_id, new_fact = new_by_key[key]
             # A timestamp refresh with the same value is not a value change.
-            if canonical(old_fact['value']) == canonical(new_fact['value']):
+            old_value, new_value = old_fact['value'], new_fact['value']
+            if task.get('macro_round_review') == MACRO_REVIEW:
+                old_value, new_value = observation_value(old_fact), observation_value(new_fact)
+            if canonical(old_value) == canonical(new_value):
                 continue
             item = {'entity_id': key[0], 'field': key[1],
                     'kind': 'observed_value_changed_not_action_proof',

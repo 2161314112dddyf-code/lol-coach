@@ -66,7 +66,9 @@ def enemy_sightings(frame):
             raise ValueError('invalid_visibility_state')
         opponents.append(dict(champion=hero['champion'], entity_id=entity, visible=visible,
                               last_observed_path_start=sample, fact_id=fid))
-    return dict(frame_id=frame_id, observer_team_id=team, at_seconds=at, opponents=opponents)
+    return dict(frame_id=frame_id, player_entity_id=decision['player_entity_id'], observer_team_id=team,
+                visibility_scope='shared_team_vision', player_attention='unknown',
+                at_seconds=at, opponents=opponents)
 
 
 def check_sighting_answer(frame, entity_id, answer):

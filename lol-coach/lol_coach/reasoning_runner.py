@@ -6,7 +6,7 @@ schema. Tests use scripted callbacks, not real language model intelligence.
 """
 from copy import deepcopy
 
-from .decision_contract import output_schema, validate_decision
+from .decision_contract import MACRO_REVIEW, SUPPORT_LANE_REVIEW, output_schema, validate_decision
 from .reasoning_frame import TOOLS, canonical, lookup_reference, model_messages, number
 
 
@@ -30,7 +30,9 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
         raise ValueError('generate must be a host-provided callable')
 
     frozen = deepcopy(bundle)
-    schema = output_schema()
+    task = frozen['frame'].get('task', {})
+    macro_review = task.get('macro_round_review') == MACRO_REVIEW
+    schema = output_schema(frozen['frame'])
     tools = TOOLS
     initial = frozen
     if round_tool_call is not None:
@@ -55,13 +57,26 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
             f'本帧工具 {names}。按需返回 {{"tool_requests":[{{"id":"q1","name":"工具名","arguments":{{}}}}]}}，'
             '每批1至5项、累计最多10项。先比较三种行动。接续上回合时查看计划变化。'
             '答复使用 {"answer":决策对象}，三个选项 ID 用 leave_now、help_then_leave、clear_then_leave。'
+            '每个选项的执行者是同一位被复盘玩家。若有本人的 allied_path_start_sample，移动首选要引用它并考虑采样时间。'
+            '若契约要求 immediate_action，写你眼前能采取的第一步。三种转线方案都不合适时，仍可建议先拉开距离、确认威胁或保留技能。'
             '未知可给条件分支。目标是否打完、本人是否有效输出和队友是否到场需分别判断。'
             '需要比较多等几秒的代价时，可用 compare_help_duration 改停留秒数。最终三案仍按原题秒数。'
+            '查射程、基础冷却或分段公式可调用 get_ability_parameters。判断伤害足不足时，用 calculate_ability_damage，'
+            '先传空 assumptions 查当帧读数和缺项，再把假设单列。多段之和只对选定命中成立，须查 targeting、cast_sequence、距离与冷却，才能判断施法机会。estimated_damage 是区间估算，'
+            '先读当前帧预加载的本人符文与装备。damage 是技能本体，含符文的数值和缺项读 rune_damage；'
+            '逐段区分命中前血线、叠层和冷却。触发条件未知时保留区间或未知。'
+            '英雄一级属性与成长参数是静态资料。结算有效抗性须另有依据。不能将算例当成已命中、击杀或实测掉血。'
             '仅有己方兵的记录时，写明敌兵情况未知。玩家本人能否看见敌兵需要另外的证据。'
             '用当前位置安排接应须引队友位置样本。给出具体河口等地名还需地标对应，缺失时写成“若队友能从此处接应”。'
             '获得条件证据后也不能断言玩家已执行。')
     if question:
         messages.append({'role':'user', 'content':question})
+    if macro_review:
+        messages.append({'role': 'user', 'content':
+            '先从本人视角给出这轮的地图目标，说明它承接了什么局面、对方可能怎样回应。'
+            '已指定的目的地仅用于算三种走法的代价。若该处已失去价值，首要行动可转守、换边、发育或回补。'
+            '上一手带来的线权或位置若仍能支持施压，改去另一处也可以是同轮。把技能交换放在回合内。'
+            '能用工具时请取 review_round_plan 和 compare_round_options。'})
     trace = []
     completed_tools = set()
     reference_reads = []
@@ -101,7 +116,7 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
             validation = validate_decision(answer, frozen['frame'])
             if round_tool_call is not None:
                 required_tools = {'compare_round_options'}
-                if frozen['frame']['task'].get('previous_plan'):
+                if task.get('previous_plan') or macro_review or task.get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
                     required_tools.add('review_round_plan')
                 for missing in sorted(required_tools - completed_tools):
                     validation['errors'].append({'path':'tools', 'message':'本帧尚未查询 '+missing})

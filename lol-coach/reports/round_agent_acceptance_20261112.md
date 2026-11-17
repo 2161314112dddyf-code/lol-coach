@@ -108,7 +108,7 @@ $rofl = "$env:USERPROFILE/Documents/League of Legends/Replays/HN1-11461276459.ro
 $blue = 'data/private/reasoning/vision-blue-pantheon-5m-1622/bundle.json'
 $later = 'data/private/reasoning/agent-study-1622-pantheon-320/bundle.json'
 $out = 'data/private/reasoning_sessions/review-accept-' + (New-Guid)
-& $mcp -m scripts.run_review_agent --bundle $blue --bundle $later --lane-replay $rofl --lane mid --target dragon --help-seconds 5 --backend probe --output $out
+& $mcp -m scripts.run_review_agent --perspective comparison --bundle $blue --bundle $later --lane-replay $rofl --lane mid --target dragon --help-seconds 5 --backend probe --output $out
 ```
 
 该私有 MCP 解释器初运行缺少 `zstandard`，已从本机缓存安装与项目相同的 0.25.0 后重跑。成功会话的两个状态都是 `evidence_only`。此项证明实际工具取证，并没有生成模型战术答案。
@@ -122,5 +122,5 @@ $out = 'data/private/reasoning_sessions/review-accept-' + (New-Guid)
 ```powershell
 $chain = 'data/private/final_replay_20261112/chain'
 $out = 'data/private/reasoning_sessions/review-prior-' + (New-Guid)
-& $mcp -m scripts.run_review_agent --previous-bundle "$chain/211_bundle.json" --previous-answer "$chain/211_answer.json" --bundle "$chain/223_bundle.json" --lane mid --target dragon --help-seconds 5 --backend probe --output $out
+& $mcp -m scripts.run_review_agent --perspective comparison --previous-bundle "$chain/211_bundle.json" --previous-answer "$chain/211_answer.json" --bundle "$chain/223_bundle.json" --lane mid --target dragon --help-seconds 5 --backend probe --output $out
 ```

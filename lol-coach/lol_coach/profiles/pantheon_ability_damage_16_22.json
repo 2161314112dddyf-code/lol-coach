@@ -1,0 +1,271 @@
+{
+  "build": "16.22.836.1077",
+  "champion": "Pantheon",
+  "scope": "标准召唤师峡谷，对英雄，未套用其他模式覆盖或附加效果。",
+  "source": {
+    "spell_asset": "data/characters/pantheon/pantheon.bin",
+    "spell_sha256": "366f02ef3dee9859140fc9faedc120b58b41a913d20c3f23db78b422cceed9ac",
+    "spell_archive": "DATA/FINAL/Champions/Pantheon.wad.client",
+    "tooltip_asset": "data/menu/en_us/lol.stringtable",
+    "tooltip_archive": "DATA/FINAL/Localized/Global.en_US.wad.client",
+    "tooltip_sha256": "a66c16185f2b2e224564230014e1c178f513526e7633f43c64148afa6de64fc9",
+    "tooltip_keys": {
+      "Q": "Spell_PantheonQ_Tooltip",
+      "W": "Spell_PantheonW_Tooltip",
+      "R": "Spell_PantheonRJump_Tooltip"
+    },
+    "tooltip_text_sha256": {
+      "R": "f1f94c4786b732d74e7ed8887b20c74dfc85b2db6cfad7627d478a4d14b4758e",
+      "W": "4c00c9d12c01245e6ee24c0ba92089bef9ac8e3dc7c7d049fd4a5da889a2f659",
+      "Q": "a44f85c10821d4341c46402d653f8436667cf08bfdad9c0399d5a177f4c350d5"
+    }
+  },
+  "abilities": {
+    "Q": {
+      "max_rank": 5,
+      "range_by_rank": [],
+      "base_cooldown_seconds": [
+        11.0,
+        10.25,
+        9.5,
+        8.75,
+        8.0
+      ],
+      "base_mana_cost": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "components": {
+        "tap": {
+          "label": "Q 短按",
+          "rank_slot": "Q",
+          "damage_type": "physical",
+          "base_by_rank": [
+            70.0,
+            100.0,
+            130.0,
+            160.0,
+            190.0
+          ],
+          "coefficients": {
+            "bonus_ad": 1.149999976158142
+          },
+          "condition": "未强化短按命中英雄",
+          "low_health": {
+            "base_by_rank": [
+              155.0,
+              230.0,
+              305.0,
+              380.0,
+              455.0
+            ],
+            "coefficients": {
+              "bonus_ad": 2.299999952316284
+            }
+          }
+        },
+        "throw_first": {
+          "label": "Q 投掷首个目标",
+          "rank_slot": "Q",
+          "damage_type": "physical",
+          "base_by_rank": [
+            70.0,
+            100.0,
+            130.0,
+            160.0,
+            190.0
+          ],
+          "coefficients": {
+            "bonus_ad": 1.149999976158142,
+            "ap": 0.5
+          },
+          "condition": "未强化蓄力投掷首个命中目标",
+          "low_health": {
+            "base_by_rank": [
+              155.0,
+              230.0,
+              305.0,
+              380.0,
+              455.0
+            ],
+            "coefficients": {
+              "bonus_ad": 2.299999952316284
+            },
+            "requires_zero_ap": true,
+            "scope": "客户端替代公式未绑定投掷低血量时的法强系数。当前仅对命中时法强为 0 的投掷核算该分支。"
+          }
+        },
+        "throw_secondary": {
+          "label": "Q 投掷穿透目标",
+          "rank_slot": "Q",
+          "damage_type": "physical",
+          "base_by_rank": [
+            35.0,
+            50.0,
+            65.0,
+            80.0,
+            95.0
+          ],
+          "coefficients": {
+            "bonus_ad": 0.574999988079071,
+            "ap": 0.25
+          },
+          "condition": "未强化蓄力投掷，穿过首个目标后命中英雄",
+          "low_health": {
+            "base_by_rank": [
+              77.5,
+              115.0,
+              152.5,
+              190.0,
+              227.5
+            ],
+            "coefficients": {
+              "bonus_ad": 1.149999976158142
+            },
+            "requires_zero_ap": true,
+            "scope": "客户端替代公式未绑定投掷低血量时的法强系数。当前仅对命中时法强为 0 的投掷核算该分支。"
+          }
+        }
+      },
+      "hold_range_world": 1200.0,
+      "mutually_exclusive": [
+        [
+          "tap",
+          "throw_first",
+          "throw_secondary"
+        ]
+      ],
+      "unsupported": "仅非满被动的 Q。强化 Q 的额外伤害不在这些分段中。",
+      "low_health_rule": {
+        "target_health_fraction_below": 0.2,
+        "calculation": "ExecuteDamageCalcModified",
+        "threshold_data_value": "CritHealthThreshold",
+        "condition": "以目标被这段 Q 命中前的当前生命除以最大生命判定；护盾不算生命。"
+      }
+    },
+    "W": {
+      "max_rank": 5,
+      "range_by_rank": [
+        600.0,
+        600.0,
+        600.0,
+        600.0,
+        600.0
+      ],
+      "base_cooldown_seconds": [
+        13.0,
+        12.0,
+        11.0,
+        10.0,
+        9.0
+      ],
+      "base_mana_cost": [
+        55.0,
+        55.0,
+        55.0,
+        55.0,
+        55.0
+      ],
+      "components": {
+        "vault": {
+          "label": "W 盾跃冲击",
+          "rank_slot": "W",
+          "damage_type": "physical",
+          "base_by_rank": [
+            0.05999999865889549,
+            0.06499999761581421,
+            0.07000000029802322,
+            0.07500000298023224,
+            0.07999999821186066
+          ],
+          "coefficients": {
+            "bonus_health": 3.9999998989515007e-05,
+            "ap": 0.0001500000071246177
+          },
+          "condition": "对英雄命中盾跃本体；强化后的三次攻击及装备效果不计",
+          "multiply_by": "target_max_health"
+        }
+      }
+    },
+    "R": {
+      "max_rank": 3,
+      "range_by_rank": [
+        5500.0,
+        5500.0,
+        5500.0
+      ],
+      "base_cooldown_seconds": [
+        180.0,
+        165.0,
+        150.0
+      ],
+      "base_mana_cost": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "components": {
+        "landing_center": {
+          "label": "R 落地中心",
+          "rank_slot": "R",
+          "damage_type": "magic",
+          "base_by_rank": [
+            300.0,
+            500.0,
+            700.0
+          ],
+          "coefficients": {
+            "ap": 1.0
+          },
+          "condition": "冲击波最大伤害区命中"
+        },
+        "landing_edge": {
+          "label": "R 落地最外缘",
+          "rank_slot": "R",
+          "damage_type": "magic",
+          "base_by_rank": [
+            150.0,
+            250.0,
+            350.0
+          ],
+          "coefficients": {
+            "ap": 0.5
+          },
+          "condition": "冲击波命中且达到最大衰减"
+        },
+        "spear": {
+          "label": "R 前置矛",
+          "rank_slot": "Q",
+          "damage_type": "physical",
+          "base_by_rank": [
+            70.0,
+            100.0,
+            130.0,
+            160.0,
+            190.0
+          ],
+          "coefficients": {
+            "bonus_ad": 1.149999976158142,
+            "ap": 0.5
+          },
+          "condition": "前置矛小范围命中，按 R 自身提示的 Q.HoldDamageCalc 结算。未找到 R 继承 Q 低血替换的独立证据。"
+        }
+      },
+      "mutually_exclusive": [
+        [
+          "landing_center",
+          "landing_edge"
+        ]
+      ],
+      "hit_geometry": "前置矛与落地波可各自命中。中心至外缘的精确衰减曲线未建模。",
+      "passive_percent_armor_penetration_by_rank": [
+        0.10000000149011612,
+        0.20000000298023224,
+        0.30000001192092896
+      ]
+    }
+  }
+}

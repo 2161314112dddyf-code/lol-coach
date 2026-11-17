@@ -1,0 +1,779 @@
+{
+  "schema": "rune-damage-rules/v1",
+  "build": "16.22.836.1077",
+  "sources": [
+    {
+      "archive": "DATA/FINAL/Global.wad.client",
+      "asset": "perks",
+      "asset_hash": "fe11209c1b2fb62e",
+      "sha256": "b17c7331fb54215c998ed5288a5c77767df8ef3493cf20db990b97b5697bc26c"
+    },
+    {
+      "archive": "DATA/FINAL/Localized/Global.en_US.wad.client",
+      "asset": "data/menu/en_us/lol.stringtable",
+      "sha256": "a66c16185f2b2e224564230014e1c178f513526e7633f43c64148afa6de64fc9"
+    },
+    {
+      "archive": "DATA/FINAL/Champions/Pantheon.wad.client",
+      "asset": "data/characters/pantheon/pantheon.bin",
+      "sha256": "366f02ef3dee9859140fc9faedc120b58b41a913d20c3f23db78b422cceed9ac"
+    }
+  ],
+  "true_damage_amplification": {
+    "source_url": "https://www.leagueoflegends.com/en-us/news/game-updates/patch-2025-s1-3-notes/",
+    "section": "Bugfixes & QoL Changes",
+    "html_sha256": "5c26e790169cdbfb568308604350b27007198f224d9ba6f2a2bb1218790e3112",
+    "source_quote": "All sources of damage amplification now increase all true damage, except Smite and jungle pet damage.",
+    "quote_sha256": "9432449dea776dff2d342ea7e2b807037442bf0a3883dba39dcfc5bc8dad8b21",
+    "evaluated_sources": [
+      "champion_ability",
+      "rune.8126",
+      "rune.8143"
+    ],
+    "patch_exceptions": [
+      "Smite",
+      "jungle pet damage"
+    ],
+    "scope": "ordinary champion QWER components and separately reviewed Cheap Shot / Sudden Impact; summoner spells and pets outside calculator"
+  },
+  "ultimate_component_tags": {
+    "Pantheon": {
+      "tags": {
+        "PantheonW": [
+          "PositiveEffect_MoveBlock",
+          "Trait_ImmobilizingCCSpell",
+          "Trait_DamageAbility",
+          "Trait_Strike"
+        ],
+        "PantheonQ": [
+          "Trait_DamageAbility",
+          "Trait_ChannelSpell",
+          "Trait_SignatureSpell",
+          "Trait_Target_Directional",
+          "Trait_Melee_SmallWindup",
+          "Trait_AoE"
+        ],
+        "PantheonR": [
+          "Trait_Ultimate",
+          "PositiveEffect_Teleport",
+          "Trait_DamageAbility",
+          "Trait_AoE"
+        ]
+      },
+      "source": {
+        "archive": "DATA/FINAL/Champions/Pantheon.wad.client",
+        "asset": "data/characters/pantheon/pantheon.bin",
+        "sha256": "366f02ef3dee9859140fc9faedc120b58b41a913d20c3f23db78b422cceed9ac"
+      },
+      "tooltip": "Spell_PantheonRJump_Tooltip",
+      "components": {
+        "R.landing_center": "area_ultimate",
+        "R.landing_edge": "area_ultimate",
+        "Q.tap": "non_ultimate",
+        "Q.throw_first": "non_ultimate",
+        "Q.throw_secondary": "non_ultimate",
+        "W.vault": "non_ultimate"
+      },
+      "unresolved": {
+        "R.spear": "Q defines the spear amount; the impact damage tag has not been confirmed"
+      }
+    }
+  },
+  "scope": "CLASSIC Map11 champion targets; default perk effects, without mode overrides",
+  "level_interpolation_reference": "https://github.com/moonshadow565/calcrev/blob/40f21c06e5cfc10750bb44b39d1f2d4e3567a6dc/calc.py#L332-L340",
+  "level_interpolation_source_sha256": "35a130db9f9d9817206d8d02e013384e27ec088fe2f2dd9bf19140f4bd58d345",
+  "rules": {
+    "8014": {
+      "name": "CoupDeGrace",
+      "display_name": "Coup de Grace",
+      "kind": "low_health_damage_amp",
+      "multiplier": 1.08,
+      "target_health_fraction_below": 0.4,
+      "sample": "target_before_each_hit",
+      "validated_damage_types": [
+        "physical",
+        "magic",
+        "true"
+      ],
+      "record": "Perks/Styles/Precision/CoupDeGrace",
+      "tooltip_key": "perk_long_desc_CoupDeGrace",
+      "tooltip_sha256": "41b3e5ccf9806c8ec358a9f525ea3f244c0d4dbf88d6452c4b8e8f57f8df5743"
+    },
+    "8010": {
+      "name": "Conqueror",
+      "display_name": "Conqueror",
+      "kind": "adaptive_stats_in_panel",
+      "max_stacks": 12,
+      "duration_seconds": 5.0,
+      "spell_or_melee_attack_stacks": 2,
+      "ranged_basic_attack_stacks": 1,
+      "adaptive_force_per_stack_endpoints": [
+        1.8,
+        4.0
+      ],
+      "fully_stacked_melee_healing_fraction": 0.08,
+      "fully_stacked_ranged_healing_fraction": 0.05,
+      "pre_hit_stacks": "read stats at impact; a new stack can change later hits",
+      "record": "Perks/Styles/Precision/Conqueror",
+      "tooltip_key": "perk_long_desc_Conqueror",
+      "tooltip_sha256": "e07b45089a461220dd9efbc26e4d3494783e867cad577dd3f1c9cb1f5c0732ff"
+    },
+    "9111": {
+      "name": "Triumph",
+      "display_name": "Triumph",
+      "kind": "no_separate_spell_hit",
+      "effect": "takedown_recovery_and_gold",
+      "parameters": {
+        "MissingHealthRestored": 0.05,
+        "TriumphMaxHealthRestored": 0.025,
+        "BonusGold": 20.0
+      },
+      "record": "Perks/Styles/Precision/Triumph",
+      "tooltip_key": "perk_long_desc_9111",
+      "tooltip_sha256": "94d602ce7601fb19d0ce7ccfbd3c6aa4e6c4a13e941aaf5e5e9ae44ddef90e9a"
+    },
+    "9104": {
+      "name": "LegendAlacrity",
+      "display_name": "Legend: Alacrity",
+      "kind": "no_separate_spell_hit",
+      "effect": "attack_speed",
+      "parameters": {
+        "AttackSpeedBase": 0.03,
+        "AttackSpeedPerStack": 0.015,
+        "MaxLegendStacks": 10.0
+      },
+      "record": "Perks/Styles/Precision/LegendAlacrity",
+      "tooltip_key": "perk_long_desc_LegendHeroism",
+      "tooltip_sha256": "89b00ef52294c65a0c8789f44e531911cd4bf576ae71563637a88c76c0d095be"
+    },
+    "8304": {
+      "name": "MagicalFootwear",
+      "display_name": "Magical Footwear",
+      "kind": "no_separate_spell_hit",
+      "effect": "boots",
+      "parameters": {
+        "GiveBootsAtMinute": 12.0,
+        "SecondsSoonerPerTakedown": 45.0,
+        "AdditionalMovementSpeed": 10.0
+      },
+      "record": "Perks/Styles/Inspiration/MagicalFootwear",
+      "tooltip_key": "perk_long_desc_8304",
+      "tooltip_sha256": "94a832b081b5db655df9d8f32f30d5c602bc64af4e21be6140c1cdc15aafe04f"
+    },
+    "8347": {
+      "name": "CosmicInsight",
+      "display_name": "Cosmic Insight",
+      "kind": "no_separate_spell_hit",
+      "effect": "summoner_and_item_haste",
+      "parameters": {
+        "SummonerHaste": 18.0,
+        "ItemHaste": 10.0
+      },
+      "record": "Perks/Styles/Inspiration/CosmicInsight",
+      "tooltip_key": "perk_long_desc_CosmicInsight",
+      "tooltip_sha256": "aa0dd7dbb4267cdfbd7a9dd2527f0aa2dfdf60054de61738580b937a24af249d"
+    },
+    "5008": {
+      "name": "Adaptive",
+      "display_name": "Adaptive Force",
+      "kind": "no_separate_spell_hit",
+      "effect": "adaptive_stats_in_panel",
+      "parameters": {
+        "StatGain2": 9.0
+      },
+      "record": "Perks/StatMods/Adaptive",
+      "tooltip_key": "perk_long_desc_StatModAdaptive",
+      "tooltip_sha256": "a2c78f12b23174c8a7bec8cd69bb80829789ba75896e40e3c164a64fdb3dccbd"
+    },
+    "5013": {
+      "name": "Tenacity",
+      "display_name": "Tenacity and Slow Resist",
+      "kind": "no_separate_spell_hit",
+      "effect": "tenacity_and_slow_resist",
+      "parameters": {
+        "StatGain": 15.0
+      },
+      "record": "Perks/StatMods/Tenacity",
+      "tooltip_key": "perk_short_desc_StatModTenacity",
+      "tooltip_sha256": "d56cabf6c622818c309ad3c5375343e81599a031025c2758c5322aecde622e05"
+    },
+    "8126": {
+      "name": "CheapShot",
+      "display_name": "Cheap Shot",
+      "kind": "conditional_true_damage",
+      "damage_by_level": [
+        10.0,
+        12.058823529411764,
+        14.117647058823529,
+        16.176470588235293,
+        18.235294117647058,
+        20.294117647058826,
+        22.352941176470587,
+        24.411764705882355,
+        26.470588235294116,
+        28.529411764705884,
+        30.58823529411765,
+        32.64705882352941,
+        34.705882352941174,
+        36.76470588235294,
+        38.82352941176471,
+        40.88235294117647,
+        42.94117647058823,
+        45.0
+      ],
+      "cooldown_seconds": 4.0,
+      "trigger": "damaging an enemy champion after movement or action impairment",
+      "record": "Perks/Styles/Domination/CheapShot",
+      "tooltip_key": "perk_long_desc_CheapShot",
+      "tooltip_sha256": "fd612a766ec1cc650ca5c4aa9a35f7ddc132fbad8da66ff9eb41c842761d1f2b"
+    },
+    "8112": {
+      "name": "Electrocute",
+      "display_name": "Electrocute",
+      "kind": "conditional_adaptive_damage",
+      "damage_by_level": [
+        70.0,
+        80.0,
+        90.0,
+        100.0,
+        110.0,
+        120.0,
+        130.0,
+        140.0,
+        150.0,
+        160.0,
+        170.0,
+        180.0,
+        190.0,
+        200.0,
+        210.0,
+        220.0,
+        230.0,
+        240.0
+      ],
+      "bonus_ad_ratio": 0.1,
+      "ap_ratio": 0.05,
+      "window_seconds": 3.0,
+      "required_distinct_attacks_or_abilities": 3,
+      "cooldown_seconds": 20.0,
+      "record": "Perks/Styles/Domination/Electrocute",
+      "tooltip_key": "perk_long_desc_8112",
+      "tooltip_sha256": "6bcd3c36df230082d2210f3f83932ced9557672b0fa0001d030e3679e8a147ef"
+    },
+    "8237": {
+      "name": "Scorch",
+      "display_name": "Scorch",
+      "kind": "delayed_magic_damage",
+      "damage_by_level": [
+        20.0,
+        21.176470588235293,
+        22.352941176470587,
+        23.529411764705884,
+        24.705882352941178,
+        25.88235294117647,
+        27.058823529411764,
+        28.235294117647058,
+        29.411764705882355,
+        30.588235294117645,
+        31.764705882352942,
+        32.94117647058823,
+        34.11764705882353,
+        35.294117647058826,
+        36.470588235294116,
+        37.64705882352941,
+        38.82352941176471,
+        40.0
+      ],
+      "delay_seconds": 1.0,
+      "cooldown_seconds": 10.0,
+      "trigger": "next damaging ability hit on a champion",
+      "record": "Perks/Styles/Sorcery/Scorch",
+      "tooltip_key": "perk_long_desc_Scorch",
+      "tooltip_sha256": "4c7116d996a67f1fc15de8895aeaa9ac222ab41ecf256235429844d67ca2570d"
+    },
+    "8128": {
+      "name": "DarkHarvest",
+      "display_name": "Dark Harvest",
+      "kind": "dark_harvest",
+      "target_health_fraction_below": 0.5,
+      "base_damage": 30.0,
+      "damage_per_soul": 11.0,
+      "bonus_ad_ratio": 0.1,
+      "ap_ratio": 0.05,
+      "cooldown_seconds": 35.0,
+      "takedown_reset_seconds": 1.0,
+      "trigger": "damaging a low-health champion; use pre-proc soul count and evidence of trigger",
+      "record": "Perks/Styles/Domination/DarkHarvest",
+      "tooltip_key": "perk_long_desc_DarkHarvest",
+      "tooltip_sha256": "449a95b78e165111806ee4d5ac91d01219701c83a0df1f4ee396a2cba67a457c"
+    },
+    "8017": {
+      "name": "CutDown",
+      "display_name": "Cut Down",
+      "kind": "high_health_damage_amp",
+      "multiplier": 1.08,
+      "target_health_fraction_above": 0.6,
+      "sample": "target_before_each_hit",
+      "validated_damage_types": [
+        "physical",
+        "magic",
+        "true"
+      ],
+      "record": "Perks/Styles/Precision/CutDown",
+      "tooltip_key": "perk_long_desc_CutDown",
+      "tooltip_sha256": "e269b8bf72add9e0d458b052f8d1df1fddb190c9992045854137f9fa8c5a7d8d"
+    },
+    "8143": {
+      "name": "SuddenImpact",
+      "display_name": "Sudden Impact",
+      "kind": "post_mobility_true_damage",
+      "damage_by_level": [
+        20.0,
+        23.529411764705884,
+        27.058823529411764,
+        30.588235294117645,
+        34.11764705882353,
+        37.64705882352941,
+        41.17647058823529,
+        44.705882352941174,
+        48.23529411764706,
+        51.76470588235294,
+        55.294117647058826,
+        58.8235294117647,
+        62.35294117647059,
+        65.88235294117646,
+        69.41176470588235,
+        72.94117647058823,
+        76.47058823529412,
+        80.0
+      ],
+      "armed_seconds": 4.0,
+      "cooldown_seconds": 10.0,
+      "trigger": "damaging attack or ability on champion after dash/leap/blink/teleport or leaving stealth",
+      "record": "Perks/Styles/Domination/SuddenImpact",
+      "tooltip_key": "perk_long_desc_SuddenImpact",
+      "tooltip_sha256": "cb52519e6e5046ae89de7692a33a6c9343e74eab35d66b1a9d9e9a391fbc8d12"
+    },
+    "8299": {
+      "name": "LastStand",
+      "display_name": "Last Stand",
+      "kind": "caster_low_health_amp",
+      "min_bonus": 0.05,
+      "max_bonus": 0.11,
+      "below_health": 0.6,
+      "max_at_health": 0.3,
+      "unreviewed": "intermediate health curve",
+      "record": "Perks/Styles/Precision/LastStand",
+      "tooltip_key": "perk_long_desc_8234",
+      "tooltip_sha256": "f3f16da083e66f12b09271a1bd04b616ee4c8af8ae7a6987ebf2494a95224382"
+    },
+    "8005": {
+      "name": "PressTheAttack",
+      "display_name": "Press the Attack",
+      "kind": "consecutive_attacks_and_amp",
+      "attacks": 3,
+      "adaptive_level_endpoints": [
+        40.0,
+        160.0
+      ],
+      "multiplier": 1.08,
+      "trigger": "consecutive basic attacks on one champion; amplification until leaving champion combat",
+      "unreviewed": "interaction between triggering hit, proc, subsequent hits and combat resets",
+      "record": "Perks/Styles/Precision/PressTheAttack",
+      "tooltip_key": "perk_long_desc_PressTheAttack",
+      "tooltip_sha256": "e6ae91d54d7113f9bf5a257b831ee37c8b6cfe1b31fcfa6b7337f35ef8b4e53e"
+    },
+    "8369": {
+      "name": "FirstStrike",
+      "display_name": "First Strike",
+      "kind": "first_strike",
+      "grace_seconds": 0.25,
+      "duration_seconds": 3.0,
+      "extra_true_fraction": 0.07,
+      "cooldown_endpoints": [
+        25.0,
+        15.0
+      ],
+      "unreviewed": "eligible damage basis, ordering, denial and nested proc exclusions",
+      "record": "Perks/Styles/Inspiration/FirstStrike",
+      "tooltip_key": "perk_long_desc_FirstStrike",
+      "tooltip_sha256": "d3e13d9659612129ecb0081e09a3406cebe76346b61bf1967e796145a7009b85"
+    },
+    "8229": {
+      "name": "ArcaneComet",
+      "display_name": "Arcane Comet",
+      "kind": "comet_distance_damage",
+      "damage_by_level": [
+        15.0,
+        20.0,
+        25.0,
+        30.0,
+        35.0,
+        40.0,
+        45.0,
+        50.0,
+        55.0,
+        60.0,
+        65.0,
+        70.0,
+        75.0,
+        80.0,
+        85.0,
+        90.0,
+        95.0,
+        100.0
+      ],
+      "bonus_ad_ratio": 0.1,
+      "ap_ratio": 0.05,
+      "max_distance": 750.0,
+      "max_bonus": 1.0,
+      "cooldown_endpoints": [
+        20.0,
+        8.0
+      ],
+      "unreviewed": "distance sampled at cast or impact, distance curve, cooldown reductions and hit",
+      "record": "Perks/Styles/Sorcery/ArcaneComet",
+      "tooltip_key": "perk_long_desc_ArcaneComet",
+      "tooltip_sha256": "9b4bb71f85d95c03344e7cf023355ccee5c3c1b2a15b36fb6081ca0e2185e8ca"
+    },
+    "8214": {
+      "name": "SummonAery",
+      "display_name": "Summon Aery",
+      "kind": "aery_damage_or_shield",
+      "damage_by_level": [
+        10.0,
+        12.352941176470589,
+        14.705882352941178,
+        17.058823529411764,
+        19.411764705882355,
+        21.764705882352942,
+        24.11764705882353,
+        26.470588235294116,
+        28.823529411764707,
+        31.176470588235293,
+        33.529411764705884,
+        35.88235294117647,
+        38.23529411764706,
+        40.58823529411765,
+        42.94117647058823,
+        45.294117647058826,
+        47.64705882352941,
+        50.0
+      ],
+      "bonus_ad_ratio": 0.1,
+      "ap_ratio": 0.05,
+      "trigger": "ready once Aery returns; share readiness with ally shields",
+      "unreviewed": "travel, return, target and branch",
+      "record": "Perks/Styles/Sorcery/SummonAery",
+      "tooltip_key": "perk_long_desc_SummonAery",
+      "tooltip_sha256": "2af92f42f2f01a2b52f7385b59d2071754250632b6b0e64d8a42dda30fb5af70"
+    },
+    "8473": {
+      "name": "BonePlating",
+      "display_name": "Bone Plating",
+      "kind": "target_block_after_initial_hit",
+      "hits": 3,
+      "block_level_endpoints": [
+        30.0,
+        60.0
+      ],
+      "duration_seconds": 1.5,
+      "cooldown_seconds": 55.0,
+      "trigger": "subsequent hits from the same champion",
+      "unreviewed": "mitigation order and attack grouping",
+      "record": "Perks/Styles/Resolve/BonePlating",
+      "tooltip_key": "perk_long_desc_BonePlating",
+      "tooltip_sha256": "245ffc19a772e94d5952451b1dce235310fd894ae84d6dd2e35f8b1b867bab3d"
+    },
+    "8139": {
+      "name": "TasteOfBlood",
+      "display_name": "Taste of Blood",
+      "kind": "no_separate_spell_hit",
+      "effect": "healing",
+      "record": "Perks/Styles/Domination/TasteOfBlood",
+      "tooltip_key": "perk_long_desc_TasteOfBlood",
+      "tooltip_sha256": "aa7f5b532158a815a36697a076b69f9edda8ac1a8395514cb65add9c9361c4a8"
+    },
+    "8140": {
+      "name": "GrislyMementos",
+      "display_name": "Grisly Mementos",
+      "kind": "no_separate_spell_hit",
+      "effect": "trinket_haste",
+      "record": "Perks/Styles/Domination/GrislyMementos",
+      "tooltip_key": "perk_long_desc_GrislyMementos",
+      "tooltip_sha256": "916662b4407cef9443f59987fd70c33c6e7231d6d75623c6c1226b240ec27309"
+    },
+    "8137": {
+      "name": "SixthSense",
+      "display_name": "Sixth Sense",
+      "kind": "no_separate_spell_hit",
+      "effect": "ward_detection",
+      "record": "Perks/Styles/Domination/SixthSense",
+      "tooltip_key": "perk_long_desc_SixthSense",
+      "tooltip_sha256": "af42879e5119c9298a9ca78dcd47d5a86317fcae44b49c0937b1bed8e900fd9f"
+    },
+    "8135": {
+      "name": "TreasureHunter",
+      "display_name": "Treasure Hunter",
+      "kind": "no_separate_spell_hit",
+      "effect": "takedown_gold",
+      "record": "Perks/Styles/Domination/TreasureHunter",
+      "tooltip_key": "perk_long_desc_TreasureHunter",
+      "tooltip_sha256": "18297f620bc161d7b93692c1ad9af10c17e3993e64039b31f14ba541a4d11358"
+    },
+    "8105": {
+      "name": "RelentlessHunter",
+      "display_name": "Relentless Hunter",
+      "kind": "no_separate_spell_hit",
+      "effect": "out_of_combat_speed",
+      "record": "Perks/Styles/Domination/RelentlessHunter",
+      "tooltip_key": "perk_long_desc_8105",
+      "tooltip_sha256": "14597dc6d3053d92e1922a5cc0b99bf67703a3ef410cdbda674dd8613b3f95d0"
+    },
+    "8106": {
+      "name": "UltimateHunter",
+      "display_name": "Ultimate Hunter",
+      "kind": "no_separate_spell_hit",
+      "effect": "ultimate_haste",
+      "record": "Perks/Styles/Domination/UltimateHunter",
+      "tooltip_key": "perk_long_desc_UltimateHunter",
+      "tooltip_sha256": "7c238490553cf9bf8cf0bc81682c4ff553a94b1a34e607f6da52cd5961945211"
+    },
+    "8009": {
+      "name": "PresenceOfMind",
+      "display_name": "Presence of Mind",
+      "kind": "no_separate_spell_hit",
+      "effect": "resource_restore",
+      "record": "Perks/Styles/Precision/PresenceOfMind",
+      "tooltip_key": "perk_long_desc_PresenceOfMind",
+      "tooltip_sha256": "d40e51db5313f89663ad8c9e4271281089e78d68916e27b2e85a6c3605015882"
+    },
+    "8210": {
+      "name": "Transcendence",
+      "display_name": "Transcendence",
+      "kind": "no_separate_spell_hit",
+      "effect": "haste_and_basic_cooldown",
+      "record": "Perks/Styles/Sorcery/Transcendence",
+      "tooltip_key": "perk_long_desc_Transcendence",
+      "tooltip_sha256": "8c2fabbe046941281582cf7c5c2ea565b86823eeda7e8968e3909b9f7fd3ad93"
+    },
+    "8226": {
+      "name": "ManaflowBand",
+      "display_name": "Manaflow Band",
+      "kind": "no_separate_spell_hit",
+      "effect": "maximum_mana_and_restore",
+      "record": "Perks/Styles/Sorcery/ManaflowBand",
+      "tooltip_key": "perk_long_desc_8226",
+      "tooltip_sha256": "85fb8867b0ef7f543e52b27d1e5fc47b4929d83e58d4af25bdcbb13bf6907769"
+    },
+    "5001": {
+      "name": "HealthScaling",
+      "display_name": "Health Scaling",
+      "kind": "no_separate_spell_hit",
+      "effect": "health_in_panel",
+      "record": "Perks/StatMods/HealthScaling",
+      "tooltip_key": "perk_long_desc_StatModHealthScaling",
+      "tooltip_sha256": "5cf960aaf9801fa9d5917ff29ca5f188b6686635bab7af8764a3255cb9ac0763"
+    },
+    "5011": {
+      "name": "Health",
+      "display_name": "Health",
+      "kind": "no_separate_spell_hit",
+      "effect": "health_in_panel",
+      "record": "Perks/StatMods/Health",
+      "tooltip_key": "perk_short_desc_StatModHealth",
+      "tooltip_sha256": "ac85f0c0319c3d57c494c561653255349dd78c6889e58511079c4ef9c34f11ef"
+    },
+    "5010": {
+      "name": "MovementSpeed",
+      "display_name": "Move Speed",
+      "kind": "no_separate_spell_hit",
+      "effect": "move_speed_in_panel",
+      "record": "Perks/StatMods/MovementSpeed",
+      "tooltip_key": "perk_long_desc_StatModMovementSpeed",
+      "tooltip_sha256": "d39f1fe9ecea27a69e5432e788e447b93a267d9b18209fe9e23e1cb45ae19543"
+    },
+    "5007": {
+      "name": "CDRScaling",
+      "display_name": "Ability Haste",
+      "kind": "no_separate_spell_hit",
+      "effect": "ability_haste_in_panel",
+      "record": "Perks/StatMods/CDRScaling",
+      "tooltip_key": "perk_long_desc_StatModCooldownReductionScaling",
+      "tooltip_sha256": "17853625fed7ec0b41cf2a72fd15b4c6b4c39d58877ca25d06ff791458c6724b"
+    },
+    "5005": {
+      "name": "AttackSpeed",
+      "display_name": "Attack Speed",
+      "kind": "no_separate_spell_hit",
+      "effect": "attack_speed_in_panel",
+      "record": "Perks/StatMods/AttackSpeed",
+      "tooltip_key": "perk_long_desc_StatModAttackSpeed",
+      "tooltip_sha256": "a52cbdf660aa41f07404fda27875ed7405747143c8b6d6aaa745be4f7a208ec1"
+    },
+    "8224": {
+      "name": "NullifyingOrb",
+      "display_name": "Axiom Arcanist",
+      "kind": "ultimate_amplifier",
+      "single_target_bonus": 0.12,
+      "aoe_bonus": 0.08,
+      "takedown_cooldown_reduction_percent": 7.0,
+      "unreviewed": "per-component ultimate damage tag, single-target or area classification",
+      "record": "Perks/Styles/Sorcery/NullifyingOrb",
+      "tooltip_key": "perk_long_desc_AxiomArcanist",
+      "tooltip_sha256": "65c4ea9d60f9413df88105673afa9e04e0d7a4ae669c188cc0bc056c7a7d58c9"
+    },
+    "8234": {
+      "name": "Celerity",
+      "display_name": "Celerity",
+      "kind": "no_separate_spell_hit",
+      "effect": "move_speed_in_panel",
+      "record": "Perks/Styles/Sorcery/Celerity",
+      "tooltip_key": "perk_long_desc_Celerity",
+      "tooltip_sha256": "f6eecd6f1cf3490a7052284cec960ab7d6718f5629a768e6a78bdbacafba9786"
+    },
+    "8230": {
+      "name": "PhaseRush",
+      "display_name": "Stormraider's Surge",
+      "kind": "no_separate_spell_hit",
+      "effect": "move_speed_and_slow_resist",
+      "record": "Perks/Styles/Sorcery/PhaseRush",
+      "tooltip_key": "perk_long_desc_PhaseRush",
+      "tooltip_sha256": "23007c3adc1891d59ab75d0877ac332a056769834b376785ee1a617803532701"
+    },
+    "8233": {
+      "name": "AbsoluteFocus",
+      "display_name": "Absolute Focus",
+      "kind": "no_separate_spell_hit",
+      "effect": "health_based_adaptive_stats_in_panel",
+      "record": "Perks/Styles/Sorcery/AbsoluteFocus",
+      "tooltip_key": "perk_long_desc_8233",
+      "tooltip_sha256": "3ac2eb34405d78b22ea0ac2a1a10c36cc80f09a0513946b6de49cad6e61538f2"
+    },
+    "8236": {
+      "name": "GatheringStorm",
+      "display_name": "Gathering Storm",
+      "kind": "no_separate_spell_hit",
+      "effect": "time_based_adaptive_stats_in_panel",
+      "record": "Perks/Styles/Sorcery/GatheringStorm",
+      "tooltip_key": "perk_long_desc_GatheringStorm",
+      "tooltip_sha256": "971db41c60018c8057c570a420e325d6687afb4f0f13655b37d7b147dc8eae9a"
+    },
+    "8439": {
+      "name": "Aftershock",
+      "display_name": "Aftershock",
+      "kind": "immobilize_resists_and_delayed_burst",
+      "delay_seconds": 2.5,
+      "magic_damage_level_endpoints": [
+        25.0,
+        120.0
+      ],
+      "bonus_health_ratio": 0.08,
+      "cooldown_seconds": 20.0,
+      "flat_resists": 45.0,
+      "bonus_resist_ratio": 0.75,
+      "unreviewed": "actual immobilization, defense caps, delayed blast hit and additional mitigation",
+      "record": "Perks/Styles/Resolve/Aftershock",
+      "tooltip_key": "perk_long_desc_VeteranAftershock",
+      "tooltip_sha256": "ee192a1237390b343e18c4f836951db120ea49914c8fa361d5f6eee6f38242f3"
+    },
+    "8463": {
+      "name": "FontOfLife",
+      "display_name": "Font of Life",
+      "kind": "no_separate_spell_hit",
+      "effect": "self_and_ally_heal",
+      "record": "Perks/Styles/Resolve/FontOfLife",
+      "tooltip_key": "perk_long_desc_FontOfLife",
+      "tooltip_sha256": "8153c6d97afbb7d946acfdd61d7396bfb45dcc862a789048b36c41260165dcca"
+    },
+    "8242": {
+      "name": "Unflinching",
+      "display_name": "Unflinching",
+      "kind": "no_separate_spell_hit",
+      "effect": "conditional_defenses",
+      "record": "Perks/Styles/Resolve/Unflinching",
+      "tooltip_key": "perk_long_desc_Unflinching",
+      "tooltip_sha256": "11827145d523fa6d7c16404e715ac04c874a7857c99b44d779cec5cf2683e1a2"
+    },
+    "8453": {
+      "name": "Revitalize",
+      "display_name": "Revitalize",
+      "kind": "no_separate_spell_hit",
+      "effect": "outgoing_and_incoming_sustain",
+      "record": "Perks/Styles/Resolve/Revitalize",
+      "tooltip_key": "perk_long_desc_Revitalize",
+      "tooltip_sha256": "22aaa9c31d28a8d768211467c2c52bfc70c0ec58f00ffabd34c36a84ae8a5686"
+    },
+    "8401": {
+      "name": "ShieldBash",
+      "display_name": "Shield Bash",
+      "kind": "new_shield_next_attack",
+      "damage_level_endpoints": [
+        5.0,
+        30.0
+      ],
+      "bonus_health_percent": 2.5,
+      "new_shield_percent": 15.0,
+      "window_after_shield_ends_seconds": 2.0,
+      "unreviewed": "new shield, shield amount and empowered attack consumption",
+      "record": "Perks/Styles/Resolve/ShieldBash",
+      "tooltip_key": "perk_long_desc_ShieldBash",
+      "tooltip_sha256": "7314970a75c046c94a6133a64b91acf355f86b2ec6025f8b1d7a53ec4c125ec1"
+    },
+    "8429": {
+      "name": "Conditioning",
+      "display_name": "Conditioning",
+      "kind": "no_separate_spell_hit",
+      "effect": "defensive_stats_in_panel",
+      "record": "Perks/Styles/Resolve/Conditioning",
+      "tooltip_key": "perk_long_desc_Conditioning",
+      "tooltip_sha256": "49e0eb8d9214d4149046257a8804f291a3683b10443ffaa131afa169323a116f"
+    },
+    "8008": {
+      "name": "LethalTempo",
+      "display_name": "Lethal Tempo",
+      "kind": "stacked_attack_speed_and_on_attack",
+      "max_stacks": 6,
+      "duration_seconds": 6.0,
+      "melee_level_endpoints": [
+        9.0,
+        30.0
+      ],
+      "ranged_level_endpoints": [
+        6.0,
+        24.0
+      ],
+      "unreviewed": "pre-attack stacks, attack-speed contribution and on-attack eligibility",
+      "record": "Perks/Styles/Precision/LethalTempo",
+      "tooltip_key": "perk_long_desc_LethalTempo",
+      "tooltip_sha256": "56d81de5972717989a6eaf309e2d61b6d1cacec534e272744025d4dbfed0f924"
+    },
+    "9103": {
+      "name": "LegendBloodline",
+      "display_name": "Legend: Bloodline",
+      "kind": "no_separate_spell_hit",
+      "effect": "lifesteal_and_health_in_panel",
+      "record": "Perks/Styles/Precision/LegendBloodline",
+      "tooltip_key": "perk_long_desc_LegendBloodline",
+      "tooltip_sha256": "152d5d3e6157aae63d9c5e632b9817cc48e213bbf5483608a7a5067bb5140a61"
+    },
+    "9105": {
+      "name": "LegendHaste",
+      "display_name": "Legend: Haste",
+      "kind": "no_separate_spell_hit",
+      "effect": "basic_ability_haste",
+      "record": "Perks/Styles/Precision/LegendHaste",
+      "tooltip_key": "perk_long_desc_LegendHaste",
+      "tooltip_sha256": "cee725739fee69f01105edd24a79d19d916dfa4a6ac9c5880607e6fd4d338b8c"
+    },
+    "8321": {
+      "name": "CashBack",
+      "display_name": "Cash Back",
+      "kind": "no_separate_spell_hit",
+      "effect": "purchase_refund",
+      "record": "Perks/Styles/Inspiration/CashBack",
+      "tooltip_key": "perk_long_desc_FuturesMarket",
+      "tooltip_sha256": "ae01d203516f420ec3caaa4ed56f7c2160b6bdab23543c95ab3443c1e945c26b"
+    }
+  }
+}

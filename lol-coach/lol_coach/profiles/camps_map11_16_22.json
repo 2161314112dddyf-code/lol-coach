@@ -1,0 +1,137 @@
+{
+  "build": "16.22.836.1077",
+  "map_id": 11,
+  "config_path": "data/maps/shipping/map11/map11.bin",
+  "config_sha256": "cddcfa0a51b90ecfed85f6cc3ebaeb5efa99a449c93312c2017ce84e7945c684",
+  "locator_entry": "0xa250382e",
+  "camps": [
+    {
+      "kind": "blue",
+      "locator": "OrderBlueBuff1",
+      "xz": [
+        3821.488525390625,
+        7901.05419921875
+      ]
+    },
+    {
+      "kind": "wolves",
+      "locator": "OrderWolves1",
+      "xz": [
+        3780.6279296875,
+        6443.98388671875
+      ]
+    },
+    {
+      "kind": "raptors",
+      "locator": "OrderVultures1",
+      "xz": [
+        6706.67822265625,
+        5521.0439453125
+      ]
+    },
+    {
+      "kind": "red",
+      "locator": "OrderRedBuff1",
+      "xz": [
+        7765.244140625,
+        4020.18701171875
+      ]
+    },
+    {
+      "kind": "krugs",
+      "locator": "OrderGolems1",
+      "xz": [
+        8482.470703125,
+        2705.947998046875
+      ]
+    },
+    {
+      "kind": "dragon",
+      "locator": "Dragon",
+      "xz": [
+        9866.1484375,
+        4414.01416015625
+      ]
+    },
+    {
+      "kind": "blue",
+      "locator": "ChaosBlueBuff1",
+      "xz": [
+        11031.728515625,
+        6990.84423828125
+      ]
+    },
+    {
+      "kind": "wolves",
+      "locator": "ChaosWolves1",
+      "xz": [
+        11008.15234375,
+        8387.408203125
+      ]
+    },
+    {
+      "kind": "raptors",
+      "locator": "ChaosVultures1",
+      "xz": [
+        7986.9970703125,
+        9471.388671875
+      ]
+    },
+    {
+      "kind": "red",
+      "locator": "ChaosRedBuff1",
+      "xz": [
+        7101.869140625,
+        10900.546875
+      ]
+    },
+    {
+      "kind": "krugs",
+      "locator": "ChaosGolems1",
+      "xz": [
+        6317.09228515625,
+        12146.4580078125
+      ]
+    },
+    {
+      "kind": "baron",
+      "locator": "Baron1",
+      "xz": [
+        5007.1240234375,
+        10471.4462890625
+      ]
+    },
+    {
+      "kind": "gromp",
+      "locator": "OrderOwlBear",
+      "xz": [
+        2110.6279296875,
+        8450.984375
+      ]
+    },
+    {
+      "kind": "gromp",
+      "locator": "ChaosOwlBear",
+      "xz": [
+        12703.62890625,
+        6443.98388671875
+      ]
+    },
+    {
+      "kind": "scuttle",
+      "locator": "DragonEelCamp",
+      "xz": [
+        10500.0,
+        5170.0
+      ]
+    },
+    {
+      "kind": "scuttle",
+      "locator": "BaronEelCamp",
+      "xz": [
+        4400.0,
+        9600.0
+      ]
+    }
+  ]
+}

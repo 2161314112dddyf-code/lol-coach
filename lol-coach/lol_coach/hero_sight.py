@@ -1,18 +1,20 @@
 """Source-bound enemy position samples. Never expose a path's destination."""
 from collections import defaultdict
 
-from .movement_1622 import PANTHEON, TEN_PLAYER, iter_path_samples
+from .movement_1622 import PANTHEON, RED_JUNGLE_REPLAY, TEN_PLAYER, iter_path_samples
 
 
 def reviewed_heroes(digest):
     if digest == PANTHEON:
         return {0x400000ae: dict(name='Pantheon', team_id=100, basis='single-player roster, cast and recall anchors')}
-    if digest != TEN_PLAYER:
+    if digest == TEN_PLAYER:
+        names = ('Aatrox', 'Jayce', 'TwistedFate', 'Caitlyn', 'Pantheon',
+                 'Yone', 'MasterYi', 'Katarina', 'KogMaw', 'TahmKench')
+    elif digest == RED_JUNGLE_REPLAY:
+        names = ('Darius', 'Amumu', 'TwistedFate', 'Jhin', 'Karma',
+                 'Jayce', 'Pantheon', 'Ahri', 'Ezreal', 'Nautilus')
+    else:
         return {}
-    # Both fountain groups and the ten individual ward-placement totals
-    # independently identify these actors in this match.
-    names = ('Aatrox', 'Jayce', 'TwistedFate', 'Caitlyn', 'Pantheon',
-             'Yone', 'MasterYi', 'Katarina', 'KogMaw', 'TahmKench')
     return {0x400000ae + i: dict(name=name, team_id=100 if i < 5 else 200,
             basis='reviewed match roster, native fountain side and per-actor ward counts') for i, name in enumerate(names)}
 
@@ -84,6 +86,12 @@ def native_vision_snapshot(index, team, player, at):
                            visibility=visibility, inventory={}))
     if owner is None:
         raise ValueError("Choose a verified own-team champion name or network ID on a reviewed replay")
+    from .player_state import load_own_observations
+    from .native_kill_feed import load_feed
+    combat, public_evidence = load_feed(index, roster, at)
+    evidence.update(public_evidence)
     return dict(schema='macro-snapshot/v1', version=index['version'], source_sha256=index['source_sha256'],
                 context=dict(at_seconds=at, observer_team_id=team, player_entity_id=owner),
-                heroes=heroes, recent_public_combat=[], evidence=evidence)
+                heroes=heroes, recent_public_combat=combat or [], evidence=evidence,
+                public_kill_feed_missing=combat is None,
+                own_native_observations=load_own_observations(index, team, owner, at))

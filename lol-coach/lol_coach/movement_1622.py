@@ -13,9 +13,10 @@ from .replay_container import container_info, packets
 VERSION = '16.22.836.1077'
 OPCODE = 0x482
 PANTHEON = '2febca32e5e32b182ded7dcccdcc0f2c41405d51e41115b058a5f2d7824e3692'
-# All three contain the reviewed Map11 western and eastern Gromp spawn signatures.
+RED_JUNGLE_REPLAY = '02fe29bdcd74eb69d182d5f22f2f2175f07a37a89df2cb44c83c6a5d3e0c744c'
+# Each contains the reviewed Map11 western and eastern Gromp spawn signatures.
 MAP11_REPLAYS = {PANTHEON, 'de8bd7553e8847751f52e2877bc0b320825dc92cc8554f412d7769743cb68c7b',
-                 'cf9bd72a98818d85f6ccf800c929142579831713d9e0c6e9c6194eac20f98e4f'}
+                 'cf9bd72a98818d85f6ccf800c929142579831713d9e0c6e9c6194eac20f98e4f', RED_JUNGLE_REPLAY}
 # Integer part of the X/Z midpoint in both reviewed Map11 navgrid headers.
 ORIGIN = (7358, 7412)
 WIRE_TO_PLAIN = bytes.fromhex(
@@ -156,9 +157,9 @@ def _sample_ward_positions(raw, wards):
 
 TEN_PLAYER = 'cf9bd72a98818d85f6ccf800c929142579831713d9e0c6e9c6194eac20f98e4f'
 
-# Verified by single-caster 0x2f6 anchors. The tenth player had no such cast.
+# Verified by single-caster 0x2f6 anchors across the two ten-player replays.
 SIGHT_OWNERS = {
-    0x06:0x400000ae, 0x46:0x400000b0, 0x66:0x400000b1,
+    0x06:0x400000ae, 0x26:0x400000af, 0x46:0x400000b0, 0x66:0x400000b1,
     0x85:0x400000b2, 0xa5:0x400000b3, 0xc5:0x400000b4,
     0xe5:0x400000b5, 0x05:0x400000b6, 0x25:0x400000b7,
 }
