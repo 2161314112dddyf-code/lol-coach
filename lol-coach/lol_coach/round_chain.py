@@ -135,6 +135,8 @@ def attach_previous_plan(current_bundle, previous_bundle=None, previous_answer=N
 
         card = {key: deepcopy(previous_answer[key]) for key in (
             'objective', 'role_assignments', 'options', 'recommendation', 'open_questions')}
+        if 'follow_through' in previous_answer:
+            card['follow_through'] = deepcopy(previous_answer['follow_through'])
         if 'macro_round' in previous_answer:
             # The older change IDs belong to the pair of frames before this
             # one. Carry the conclusion and its evidence from the previous
@@ -144,6 +146,13 @@ def attach_previous_plan(current_bundle, previous_bundle=None, previous_answer=N
         if ('lane_plan' in previous_answer and task.get('bottom_lane_actors') is not None
                 and task['bottom_lane_actors'] == prior['task'].get('bottom_lane_actors')):
             card['lane_plan'] = deepcopy(previous_answer['lane_plan'])
+        if (task.get('team_coordination_review') == 'team-coordination/v1'
+                and 'team_coordination' in previous_answer):
+            # Carry the prior suggestion, never an inferred message or commitment.
+            # Its evidence stays in the validated previous card and historical_facts.
+            card['previous_coordination_suggestion'] = {
+                key: deepcopy(value) for key, value in previous_answer['team_coordination'].items()
+                if key in ('mode', 'recipient_id', 'intended_action', 'message', 'trigger', 'response_cue', 'fallback')}
 
         def remap(node):
             if isinstance(node, list):
@@ -185,6 +194,15 @@ def attach_previous_plan(current_bundle, previous_bundle=None, previous_answer=N
             'execution_status': 'unknown',
             'semantics': '先前模型建议与历史观测；不是玩家执行、成功或承诺的证据。',
         }
+        if prior['task'].get('knowledge_handbook'):
+            from .coaching_knowledge import cited_knowledge
+            task['previous_plan']['historical_knowledge'] = {
+                'version': prior['task']['knowledge_handbook']['version'],
+                'previous_frame_id': prior['frame_id'],
+                'references': {rid: deepcopy(prior['references'][rid])
+                               for rid in sorted(cited_knowledge(previous_answer, prior))},
+                'semantics': '旧知识引用按这些历史版本与哈希解释；不可用当前同名卡替代旧正文。当前建议须重读本帧卡。',
+            }
         task['round_transition'] = {
             'previous_frame_id': prior['frame_id'],
             'elapsed_seconds': at - prior['decision']['at_seconds'], 'changes': changes,

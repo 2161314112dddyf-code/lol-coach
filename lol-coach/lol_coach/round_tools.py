@@ -9,6 +9,7 @@ from .review_sightings import enemy_sightings
 from .round_chain import _check_bundle, _source
 from .round_options import compare_round_options
 from .round_plan import review_round_plan
+from .team_coordination import team_coordination
 from .review_abilities import SLOTS, ability_damage, ability_parameters, pin_damage_profiles
 
 
@@ -19,6 +20,8 @@ def _definition(name, description, **properties):
 
 
 ROUND_TOOLS = [*TOOLS,
+    _definition('review_personal_action',
+                'Read the selected player movement history up to this frame. Compare continuing the current action with changing it. Command endpoints are not observed arrivals.'),
     _definition('get_ability_parameters',
                 'Read one lineup champion’s patch-pinned spell, published ranges and base cooldowns by rank, and reviewed damage component names and formulas when available.',
                 champion={'type':'string','minLength':1}, slot={'type':'string','enum':list(SLOTS)}),
@@ -199,10 +202,23 @@ def round_call(bundle, name, arguments):
                 'default_help_seconds': default['help_seconds'], 'option': option}
     if arguments:
         raise ValueError('round_scope_is_locked')
+    if name == 'review_personal_action':
+        from .personal_episode import personal_context
+        return personal_context(frame)
     if name == 'compare_round_options':
         return compare_round_options(frame, **frame['task']['round_comparison'])
     if name == 'review_round_plan':
-        return review_round_plan(bundle)
+        plan = review_round_plan(bundle)
+        if frame['task'].get('knowledge_handbook'):
+            plan['knowledge_handbook'] = deepcopy(frame['task']['knowledge_handbook'])
+            plan['previous_follow_through'] = deepcopy((frame['task'].get('previous_plan') or {}).get(
+                'decision_card', {}).get('follow_through'))
+        if frame['task'].get('team_coordination_review') == 'team-coordination/v1':
+            from .round_options import resource_window
+            comparison = compare_round_options(frame, **frame['task']['round_comparison'])
+            windows = resource_window(frame, comparison, self_state=plan['player_action_context']['self_state'])
+            plan['team_coordination'] = team_coordination(bundle, plan, windows)
+        return plan
     if name == 'enemy_sightings':
         return enemy_sightings(frame)
     raise ValueError('unknown_round_tool')

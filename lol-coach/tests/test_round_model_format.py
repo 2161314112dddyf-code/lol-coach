@@ -191,3 +191,44 @@ def test_final_slot_only_returns_an_answer_or_explains_missing_reads():
     assert '可调用工具' not in messages[-1]['content'] and '玩家现在要做的第一步' in messages[-1]['content']
     with pytest.raises(ValueError, match='invalid_remaining_model_calls'):
         prepare_round_request(req,remaining_calls=0)
+
+
+def test_personal_wire_preserves_an_original_action_and_a_stop_without_a_card_read():
+    from lol_coach.coaching_knowledge import attach_handbook
+    from lol_coach.execution_review import evidence_review
+    from lol_coach.reasoning_frame import digest
+    from test_personal_episode import pair
+
+    original, answer = pair()
+    bundle = attach_handbook(original)
+    frame = bundle['frame']
+    new_action = '你可以停在接应距离内，等对方先靠前再决定是否换血。'
+    preferred, fallback = 'change_action', 'continue_action'
+    answer['frame_id'] = frame['frame_id']
+    answer['immediate_action'] = new_action
+    next(o for o in answer['options'] if o['id'] == preferred)['action'] = new_action
+    answer['recommendation'].update(preferred_option_id=preferred, fallback_option_id=fallback,
+                                    switch_conditions=['对方先靠前时重估跟进距离。'])
+    answer['follow_through'] = dict(option_id=preferred, baseline_if_unchanged='继续现有行动会离开接应位置。',
+                                    steps=[], limits=['要等对方的下一次可见移动。'])
+    schema = output_schema(frame)
+    req = dict(messages=model_messages(bundle, schema), tools=ROUND_TOOLS, response_schema=schema)
+    record(req, 'review_personal_action')
+    messages, grammar = prepare_round_request(req, remaining_calls=1)
+    fields = grammar['properties']['answer']['properties']
+    assert 'decision_guidance' in messages[0]['content'] and 'steps=[]' in messages[0]['content']
+    assert fields['follow_through']['properties']['steps'].get('minItems', 0) == 0
+    assert all('enum' not in branch['properties']['action']
+               for branch in fields['options']['properties'][preferred]['anyOf'])
+    restored = expand_round_response(req, data(answer))['answer']
+    assert restored == answer
+    check = validate_decision(restored, frame)
+    assert check['status'] == 'PASS', check['errors']
+
+    def capture_review(request):
+        assert 'decision_guidance' in request['messages'][0]['content']
+        payload = json.loads(request['messages'][1]['content'])
+        assert payload['answer']['immediate_action'] == new_action and not payload['tool_receipts']
+        return dict(answer_sha256=digest(answer), accepted=True, issues=[])
+
+    evidence_review(bundle, dict(answer=restored, trace=[]), capture_review)

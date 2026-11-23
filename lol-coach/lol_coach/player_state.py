@@ -75,7 +75,7 @@ def own_live_sample(doc, clock, replay_sha256, team, player):
                 sha256=digest(dict(replay=replay_sha256, team=team, entity=player, time=when, value=value)))
 
 
-def load_own_observations(index, team, player, at, root=None):
+def load_own_observations(index, team, player, at, root=None, *, include_build_history=False):
     sha = index['source_sha256']
     if int(player, 16) not in reviewed_heroes(sha):
         return []
@@ -90,7 +90,9 @@ def load_own_observations(index, team, player, at, root=None):
         if (receipt.get('schema') != 'own-replay-state/v1' or receipt['source_sha256'] != sha
                 or receipt['team_id'] != team or receipt['entity_id'] != player or receipt['build'] != index['version']):
             raise ValueError('native_player_state_scope_mismatch')
-        eligible = [r for r in receipt['samples'] if 0 <= r['time'] <= at and at - r['time'] <= 1]
+        allow_history = include_build_history and source == 'native_replay_liveclient_allplayers_self'
+        eligible = [r for r in receipt['samples'] if 0 <= r['time'] <= at
+                    and (allow_history or at - r['time'] <= 1)]
         if eligible:
             newest = max(r['time'] for r in eligible)
             same_time = [r for r in eligible if r['time'] == newest]

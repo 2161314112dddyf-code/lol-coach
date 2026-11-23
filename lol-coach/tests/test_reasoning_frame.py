@@ -5,12 +5,41 @@ import json
 import pytest
 
 from lol_coach.macro_snapshot import build_snapshot
-from lol_coach.reasoning_frame import compile_frame, lookup_reference, model_messages
+from lol_coach.reasoning_frame import compile_frame, digest, lookup_reference, model_messages
 from test_macro_snapshot import bundles
 
 
 def snapshot(bundles, at=8):
     return build_snapshot(*bundles, at=at, team=100, player='self')
+
+
+def test_last_personal_build_only_supplies_dated_level_and_items(bundles):
+    s = snapshot(bundles)
+    at = s['context']['at_seconds']
+    value = dict(level=6, inventory=[dict(item_id=1001, count=1)], is_dead=True,
+                 respawn_timer_seconds=5, creep_score=17, summoner_spells=['Flash', 'Ignite'],
+                 rune_ids=dict(keystone=8112, primaryRuneTree=8100, secondaryRuneTree=8000))
+    def sample(when):
+        return dict(source='native_replay_liveclient_allplayers_self', time=when, value=value,
+                    sha256=digest(dict(replay=s['source_sha256'], team=100, entity='self', time=when, value=value)))
+    s['own_native_observations'] = [sample(at - 2)]
+    b = compile_frame(s)
+    me = next(h for h in b['frame']['lineup'] if h['entity_id'] == 'self')
+    history = [b['frame']['facts'][fid] for fid in me['history_fact_ids']]
+    build, = [r for r in history if r['field'] == 'last_observed_personal_build']
+    assert build['value'] == {'level': 6, 'inventory': value['inventory']}
+    assert build['age_seconds'] == 2 and build['temporal_scope'] == 'historical_sample'
+    from lol_coach.personal_episode import personal_context
+    tool = personal_context(b['frame'])
+    assert list(tool['own_state_samples'].values()) == [build]
+    assert not any(b['frame']['facts'][fid]['field'] in ('last_observed_personal_build', 'personal_client_state')
+                   for fid in me['current_fact_ids'])
+    s['own_native_observations'] = [sample(at)]
+    current = compile_frame(s)['frame']['facts'].values()
+    assert any(f['field'] == 'personal_client_state' and f['value']['is_dead'] for f in current)
+    s['own_native_observations'] = [sample(at + 1)]
+    with pytest.raises(ValueError, match='invalid_personal_native_observation'):
+        compile_frame(s)
 
 
 def test_future_hidden_metadata_and_source_hash_do_not_change_model_input(bundles):

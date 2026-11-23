@@ -1,6 +1,43 @@
 # 项目运行手册
 
-复盘实验入口更新于 2026-11-17。最新的个人复盘给出潘森一次下路支援的进场条件、伤害缺口和落地退路。[07:28 实战答卷](reports/潘森交战判断_20261117.md) · [项目现状](docs/PROJECT_SUMMARY.md) · [当前接管点](docs/CURRENT_TASK.md) · [文档索引](docs/INDEX.md)。以下命令在`lol-coach/`执行，输出路径使用尚不存在的新文件/目录。
+2026-11-19 起，正式会话自动接入[本地知识手册](docs/knowledge/README.md)。模型按需通过 `get_reference` 读取条件知识卡，并在 `follow_through` 给出首选之后的分支和下一次观察点。推完不等于进塔、预期回推不等于已发生。下一帧继承计划再核对事实；安静个人帧仍不强制展开全队联动。已有运行命令无需新增参数。[本轮检查与边界](reports/知识手册接入_20261119.md)
+
+复盘实验入口更新于 2026-11-18。个人行动模式已接入“近期动作 → 继续或改选 → 证据复核 → 封存 → 实际经过”。[两局实跑与边界](reports/个人行动链路实现_20261118.md) · [07:28 实战答卷](reports/潘森交战判断_20261117.md) · [当前接管点](docs/CURRENT_TASK.md) · [文档索引](docs/INDEX.md)。以下命令在`lol-coach/`执行，输出路径使用尚不存在的新文件/目录。
+
+### 复跑个人行动与赛后执行核对
+
+`--personal-actions` 默认围绕本人的操作。只有当时可证、会影响这一步的事件才会打开联动分析，写给谁、该说什么、等到什么变化就自己改选。普通补刀或清营直接给本人建议。所有卡封存后，执行报告才核对同局实际发出的信号和指定队友的后续位置。[个人复盘中的队友联动](docs/回合复盘方案_v0.1/AGENT_MCP_IMPLEMENTATION.md#个人决策如何考虑队友)
+
+本机已安装 MCP 的解释器如下；其他机器按后文安装项目的 `review-mcp,map` 依赖，再改用自己的解释器。以下命令准备红方打野潘森的四个时刻。小数参数加引号，避免 PowerShell 在传给 Python 前缩短精度。
+
+```powershell
+$py = 'data/private/agent_study_current/mcp-env/Scripts/python.exe'
+$r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'League of Legends/Replays/HN1-11468661236.rofl'
+$log = 'D:/WeGameApps/英雄联盟/Game/Logs/GameLogs/2026-11-14T20-24-44/2026-11-14T20-24-44_r3dlog.txt'
+$frames = 'data/private/reasoning/personal-' + (New-Guid)
+$out = 'data/private/reasoning_sessions/personal-' + (New-Guid)
+& $py -m scripts.prepare_personal_match --replay $r --game-log $log --at '738.6788940429688' '744.606' '750' '750.4241333007812' --output $frames
+& $py -m scripts.run_review_agent --sequence "$frames/sequence.json" --subject-replay $r --game-log $log --lane jungle --target dragon --help-seconds 5 --personal-actions --backend file --timeout 3600 --output $out
+```
+
+`file` 后端会等待模型读请求并回填文件，并非运行命令后自动获得云端模型。Codex 是本轮读写者。所有回复沿用 `{"request_id":"原请求ID","response":{"answer":规定对象}}`；查询用 `response.tool_requests`。依次处理各帧 `exchange` 和 `claim_exchange`，全部事前卡封存后才出现 `execution_exchange`。文件应原子写入，不能覆盖已有回执。已配置本机模型时可换成 `--backend ollama --model 模型名称`，其独立战术质量需另验。
+
+正式个人会话封存并回看后，打开输出根目录的 `player-review.md`。重点题会讲两条走法的收益与代价，后面紧跟实际发生的事。`execution-review.md` 保留逐点核对，`review.md` 保存事前计划。若会话已有封存结果，可运行 `python -m lol_coach.player_review 会话目录` 重新组稿。逐帧文件保留答案、证据复核与真实工具回执，方便回查；任一决策复核失败会阻止后续实况进入这次判断。
+
+个人整局使用 `--event-checkpoints` 自动选教学暂停点。加 `--schedule-only` 可先看 `schedule.json` 中的全部候选，以及 `selection.json` 中每一项保留或合并的理由。去掉 `--schedule-only` 即按所选时刻生成冻结帧与 `sequence.json`，后者可直接交给上面的 `--personal-actions` 命令。开发时需要给全部候选制帧可加 `--all-event-candidates`，检查指定时刻仍可用 `--at`。
+
+事件取点会把本人的求援、出发、撤退、推进和进攻信号合并到附近的暂停点，同区域的连续同类信号去重。候选只用于决定何时回看；是否需要展开联动由该时刻本人可知的事件决定。
+
+```powershell
+& $py -m scripts.prepare_personal_match --replay $r --game-log $log --event-checkpoints --schedule-only --output ('data/private/reasoning/schedule-' + (New-Guid))
+```
+
+本机本轮离线回归命令如下。每次换一个新的临时目录；`REVIEW_MCP_PYTHON` 指向带 MCP 依赖的解释器。
+
+```powershell
+$env:REVIEW_MCP_PYTHON = (Resolve-Path $py).Path
+.venv/Scripts/python.exe -m pytest -q --basetemp ('data/private/pytest-' + (New-Guid))
+```
 
 ### 更新复盘使用的公开数据
 
@@ -47,16 +84,17 @@ data/private/agent_study_current/mcp-env/Scripts/python.exe -m scripts.inspect_a
 
 ### 运行 2026-11-12 复盘 Agent 实验
 
-**从开局连续复盘一名玩家。** 以红方打野潘森这场十人局为例，下面的命令先准备同局同人的有序时刻，再通过正式 Agent 逐帧调用只读 MCP。默认每 150 秒取一次，另在本人请求协助后两次重看。每个时刻只是一个暂停点，是否换回合由前面的计划和本帧的新证据判断。
+**从开局连续复盘一名玩家。** 以红方打野潘森这场十人局为例，下面的命令先选出会影响本人走法的时刻，再通过正式 Agent 逐帧调用只读 MCP。平静期可抽查。新的暂停点可以续讲同一道题，是否换回合由先前计划和当时的信息判断。
 
 ```powershell
 $r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'League of Legends/Replays/HN1-11468661236.rofl'
 $game = 'D:/WeGameApps/英雄联盟/Game'
+$py = 'data/private/agent_study_current/mcp-env/Scripts/python.exe'
 $log = Join-Path $game 'Logs/GameLogs/2026-11-14T20-24-44/2026-11-14T20-24-44_r3dlog.txt'
 $frames = 'data/private/reasoning/match-' + (New-Guid)
 $out = 'data/private/reasoning_sessions/match-' + (New-Guid)
-.venv/Scripts/python.exe -m scripts.prepare_personal_match --replay $r --game-dir $game --game-log $log --output $frames
-.venv/Scripts/python.exe -m scripts.run_review_agent --sequence "$frames/sequence.json" --subject-replay $r --game-log $log --lane jungle --target dragon --help-seconds 5 --backend probe --output $out
+& $py -m scripts.prepare_personal_match --replay $r --game-dir $game --game-log $log --event-checkpoints --output $frames
+& $py -m scripts.run_review_agent --sequence "$frames/sequence.json" --subject-replay $r --game-log $log --lane jungle --target dragon --help-seconds 5 --personal-actions --backend probe --output $out
 ```
 
 安装依赖使用下节的 `.[review-mcp,map]`。上面第二条命令生成工具证据。要让模型作答，另选新的输出目录，用 `--backend file --catalog-history` 接文件交换读者，或用 `--backend ollama --model 模型名称` 接本机模型。前一帧的建议通过校验后随下一帧提供。具体实战见[红方打野潘森的逐回合复盘](reports/红方打野潘森逐回合复盘_20261116.md)。

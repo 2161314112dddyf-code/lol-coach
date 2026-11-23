@@ -55,6 +55,19 @@ def test_bad_team_binding_is_rejected(tmp_path):
         attach_combat_inputs(make_bundle(),tmp_path)
 
 
+def test_cooldowns_are_observed_values_only_at_exact_sample_clock(tmp_path):
+    path = write_panel(tmp_path)
+    record = json.loads(path.read_bytes())
+    record.pop('checksum')
+    record['samples'][0]['remaining_cooldowns'] = dict(Q=6,W=2,E=14,R=64)
+    record['checksum'] = digest(record)
+    path.write_text(json.dumps(record))
+    exact = attach_combat_inputs(make_bundle(),tmp_path)
+    fid, = exact['frame']['native_combat_panel_ids']
+    assert exact['frame']['facts'][fid]['value']['remaining_cooldowns_at_sample']['E'] == 14
+    assert 'native_combat_panel_ids' not in attach_combat_inputs(make_bundle(448.001),tmp_path)['frame']
+
+
 @pytest.mark.parametrize(('visible','sample_time','expected'),[(True,448,1222),(False,448,None),(True,447,None)])
 def test_only_current_visible_enemy_public_health_is_read(visible,sample_time,expected):
     snapshot=dict(schema='macro-snapshot/v1',version='16.22.test',source_sha256='a'*64,

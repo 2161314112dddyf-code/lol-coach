@@ -6,12 +6,13 @@ schema. Tests use scripted callbacks, not real language model intelligence.
 """
 from copy import deepcopy
 
-from .decision_contract import MACRO_REVIEW, SUPPORT_LANE_REVIEW, output_schema, validate_decision
+from .decision_contract import (MACRO_REVIEW, SUPPORT_LANE_REVIEW, TEAM_COORDINATION_REVIEW,
+                                output_schema, quiet_personal_frame, validate_decision)
 from .reasoning_frame import TOOLS, canonical, lookup_reference, model_messages, number
 
 
 def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
-                  round_tool_call=None, catalog_history=False, question=None):
+                  round_tool_call=None, catalog_history=False, question=None, answer_review=None):
     """Run a finite reference/answer/repair loop against a frozen frame.
 
     The host callback returns exactly one envelope:
@@ -31,6 +32,7 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
 
     frozen = deepcopy(bundle)
     task = frozen['frame'].get('task', {})
+    quiet = quiet_personal_frame(task)
     macro_review = task.get('macro_round_review') == MACRO_REVIEW
     schema = output_schema(frozen['frame'])
     tools = TOOLS
@@ -69,14 +71,67 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
             '仅有己方兵的记录时，写明敌兵情况未知。玩家本人能否看见敌兵需要另外的证据。'
             '用当前位置安排接应须引队友位置样本。给出具体河口等地名还需地标对应，缺失时写成“若队友能从此处接应”。'
             '获得条件证据后也不能断言玩家已执行。')
+    if quiet and round_tool_call is not None:
+        messages[-1]['content'] = (
+            '按需返回 tool_requests，每项提供唯一 id、name 和 arguments；最终用 answer 返回本帧结构。'
+            '调用 review_personal_action 读取本人的近期动作，为给玩家的第一步核对依据。')
     if question:
         messages.append({'role':'user', 'content':question})
-    if macro_review:
+    if macro_review and not quiet:
         messages.append({'role': 'user', 'content':
             '先从本人视角给出这轮的地图目标，说明它承接了什么局面、对方可能怎样回应。'
             '已指定的目的地仅用于算三种走法的代价。若该处已失去价值，首要行动可转守、换边、发育或回补。'
             '上一手带来的线权或位置若仍能支持施压，改去另一处也可以是同轮。把技能交换放在回合内。'
             '能用工具时请取 review_round_plan 和 compare_round_options。'})
+    if task.get('personal_action_review'):
+        # Replace route-specific instructions at their source before dispatch.
+        for message in messages[2:]:
+            if message['role'] == 'user':
+                message['content'] = message['content'].replace(
+                    'leave_now、help_then_leave、clear_then_leave', 'continue_action、change_action')
+                message['content'] = message['content'].replace('三种行动', '继续与改变当前行动')
+                message['content'] = message['content'].replace('三个选项', '两个选项')
+                message['content'] = message['content'].replace('最终三案仍按原题秒数。', '该工具仅为原路线计时，不强制用作当前选项。')
+                message['content'] = message['content'].replace(
+                    'review_round_plan 和 compare_round_options', 'review_round_plan 和 review_personal_action')
+        messages.append({'role':'user', 'content':
+            '本题是 personal-actions/v1。先读取 review_personal_action 的本人近期轨迹，'
+            '解释暂停前已经在做什么。两个选项分别为继续当前行动 continue_action、'
+            '改变当前行动 change_action。根据当时位置具体写动作、收益、原地代价、'
+            '对方回应及改选信号。若需要精确时钟可另查旧三案工具，数值只用于其原定路线。'
+            '事后结果尚未开放，不要猜实际施法、意图或之后的击杀。'
+            '给玩家看的句子要像老师陪他看录像。一段围绕一个他下把能认出来的信号。'
+            '有分歧时可先问一句让他自己选；做得好的具体动作也值得点出来。'
+            '说话可以用短句、停一下，或在条件变化时重复刚才那句提醒。保留原有条件，不替玩家回答。'})
+        if not quiet:
+            messages[-1]['content'] += (
+                '两条路都说得通时，先把它们放在同一件事上比较：继续能保住什么，'
+                '改走另一条，原来的人或兵线由谁接？哪件眼前看得见的事会让你改选？'
+                '确有连带影响时，在 end_state 或已有的 follow_through 中写清第一步怎样改变下一次机会。'
+                '如当前动作合理，指出值得保留的具体动作和成立条件。遇到几秒内的紧急变化就先讲眼前一手。')
+    if quiet:
+        messages.append({'role':'user', 'content':
+            '此次只评你手上的操作与直接对位。先考虑接兵、站位、换血或继续清营，'
+            '给本人下一步和一个改选条件即可。跳过全队巡视、去别路的方案和沟通建议。'
+            '工具只需先取 review_personal_action。'})
+    if task.get('team_coordination_review') == TEAM_COORDINATION_REVIEW:
+        messages.append({'role':'user', 'content':
+            '依据冻结帧判断这一手是否值得沟通；有 MCP 时读取 review_round_plan 的 team_coordination。'
+            '你离线、交关键技能、进未知区域或改变路线时，先找受到影响的队友：'
+            '他正在接哪波兵或哪组野，能否安全停手、到场时能否接第二手，你的离开会把谁留下。'
+            '有人在旁边时，仍要查他的血蓝、关键控制或位移、要打谁、进退路径与对手先手；'
+            '只有已观测的读数才能当成当前状态。任一项未知且会改变决定，就把它写成跟进条件。'
+            '从本人视角选一种做法：报出新见信息、提前表明自己的计划、请求一个具体动作，'
+            '或在已报过且仍适用、没有接应需求时安静行动。提醒、请求和承诺需要区分。'
+            '把沟通同你眼下的操作比较：正要躲控制、补炮车或处理越塔时，'
+            '只有会改变眼前一手的危险才值得立即打一个短信号。可晚一拍的安排放到出手后的空隙，'
+            '已经过期的信息直接省略。不要让玩家为沟通切屏或漏掉眼前动作。'
+            '把已见事实与对敌方的推测分开；写出给哪位队友、何时发、用哪个信号或说哪句短话。'
+            '打野解线要讲清请他一起送塔、只照应入口还是防越；能否刷完再来取决于到场血线和本波还能等多久。'
+            '本人要游走时说清谁接线、去哪、看到什么折返。两人都能跟或需要放弃时，说明由本人先做哪一步。'
+            '只有看到队友已靠近、仍在清兵或撤退等游戏证据才能描述动作；队伍可见、已发信号或正在路上都不能证明对方同意。'
+            '给出下一眼看得见的回应、等待截止的事件和没等到时本人能执行的备选；只有已核准的时间才用秒数。'
+            '发送过相同意图且情况未变时避免重复，危险对象或计划变了可以更正；上一张卡的拟议消息只能当作旧计划。'})
     trace = []
     completed_tools = set()
     reference_reads = []
@@ -114,13 +169,31 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
                 return result('failed', 'answer must be a JSON object')
             answer = response['answer']
             validation = validate_decision(answer, frozen['frame'])
+            if validation['status'] == 'PASS' and task.get('knowledge_handbook'):
+                from .coaching_knowledge import cited_knowledge
+                for missing in sorted(cited_knowledge(answer, frozen['frame']) - set(reference_reads)):
+                    validation['errors'].append({'path': 'knowledge_refs',
+                        'message': '引用前须用 get_reference 读取知识卡正文：' + missing})
+                if validation['errors']:
+                    validation['status'] = 'FAIL'
             if round_tool_call is not None:
-                required_tools = {'compare_round_options'}
-                if task.get('previous_plan') or macro_review or task.get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
+                required_tools = ({'review_personal_action'} if task.get('personal_action_review')
+                                  else {'compare_round_options'})
+                if not quiet and (task.get('previous_plan') or macro_review or task.get('bottom_lane_review') == SUPPORT_LANE_REVIEW
+                        or task.get('team_coordination_review') == TEAM_COORDINATION_REVIEW):
                     required_tools.add('review_round_plan')
                 for missing in sorted(required_tools - completed_tools):
                     validation['errors'].append({'path':'tools', 'message':'本帧尚未查询 '+missing})
                 if validation['errors']:
+                    validation['status'] = 'FAIL'
+            if validation['status'] == 'PASS' and answer_review is not None:
+                try:
+                    audit = answer_review(result('candidate'))
+                except Exception as exc:
+                    return result('failed', f'Evidence review failed: {type(exc).__name__}: {exc}')
+                trace.append({'event': 'evidence_review', 'call': calls, 'result': deepcopy(audit)})
+                if not audit['accepted']:
+                    validation['errors'].extend({'path':'evidence', 'message':issue} for issue in audit['issues'])
                     validation['status'] = 'FAIL'
             trace.append({'event': 'validation', 'call': calls, 'result': deepcopy(validation)})
             if validation['status'] == 'PASS':

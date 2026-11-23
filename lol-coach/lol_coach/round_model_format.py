@@ -2,7 +2,8 @@
 from copy import deepcopy
 import json
 
-from .decision_contract import MACRO_REVIEW, SCHEMA, SUPPORT_LANE_REVIEW, TIME_FIELDS
+from .decision_contract import (MACRO_REVIEW, SCHEMA, SUPPORT_LANE_REVIEW, TEAM_COORDINATION_REVIEW,
+                                TIME_FIELDS, own_ping_kinds, quiet_personal_frame)
 from .objective_credit import dragon_kill_events
 from .reasoning_frame import canonical
 
@@ -52,11 +53,23 @@ def _bounded(schema):
 
 
 def _answer_grammar(frame, schema):
+    actions = ('continue_action', 'change_action') if frame['task'].get('personal_action_review') else ACTIONS
     fields = _bounded(schema)['properties']
     facts, refs = frame['facts'], frame['references']
     fields['schema'] = _choice([SCHEMA])
     fields['frame_id'] = _choice([frame['frame_id']])
     fields['facts_used'] = _refs(facts, 1, 8)
+    if 'follow_through' in fields:
+        chain = fields['follow_through']['properties']
+        chain['option_id'] = _choice([None, *actions])
+        chain['baseline_if_unchanged']['maxLength'] = 240
+        chain['steps']['maxItems'] = 3
+        step = chain['steps']['items']['properties']
+        step['fact_refs'] = _refs(facts, 1, 8)
+        step['knowledge_refs'] = _refs([rid for rid, row in refs.items()
+            if row.get('kind') == 'conditional_coaching_knowledge'], 0, 3)
+        for key in ('action', 'expected_state', 'check_when', 'if_confirmed', 'if_not_confirmed'):
+            step[key]['maxLength'] = 240
     if 'lane_plan' in fields:
         plan = fields['lane_plan']['properties']
         plan['fact_refs'] = _refs(facts, 1, 16)
@@ -65,7 +78,7 @@ def _answer_grammar(frame, schema):
             choice['fact_refs'] = _refs(facts, 1, 8)
             for key in ('why', 'switch_if'):
                 choice[key]['maxLength'] = 160
-        plan['roam']['properties']['option_id'] = _choice(ACTIONS)
+        plan['roam']['properties']['option_id'] = _choice(actions)
         for key in ('pressure', 'if_open', 'if_denied'):
             plan[key]['maxLength'] = 120
         for key in ('wave_condition', 'return_by', 'short_play', 'committed_play'):
@@ -101,8 +114,9 @@ def _answer_grammar(frame, schema):
         ids = [r['entity_id'] for r in frame['lineup'] if r['relation']==relation and r['entity_id']!=player]
         if ids:
             groups[relation] = ids
-    role_groups = dict(groups)
-    if 'lane_plan' in fields:
+    quiet = quiet_personal_frame(frame['task'])
+    role_groups = {'player': [player]} if quiet else dict(groups)
+    if 'lane_plan' in fields and not quiet:
         duo = frame['task']['bottom_lane_actors']
         role_groups.update(ally=[duo['carry']], enemy=[duo['enemy_carry']], enemy_support=[duo['enemy_support']])
     role_template = fields['role_assignments']['items']
@@ -112,6 +126,33 @@ def _answer_grammar(frame, schema):
         role['properties'].update(actor_id=_choice(ids), fact_refs=_refs(facts))
         rows[group] = role
     fields['role_assignments'] = _object(rows)
+    if 'team_coordination' in fields:
+        template = fields['team_coordination']['properties']
+        variants = []
+        own_sends = own_ping_kinds(frame)
+        for mode in template['mode']['enum']:
+            if mode != 'no_signal' and 'ally' not in groups:
+                continue
+            if mode == 'already_signaled' and not own_sends:
+                continue
+            props = deepcopy(template)
+            props.update(mode=_choice([mode]), recipient_id=_choice(
+                [None] if mode == 'no_signal' else groups['ally']), fact_ids=_refs(facts, 1, 8))
+            if mode == 'already_signaled':
+                props['ping_kind'] = _choice(sorted(set(own_sends.values())))
+            elif mode == 'no_signal':
+                del props['ping_kind']
+            if mode == 'communicate':
+                props['message']['minLength'] = 1
+            else:
+                props['message'] = _choice([''])
+            if mode != 'no_signal':
+                props['response_cue']['minLength'] = 1
+            variant = _object(props)
+            if mode == 'communicate':
+                variant['required'].remove('ping_kind')
+            variants.append(variant)
+        fields['team_coordination'] = {'anyOf': variants}
     if len(frame['lineup']) > len(rows):
         other = deepcopy(role_template)
         other['properties'].update(actor_id=_choice([r['entity_id'] for r in frame['lineup']]),
@@ -120,7 +161,7 @@ def _answer_grammar(frame, schema):
 
     option_template = fields['options']['items']
     choices = {}
-    for action in ACTIONS:
+    for action in actions:
         props = deepcopy(option_template['properties'])
         del props['id'], props['time_budget']
         if 'player_perspective' in frame['task']:
@@ -164,17 +205,17 @@ def _answer_grammar(frame, schema):
     rec = fields['recommendation']['properties']
     complete_budgets = {c.get('option_id') for c in frame['calculations'].values()
                         if all(c.get('time_budget',{}).get(k) is not None for k in TIME_FIELDS)}
-    if len(complete_budgets.intersection(ACTIONS)) < 2:
+    if len(complete_budgets.intersection(actions)) < 2:
         rec['confidence']['enum'].remove('supported')
     recommendations = []
-    for preferred in (*ACTIONS, None):
+    for preferred in (*actions, None):
         branch = deepcopy(rec)
         branch['preferred_option_id'] = _choice([preferred])
         if preferred is None:
             branch['confidence'] = _choice(['insufficient_evidence'])
-            branch['fallback_option_id'] = _choice([None, *ACTIONS])
+            branch['fallback_option_id'] = _choice([None, *actions])
         else:
-            branch['fallback_option_id'] = _choice(a for a in ACTIONS if a != preferred)
+            branch['fallback_option_id'] = _choice(a for a in actions if a != preferred)
         recommendations.append(_object(branch))
     fields['recommendation'] = {'anyOf':recommendations}
     prior = frame['task'].get('previous_plan')
@@ -228,10 +269,12 @@ def _next_tools(request, frame):
             continue
         choices.append(_object(dict(id=_choice(['q'+str(n)]), name=_choice([name]), arguments=args)))
     exposed = {tool['function']['name'] for tool in request['tools']}
-    mandatory = {'compare_round_options'} & exposed
-    if 'review_round_plan' in exposed and (
+    mandatory = ({'review_personal_action'} if frame['task'].get('personal_action_review')
+                 else {'compare_round_options'}) & exposed
+    if 'review_round_plan' in exposed and not quiet_personal_frame(frame['task']) and (
         frame['task'].get('previous_plan') or frame['task'].get('macro_round_review') == MACRO_REVIEW
         or frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW
+        or frame['task'].get('team_coordination_review') == TEAM_COORDINATION_REVIEW
     ):
         mandatory.add('review_round_plan')
     return choices, mandatory - done
@@ -279,12 +322,19 @@ def prepare_round_request(request, *, remaining_calls=None):
     messages[1]['content'] = canonical({'decision_frame':frame})
     instruction = ('这是此轮本地输出格式。一次只发一个工具请求，或发最终 answer。'
                    'facts_used 只选当前事实 ID。role_assignments 按给定角色位置填写，'
-                   '先写你自己能做什么。队友和对手只写会改变你选择的动作或条件。可选 others 补充相关英雄。options 是以三个走法 ID 为键的对象。'
+                   '先写你自己能做什么。队友和对手只写会改变你选择的动作或条件。可选 others 补充相关英雄。options 的键必须符合当前契约中的行动 ID。'
                    '每种走法自己写行动、得失、条件和理由，calculation_id 选该走法已登记的计算或 null。'
                    '程序只展开你选的事实及时间值。推荐和承接由你自己判断。每段只写一句具体中文。')
-    if frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
+    if quiet_personal_frame(frame['task']):
+        instruction += '此刻优先处理本人的兵线或手上这组野，role_assignments 只需 player。必要时可在 others 补直接相关对象。'
+    elif frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
         instruction += ('下路角色按 player（你）、ally（搭档）、enemy（敌方射手）、enemy_support（敌辅）填写。'
                         '对线施压和给、不给机会分开写。游走候选的收益和搭档代价放到所引走法，写清出发和回线条件。')
+    if frame['task'].get('team_coordination_review') == TEAM_COORDINATION_REVIEW:
+        instruction += ('读取 review_round_plan 后，给受本次行动影响的队友一句当时可发的短话，分开写你已知什么、'
+                        '准备做什么。response_cue 写到哪个动作前观察队友怎样接应，fallback 写届时未跟进你的退路。'
+                        '已发同类信号时用 already_signaled，引用本人的近期发送事实与 ping_kind。'
+                        '这一步自己就能做且没有新消息时用 no_signal，trigger 说明理由。队友是否看见或答应仍需证据。')
     if missing:
         instruction += '答复前仍须取得 ' + '、'.join(sorted(missing)) + '。'
     if remaining_calls == 2 and missing:
@@ -317,7 +367,9 @@ def expand_round_response(request, envelope):
     player = frame['decision']['player_entity_id']
     wanted = {rel for eid,rel in roster.items() if eid!=player and rel in ('ally','enemy')} | {'player'}
     lane_roles = None
-    if frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
+    if quiet_personal_frame(frame['task']):
+        wanted = {'player'}
+    elif frame['task'].get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
         duo = frame['task']['bottom_lane_actors']
         lane_roles = dict(player=duo['support'], ally=duo['carry'], enemy=duo['enemy_carry'],
                           enemy_support=duo['enemy_support'])
@@ -336,7 +388,8 @@ def expand_round_response(request, envelope):
             raise ValueError('invalid_selected_actor')
     answer['role_assignments'] = [*roles.values(), *others]
     options = answer['options']
-    if not isinstance(options,dict) or set(options)!=set(ACTIONS):
+    actions = ('continue_action', 'change_action') if frame['task'].get('personal_action_review') else ACTIONS
+    if not isinstance(options,dict) or set(options)!=set(actions):
         raise ValueError('invalid_selected_options')
     for action, option in options.items():
         if 'id' in option or 'time_budget' in option or 'calculation_id' not in option:

@@ -94,4 +94,4 @@ def native_vision_snapshot(index, team, player, at):
                 context=dict(at_seconds=at, observer_team_id=team, player_entity_id=owner),
                 heroes=heroes, recent_public_combat=combat or [], evidence=evidence,
                 public_kill_feed_missing=combat is None,
-                own_native_observations=load_own_observations(index, team, owner, at))
+                own_native_observations=load_own_observations(index, team, owner, at, include_build_history=True))

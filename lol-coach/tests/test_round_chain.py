@@ -55,6 +55,26 @@ def pair():
     return old, current, answer_for(old)
 
 
+def test_link_carries_communication_only_as_previous_suggestion():
+    old, current, answer = pair()
+    for b in (old, current):
+        b['frame']['task']['team_coordination_review'] = 'team-coordination/v1'
+        freeze(b)
+    answer['frame_id'] = old['frame']['frame_id']
+    answer['team_coordination'] = dict(mode='communicate', recipient_id='ally',
+        trigger='在进入河道前', known_information='上一观测时队友血量很低。', intended_action='先保留退路。',
+        message='先退回来，我等你。', response_cue='进河道前看队友是否已经退到自己旁边。',
+        fallback='还没退到就自己撤，不进河道。', fact_ids=['ally_hp'])
+    answer['facts_used'].append(dict(fact_id='ally_hp', value=0))
+    linked = attach_previous_plan(current, old, answer)['frame']
+    prior = linked['task']['previous_plan']
+    assert prior['execution_status'] == 'unknown'
+    saved = prior['decision_card']['previous_coordination_suggestion']
+    assert saved['message'] == answer['team_coordination']['message']
+    assert saved['recipient_id'] == 'ally' and 'fact_ids' not in saved
+    assert 'previous_coordination_suggestion' not in linked['facts']
+
+
 def test_link_keeps_current_facts_and_inputs_immutable():
     old, current, answer = pair()
     before = deepcopy((old, current, answer))

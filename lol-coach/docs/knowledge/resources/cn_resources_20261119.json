@@ -1,0 +1,3369 @@
+{
+  "schema": "coaching-resource-catalog/v1",
+  "version": "2026-11-19.cn.1",
+  "stats": {
+    "submitted": 75,
+    "unique_resources": 74,
+    "duplicate_entries_merged": 1,
+    "by_platform": {
+      "PTT": 13,
+      "哔哩哔哩": 14,
+      "巴哈姆特": 13,
+      "微博／英雄联盟赛事": 1,
+      "玩加电竞": 2,
+      "百度贴吧": 3,
+      "知乎": 4,
+      "虎扑": 23,
+      "超凡电竞": 1
+    },
+    "by_access_level": {
+      "metadata_only": 9,
+      "primary_excerpt": 6,
+      "primary_text": 23,
+      "search_snippet": 36
+    },
+    "by_adoption": {
+      "candidate": 21,
+      "index_only": 48,
+      "rejected": 5
+    },
+    "forum_threads": 51,
+    "body_read_resources": 29,
+    "body_read_forum_threads": 21,
+    "body_candidate_resources": 21,
+    "already_in_v1_1": 0,
+    "adopted_sources": 15
+  },
+  "batches": [
+    {
+      "batch": "root",
+      "input_sha256": "de90465bcea9e6ac6732da4c21fd8dbd5c630cc98c89bed6e9a285582f0f67c3",
+      "queries": [
+        "英雄聯盟 心得 兵線 回城 對線 [ptt.cc]",
+        "英雄聯盟 心得 打野 反蹲 兵線 [ptt.cc]",
+        "英雄聯盟 教學 對線 換血 分推 [forum.gamer.com.tw]",
+        "[心得] 上大師 觀念 兵線 [ptt.cc]",
+        "[心得] AD 對線 換血 [ptt.cc]",
+        "[心得] 輔助 遊走 回補 [ptt.cc]",
+        "溺水鱷 兵線 基礎 觀念 [forum.gamer.com.tw]",
+        "英雄聯盟 心得 兵線 同步 分推 [forum.gamer.com.tw]",
+        "英雄聯盟 2024 心得 對線 強勢 換血 [forum.gamer.com.tw]"
+      ],
+      "resources_submitted": 12
+    },
+    {
+      "batch": "lane",
+      "input_sha256": "edaca80bb978bea5cbf335d0b14868263c978ca66ee3e5e52e5f7074d50f742b",
+      "queries": [
+        "site.ngabbs.com/read.php 英雄联盟 兵线 冻线 回城",
+        "site.bbs.nga.cn/read.php 英雄联盟 对线 换血 兵线",
+        "site.tieba.baidu.com/p/ 抢二 控线 回城 英雄联盟",
+        "site.bbs.hupu.com 控线 兵线 回城",
+        "兵线 控线",
+        "对线 换血 传送",
+        "兵线 控线 回城",
+        "\"兵线\" \"NGA\" \"回城\"",
+        "\"控线\" \"NGA\" \"上单\"",
+        "\"补刀\" \"换血\" \"虎扑\"",
+        "\"兵线\" \"贴吧\" \"英雄联盟\" \"回城\"",
+        "LOL 兵线 控线 攻略",
+        "\"兵线\" \"教学\" \"英雄联盟\" -王者 -流言板",
+        "\"对线\" \"攻略\" \"原创\" -王者",
+        "\"中单\" \"基本\" \"技巧\" -王者",
+        "\"上单\" \"抗压\" \"控线\" -王者",
+        "英雄联盟 \"剑姬\" \"攻略\"",
+        "英雄联盟 \"对线\" \"教学\" \"2019\"",
+        "英雄联盟 \"控线\" \"2020\"",
+        "\"lol吧\" \"控线\" \"攻略\"",
+        "兵線 回城 控線",
+        "上路 兵線 心得",
+        "兵線 教學",
+        "換血 對線 教學",
+        "\"单带\" \"心得\" 英雄联盟",
+        "\"对线\" \"攻略\" \"鳄鱼\"",
+        "\"兵线\" \"请教\" 英雄联盟",
+        "\"对线\" \"消耗\" \"ADC\" \"攻略\"",
+        "site.bbs.hupu.com \"上单\" \"教学\" \"兵线\" -王者 -流言板 -Reddit -情报站",
+        "site.bbs.hupu.com \"对线\" \"换血\" \"心得\" -王者 -流言板 -Reddit -情报站",
+        "兵線 \"回推\" \"心得\"",
+        "換血 \"吃兵\" \"對線\"",
+        "\"控線\" \"心得\" \"上路\"",
+        "\"回城\" \"對線\" \"搶二\"",
+        "\"单带\" \"兵线\" \"攻略\" -王者 -流言板",
+        "\"回城\" \"教学\" 英雄联盟 -王者 -流言板",
+        "英雄联盟 中单 对线 心得 兵线",
+        "英雄联盟 上单 对线 攻略 -王者",
+        "\"卡线\" \"lol吧\"",
+        "\"控线\" 英雄联盟",
+        "\"斯坦利的走狗\" \"剑姬\" 攻略",
+        "\"控线\" \"换血\" 英雄联盟 攻略 2019",
+        "\"回城\" \"兵线\" \"心得\" -王者"
+      ],
+      "resources_submitted": 24
+    },
+    {
+      "batch": "macro",
+      "input_sha256": "08dcda6a377c321624943495c7a17bcb23c518cea620e86bd83bc013b813cbd0",
+      "queries": [
+        "site.bbs.hupu.com 打野 思路 反蹲 运营 教学",
+        "site.nga.cn/read.php 打野 入侵 线权 教学",
+        "site.bbs.hupu.com 英雄联盟 劣势 运营 资源 交换",
+        "英雄联盟 打野 思路 反蹲 运营 教学 [domains:bbs.hupu.com]",
+        "打野 入侵 线权 [domains:nga.cn,ngabbbs.com]",
+        "英雄联盟 劣势 运营 资源 交换 [domains:bbs.hupu.com]",
+        "打野 教学 -手游 -王者 -TES -BLG [domains:bbs.hupu.com]",
+        "打野 反蹲 经验 [domains:bbs.nga.cn,ngabbbs.com]",
+        "lol 中期 运营 教学 -手游 [domains:bbs.hupu.com]",
+        "英雄联盟 打野 怎么 玩 思路 -手游 [domains:bbs.hupu.com]",
+        "site:bbs.nga.cn/read.php \"打野\" \"反蹲\" \"心得\"",
+        "site:bbs.hupu.com \"打野\" \"教学\" \"2019\"",
+        "site:bbs.hupu.com \"打野\" \"求教\" -手游",
+        "site:ngabbs.com \"打野\" \"入侵\"",
+        "英雄联盟 打野 线权 [domains:bbs.nga.cn]",
+        "NGA 打野 入侵 攻略",
+        "虎扑 打野 经验 2018 英雄联盟",
+        "虎扑 运营 理解 单带 大龙",
+        "NGA 打野 思路 反蹲 论坛",
+        "虎扑 LOL打野经验分享 第一期",
+        "虎扑 英雄联盟 打大龙 什么时候",
+        "虎扑 英雄联盟 运营 教学 转线",
+        "虎扑 英雄联盟 反蹲 打野 求教",
+        "\"打野\" \"经验分享\" \"虎扑\" -手游",
+        "\"运营\" \"大龙\" \"英雄联盟\" [domains:m.hupu.com]",
+        "\"打野\" \"反蹲\" [domains:forum.gamer.com.tw]",
+        "\"团战\" \"思路\" \"英雄联盟\" [domains:m.hupu.com]",
+        "\"打野\" \"反蹲\" \"心得\" site:bbs.hupu.com -手游 -王者",
+        "\"LOL\" \"打野\" \"资源\" \"取舍\" site:bbs.hupu.com -手游",
+        "\"英雄联盟\" \"单带\" \"攻略\" site:m.hupu.com -手游",
+        "\"英雄联盟\" \"逆风\" \"运营\" site:m.hupu.com -手游",
+        "\"打野\" \"觀念\" \"心得\" [domains:forum.gamer.com.tw]",
+        "\"打野\" \"攻略\" \"英雄联盟\" \"虎扑\" -手游 -王者 -预测 -比赛 -抽奖",
+        "\"打野\" \"反蹲\" \"NGA\" -魔兽 -手游",
+        "\"中期\" \"转线\" \"虎扑\" -手游 -王者",
+        "\"英雄联盟\" \"沟通\" \"指挥\" \"虎扑\" -比赛 -老头杯 -Doinb -BLG -TES",
+        "\"打野\" \"攻略\" site:m.hupu.com/bbs/ \"2019\" -王者 -手游",
+        "\"打野\" \"攻略\" site:m.hupu.com/bbs/ \"2020\" -王者 -手游",
+        "\"打野\" \"攻略\" site:m.hupu.com/bbs/ \"2021\" -王者 -手游",
+        "\"打野\" \"攻略\" site:m.hupu.com/bbs/ \"2022\" -王者 -手游",
+        "\"黑玫\" \"打野\" \"攻略\" \"虎扑\"",
+        "\"如何成为一个小doinb式上单\"",
+        "\"低分段全面上分攻略\" 虎扑",
+        "\"打野经验\" \"第一期\" \"LOL\""
+      ],
+      "resources_submitted": 20
+    },
+    {
+      "batch": "video",
+      "input_sha256": "b9c4854f1eaa362ede16d2aa54a91976b38e50ceb327371b3d8f38bc5b9e5da3",
+      "queries": [
+        "site.bilibili.com/read 英雄联盟 对线 换血 技能 真空期",
+        "site.bilibili.com/opus 英雄联盟 上单 对线 教学 细节",
+        "site.zhihu.com 英雄联盟 对线 兵线 技能 换血",
+        "英雄联盟 换血 对线 教学",
+        "英雄联盟 对线 技能 真空期",
+        "潘森 对线 W 技巧 专栏",
+        "ADC 团战 输出 思路 专栏",
+        "\"全方位\" \"攻略\" \"哔哩哔哩\" \"团战思路\" -手游",
+        "\"哔哩哔哩\" \"打野\" \"专栏\" \"思路\" -手游",
+        "\"哔哩哔哩\" \"上单\" \"专栏\" \"对线\" -手游",
+        "\"英雄联盟\" \"技能\" \"换血\" \"回答\"",
+        "site:bilibili.com/opus \"英雄联盟\" \"打野教学\"",
+        "site:bilibili.com/opus \"英雄联盟\" \"中单\" \"攻略\"",
+        "site:zhuanlan.zhihu.com \"射手夸夸\"",
+        "\"射手夸夸\" \"中期转线\"",
+        "\"bilibili.com/opus\" \"打野\" \"攻略\" -手游 -云顶",
+        "\"bilibili.com/opus\" \"对线\" \"鳄鱼\" -手游",
+        "site:bilibili.com/read \"英雄联盟\" \"教学\" \"对线\"",
+        "site:bilibili.com/read \"英雄联盟\" \"辅助\" \"技巧\"",
+        "site:bilibili.com/read \"英雄联盟\" \"打野\" \"意识\"",
+        "site:zhihu.com/question \"英雄联盟\" \"潘森\"",
+        "\"射手夸夸\" \"攻略\" -手游",
+        "\"英雄联盟\" \"对线\" \"知乎\" \"技能\"",
+        "\"知乎\" \"怎么玩好\" \"鳄鱼\" \"英雄联盟\"",
+        "\"知乎\" \"打野\" \"控图\" \"思路\"",
+        "\"怎么玩好\" \"知乎\" \"ADC\"",
+        "\"射手夸夸\" \"知乎\"",
+        "\"英雄联盟\" \"对线技巧\" \"专栏\" -手游 -site:smzdm.com",
+        "英雄联盟 对线 攻略",
+        "\"符文\" \"团战\" \"攻略\" \"专栏\" -手游",
+        "\"图文攻略\" \"潘森\" -手游",
+        "\"图文攻略\" \"上单\" \"B站\" -手游",
+        "\"我梦ZED\" \"万字\" \"专栏\"",
+        "\"最强劫攻略没有之一\" -site:bilibili.com/video",
+        "\"阿克尚\" \"攻略\" \"专栏\"",
+        "\"剑姬\" \"攻略\" \"专栏\"",
+        "\"英雄联盟\" \"本文为我原创\" \"对线\" -手游 -Wrasul -ADC教学 -薇古丝 -符文大乱斗",
+        "\"LOL\" \"本文为我原创\" \"攻略\" \"打野\"",
+        "\"LOL\" \"辅助\" \"教学\" \"本文为我原创\"",
+        "\"锤石\" \"专栏\" \"对线\" -手游",
+        "\"瑞兹\" \"攻略\" \"专栏\"",
+        "\"兰博\" \"攻略\" \"专栏\"",
+        "英雄联盟辅助教学专栏",
+        "英雄联盟 上单 文章 攻略",
+        "英雄联盟 辅助 文章 攻略",
+        "英雄联盟 文字教学 攻略 潘森 -手游",
+        "英雄联盟 文字教学 攻略 辅助 -手游",
+        "英雄联盟 文字教学 攻略 对线 -手游",
+        "英雄联盟 攻略 \"cv\" \"对线\" -手游 -云顶"
+      ],
+      "resources_submitted": 19
+    }
+  ],
+  "interpretation": "Resources are research evidence, not current-match facts. Index-only material is not operational guidance.",
+  "resources": [
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL01",
+      "title": "[基础向干货]中单的基本对线思路和技巧",
+      "url": "https://bbs.hupu.com/27277216.html",
+      "platform": "虎扑",
+      "author": "斯坦利的走狗",
+      "published_at": "2019-05-07 19:20:19",
+      "topics": [
+        "中路",
+        "推线权",
+        "长短手对位",
+        "支援代价"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读主帖正文及第一页可读相关回复；检索查看第2、3页争议，但本轮复开分页返回 Cache miss，分页摘要不作为独立正文证据。",
+      "content_notes": [
+        "把英雄拆成消耗、爆发、推线、机动、距离的组合；长手在补刀时消耗，短手在保血时保留威胁距离。",
+        "主帖同时主张少亏兵就应支援，又承认塔下大波兵时不能离开；回复讨论卡萨丁游走掉等级及男刀/亚索对位差异。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "对线计划应说明靠哪种交互取得行动权，而不是只贴强势或弱势英雄标签。",
+          "conditions": [
+            "确认双方当前射程、技能可用性和兵线",
+            "能保留反打或撤退路径"
+          ],
+          "counterexample": "退到安全区域本身不会持续挨打，但可能让出补刀、经验或兵线控制；强行贴近保留威胁又可能被击杀。",
+          "next_check": "检查谁补下一只关键兵、谁必须前移、关键技能是否已交。"
+        }
+      ],
+      "objections": [
+        "拒绝无条件支援和二打一必有利的泛化；到达时队友可能已退场。",
+        "不采用吸血鬼不能中路、做到几点必上钻等时代性或无证据保证。",
+        "第2页搜索结果出现钻石段位男刀/亚索争议；仅记争议线索，不当已核对完整楼层。"
+      ],
+      "patch_scope": "2019年个人经验；旧河蟹时间、英雄强度和出装不迁移到当前版本。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "作者自述S1末开始玩中路；未认证段位。",
+        "页面主帖和热评有重复渲染，去重为同一线程。",
+        "标题中的技巧篇在正文说明未完成；没有假称读到后续教程。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/27277216-2.html",
+        "https://bbs.hupu.com/27277216-3.html",
+        "https://m.hupu.com/bbs/27277216-3.html"
+      ],
+      "canonical_key": "hupu:27277216",
+      "merged_ids": [
+        "CL01"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K18"
+      ]
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL02",
+      "title": "第一视角细品ts第三把奎因的操作",
+      "url": "https://m.hupu.com/bbs/36166893.html",
+      "platform": "虎扑",
+      "author": "HAST1NGS",
+      "published_at": "2020-06-24 17:37",
+      "topics": [
+        "上路",
+        "奎因对鳄鱼",
+        "换血与兵线",
+        "回城"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读完整文字主帖的前五分钟逐段复盘、装备评论和页面可见热评；未打开原始第一视角视频。",
+      "content_notes": [
+        "作者指出鳄鱼一次换血账面赚血，却加快己方清掉奎因兵线，改变之后压制空间。",
+        "讨论药水、血量和取消回城导致下一轮无还手机会；敌方中野露头后才扩大压制。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "换血要同时记即时血量差、回复储备和对下一波兵线控制的影响。",
+          "conditions": [
+            "技能可能碰到小兵",
+            "双方药水/续航及下一轮威胁可以观察"
+          ],
+          "counterexample": "本轮多打掉对方血量，但对方仍高于自己的击杀能力且有药，自己却失去安全接线位置。",
+          "next_check": "对比换血前后存活小兵、回推趋势、药水和安全回城窗口。"
+        }
+      ],
+      "objections": [
+        "原视频未核验，帖子给出的具体秒数、血量和归因只算作者解读。",
+        "不采用原帖固定鳄鱼斩杀线或对选手能力的贬损。"
+      ],
+      "patch_scope": "2020年比赛，文中明确提10.9版本加强；旧符文、血色之刃及伤害阈值不可套用。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "原创逐段复盘文字；视频链接是作者提供的第一视角来源，不等于本轮看过视频。",
+        "机制正确性仍须当前版本数据约束。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/36166893.html"
+      ],
+      "canonical_key": "hupu:36166893",
+      "merged_ids": [
+        "CL02"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K17"
+      ]
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL03",
+      "title": "[深度]攻略：从选择到打团，一步步解析塞拉斯（没人比我更细）",
+      "url": "https://bbs.hupu.com/39610987.html",
+      "platform": "虎扑",
+      "author": "琉璃易碎丶",
+      "published_at": "2020-12-05 21:19:42",
+      "topics": [
+        "塞拉斯",
+        "阵容条件",
+        "技能轮次",
+        "伤害可兑现性"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读主帖英雄定位、装备/符文、可偷大招分类、对线及团战顺序；第4页对上路战士的反驳仅搜索摘录，直开失败。",
+      "content_notes": [
+        "作者给出S、S-、A、B大招分级，同时按开团、保命、拖出后续技能、支援等用途解释分级并补充条件。",
+        "作者承认E、Q二段和被动普攻未必全中，但随后仍给出固定等级与目标血量比例的斩杀示例。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "连招上限之外，还要判断可偷或可用技能是否帮助活到第二轮，以及目标是否让完整连招兑现。",
+          "conditions": [
+            "具体目标和可用大招已知",
+            "进场路径、命中条件和下一轮冷却可估"
+          ],
+          "counterexample": "有高价值大招的敌人不在附近，或第一轮尚未打完便被控制击杀。",
+          "next_check": "列出这次实际可获得的技能、关键命中条件、拉开后的再次进场条件。"
+        }
+      ],
+      "objections": [
+        "不采用某类大招出现就无脑选英雄、固定等级血线就能单杀的说法。",
+        "旧装备、符文和特殊大招交互需当前资料核验；回复摘要指出战士对位和蓝耗可能推翻主楼乐观判断。"
+      ],
+      "patch_scope": "S11初期神话装备环境；全部具体数值与出装顺序隔离为历史。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "作者是原帖攻略作者，未核验其竞技资历。",
+        "主帖重复渲染只算一次。",
+        "第4页反驳未作完整正文阅读认证。",
+        "静态满伤害示例不能直接当实战必杀，是项目对原帖的审查结论，不是原作者已经明确作出的结论。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/39610987-4.html"
+      ],
+      "canonical_key": "hupu:39610987",
+      "merged_ids": [
+        "CL03"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL04",
+      "title": "[問題] 上路兵線進塔下 該吃兵還是支援",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1629886485.A.376.html",
+      "platform": "PTT",
+      "author": "Tiandai",
+      "published_at": "2021-08-25 18:14:42",
+      "topics": [
+        "上野协同",
+        "塔下兵线",
+        "提前规划",
+        "信号"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读提问及可读回复至约19:33；重点核对key000130、h75311418、Rinobility、noheartoutme、vince4687等相反意见。",
+      "content_notes": [
+        "提问者低等级塔下有6–8只兵、打野争河蟹，担心支援失败双亏。",
+        "一组回复主张保经验，另一组要求向前追溯：为何每局固定放线，能否提前推线或沟通反蹲。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "区分当前这波能否支援，与上一波是否本可做出支援窗口，不能用后一问题否定眼前的亏线成本。",
+          "conditions": [
+            "确有即将到来的河道碰撞或队友路线信号",
+            "对位允许改变推线节奏"
+          ],
+          "counterexample": "英雄本来无能力争线，不能为配合预期路线而强行交血交命；塔下危机已形成也不能假装有线权。",
+          "next_check": "回看上一个可控时刻、双方打野已知路线及提前发出的信号。"
+        }
+      ],
+      "objections": [
+        "拒绝单排永不帮、只要帮了就把责任丢队友等情绪结论。",
+        "主帖未明确英雄，不能据鬼步自行补成诺手。",
+        "历史固定9分钟先锋等时间不沿用。"
+      ],
+      "patch_scope": "2021年路人局经验；台湾论坛，未证明国服；当前营地/资源时间另取版本数据。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "评论存在实质分歧，未以赞数或人数投票认定真理。",
+        "只提炼可检验条件，不把任一评论设为唯一正确答案。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1629886485.A.376.html",
+      "merged_ids": [
+        "CL04"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K20"
+      ]
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL05",
+      "title": "【心得】吃不到兵，練什麼都是白搭－從根本改進你的吃兵",
+      "url": "https://forum.gamer.com.tw/Co.php?bsn=17532&sn=5595582",
+      "platform": "巴哈姆特",
+      "author": "吼姆吼姆（Triangle360；正文自称西子灣溺水鱷）",
+      "published_at": "2020-03-18 03:12:09",
+      "topics": [
+        "补刀",
+        "慢推",
+        "速推",
+        "技能资源"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读主帖补刀三种情境、限制关键技能、兵线概述及结语；嵌入视频未观看，未展开其余62条评论。",
+      "content_notes": [
+        "区分能补到、只尾刀和快速清线时仍能补到三种能力；可再加入关键技能必须保留的约束。",
+        "结语区分看得到的兵没补到与压根没有去接的兵；正文也承认高CS不等于必胜。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "补刀复盘先按行动目的分母分类：机械漏刀、为控线/保血/保技能而放弃、未到场接线。",
+          "conditions": [
+            "当时计划和可用技能可识别",
+            "有足够证据知道兵死亡时玩家是否在场"
+          ],
+          "counterexample": "为躲过击杀而放的炮车不能单凭漏刀数字判为基本功差。",
+          "next_check": "检查该兵能否安全补到、补它会交出什么技能及改变何种兵线状态。"
+        }
+      ],
+      "objections": [
+        "不采用分钟数乘十为所有玩家固定验收线。",
+        "不采用四远程兵可永久控制任意位置的无条件说法；原文后段也补了兵线交互会打断流程。"
+      ],
+      "patch_scope": "2020年、作者定位金牌以下新手；台湾论坛，不认证国服或当前机制。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "日期字段是页面编辑时间。",
+        "图片引用Fandom不代表全文转载；正文是作者教学，图源另记。",
+        "未把练习工具场景等同实战。"
+      ],
+      "aliases": [],
+      "canonical_key": "forum.gamer.com.tw/Co.php?bsn=17532&sn=5595582",
+      "merged_ids": [
+        "CL05"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL06",
+      "title": "大型AD单排上分攻略",
+      "url": "https://bbs.hupu.com/37146267.html",
+      "platform": "虎扑",
+      "author": "轮椅AD",
+      "published_at": "2020-08-12 09:55:10",
+      "topics": [
+        "双人路",
+        "辅助配合",
+        "换血",
+        "出装目的"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读完整首帖文字及第一页符文争论的可读回复；人物图片、眼位图未视觉验证，其余分页未读。",
+      "content_notes": [
+        "按ADC与辅助的清线、先手、保护能力组织对线；部分英雄明确等辅助控制后再接自己的延迟控制。",
+        "女警相关回复讨论前中期节奏与后期符文价值的分歧，说明配置依赖计划。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "双人路的进攻窗口至少要核对己方辅助跟进能力和敌方两人的回应，不能按ADC单人技能表生成上前指令。",
+          "conditions": [
+            "辅助位置、技能和敌方控制状态可见",
+            "计划明确是换血、清线还是击杀"
+          ],
+          "counterexample": "ADC理论伤害足够，但辅助距离太远或自己的位移用于进攻后无人保护。",
+          "next_check": "核对两位队友到达/施法范围与控制衔接，必要时只建议保血接线。"
+        }
+      ],
+      "objections": [
+        "不沿用VN必推、小炮配硬辅满血斩杀、射手固定出装等绝对判断。",
+        "作者承认厄斐琉斯内容照搬OP.GG，该段不当作个人实战经验。"
+      ],
+      "patch_scope": "2020年射手装备/符文环境；所有数值和具体出装隔离为历史。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "作者自述多区钻一、此前大师，未认证。",
+        "页面第一次重新直开失败，使用已有可读引用成功读取正文；未把失败写成全程稳定访问。",
+        "与第二篇是同作者系列，两篇算两个主题帖子但不是独立作者共识。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:37146267",
+      "merged_ids": [
+        "CL06"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL07",
+      "title": "大型AD单排上分攻略（二）全是干货",
+      "url": "https://bbs.hupu.com/37248238.html",
+      "platform": "虎扑",
+      "author": "轮椅AD",
+      "published_at": "2020-08-16 17:26:37",
+      "topics": [
+        "双人路",
+        "换血机会",
+        "技能冷却",
+        "蓝量分配"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读首帖德莱文、女枪、大嘴、卢锡安与老鼠文字；未实测连招、未观看所提直播。",
+      "content_notes": [
+        "女枪例子让小兵血量成为Q弹射威胁；卢锡安例子围绕敌方将技能交给兵线后上前。",
+        "大嘴描述依赖璐璐保护和敌方突进状态；作者自己的符文偏好并非唯一方案。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "关键技能用于清线会改变短暂的对抗窗口；应同时说明自己为利用窗口会交掉哪些资源。",
+          "conditions": [
+            "实际观察到对方技能已交",
+            "队友能接上，且敌方其余技能/增援不抹去窗口"
+          ],
+          "counterexample": "敌方某个技能在冷却，但另一名敌人保留关键控制；为了消耗耗尽蓝，下一波无法处理。",
+          "next_check": "核对敌方双人组剩余控制、自身撤退技能和完成下一波清线所需蓝量。"
+        }
+      ],
+      "objections": [
+        "不采用老鼠早期游走怎样都不亏、拿人头血赚等无成本论。",
+        "旧连招伤害、技能斩杀比例、出装均需版本重查。"
+      ],
+      "patch_scope": "2020年；旧物品/符文与具体机制不直接写入当前知识库。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "作者自述经验，与CL06相关而非第二位独立教练。",
+        "所提文森特直播、韩服OB只是作者来源说明，本轮未观看。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:37248238",
+      "merged_ids": [
+        "CL07"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K18"
+      ]
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL08",
+      "title": "英雄联盟控线基础知识教学",
+      "url": "https://m.hupu.com/bbs/35139261.html",
+      "platform": "虎扑",
+      "author": "头号玩家mix（转帖；文末署教学摘自苍耳老师）",
+      "published_at": "2020-04-30 12:02",
+      "topics": [
+        "兵线概览",
+        "回城",
+        "多线同步"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读完整可访问文字和两条热评；确认文末转载声明及ProGuides图源。未读到有独立技术论证的回复。",
+      "content_notes": [
+        "收录快推/慢推/控线及两路推进同步，适合作为追溯原始作者的目录。",
+        "文内存在弱势应控线与弱势更难控线的条件差异，固定小兵数也不能当通用物理公式。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "是转载整理，不把头号玩家mix认证为原作者或独立验证来源。",
+        "示例伤害、固定兵数和保证资源二选一均不可不加条件引用。"
+      ],
+      "patch_scope": "2020年旧环境；原始教学版本不明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "正文确实读到；读到转载不等于获得原创经验证据。",
+        "Dopa示例与ProGuides图未回溯原视频。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/35139261.html"
+      ],
+      "canonical_key": "hupu:35139261",
+      "merged_ids": [
+        "CL08"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL09",
+      "title": "[心得] 給\"特別的孩子\"看的上路爬分原則",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1392235054.A.BEA.html",
+      "platform": "PTT",
+      "author": "bellzebub（Bing Bing）",
+      "published_at": "2014-02-13 03:57:31",
+      "topics": [
+        "历史攻略",
+        "抢二",
+        "控线",
+        "经验适用范围"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读主文与前部红眼/补给争议；正文明确低段位与4.2版本。",
+      "content_notes": [
+        "作者限定低段位，又把除对手回家外全部控线、所有英雄抢二写成通则。",
+        "回复指出红眼与补给存在机会成本，作者接受补充。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "大量旧英雄技能和S4装备，当前不可执行。",
+        "全英雄抢二、一律控线忽略对位、gank与团队窗口。",
+        "作者以简化教学代替条件，不适合升成Agent通用规则。"
+      ],
+      "patch_scope": "2014年4.2版本；低段位自述，台湾论坛。",
+      "adoption": "rejected",
+      "verification_notes": [
+        "保留为过度固化经验的反面样本，不加入动作建议。",
+        "未认证作者水平。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1392235054.A.BEA.html",
+      "merged_ids": [
+        "CL09"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL10",
+      "title": "[心得] 上路混分角伊羅旖",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1557099285.A.6A2.html",
+      "platform": "PTT",
+      "author": "OlaOlaOlaOla（喔啦喔啦喔啦）",
+      "published_at": "2019-05-06 07:34:41",
+      "topics": [
+        "俄洛伊",
+        "局部场地",
+        "技能窗口",
+        "对位反例"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读主文和有关锐雯的连续问答、上六前防gank讨论；截图战绩与视频未核验。",
+      "content_notes": [
+        "换血围绕触手、E命中和退回触手附近组织。",
+        "jeylove反驳熟练锐雯会保Q、以E盾抵消伤害并躲兵后；作者承认高手会反制，不能只喊E中就赢。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "英雄战斗能力取决于局部可利用单位和技能结果；命中关键技能之后仍需看对手的回应。",
+          "conditions": [
+            "触手/召唤物等实际位置有证据",
+            "敌方关键技能和逃离路径纳入判断"
+          ],
+          "counterexample": "离开已建立的触手区域，或敌人利用小兵挡技能、用盾吸收主伤害，即使英雄名相同也不满足原连招条件。",
+          "next_check": "核对局部单位、E是否实际命中、敌方护盾/位移是否保留，再判断继续打或撤回。"
+        }
+      ],
+      "objections": [
+        "拒绝一打二最差一换一、六级后不怕打野的保证。",
+        "己方打野上半区不意味着敌方必在下半区。",
+        "原帖称无须技术与楼内实际执行难度矛盾。"
+      ],
+      "patch_scope": "2019年S9机制和符文；台湾论坛，不证明国服。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "是原作者经验及反驳问答；资历截图未核验。",
+        "只提炼状态依赖与反制路径，不采旧数值。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1557099285.A.6A2.html",
+      "merged_ids": [
+        "CL10"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K19"
+      ]
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL11",
+      "title": "[心得] 鑽石約瑞科心得(電一愛歐尼亞)",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1686449875.A.C2A.html",
+      "platform": "PTT",
+      "author": "asssstang（tyudehj）",
+      "published_at": "2023-06-11 10:17:49",
+      "topics": [
+        "约里克",
+        "国服自述",
+        "召唤物",
+        "对位",
+        "分推"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读主文及作者回应proxy、俄洛伊、格温的可见评论；装备表和所引YouTube没有打开。",
+      "content_notes": [
+        "作者自述艾欧尼亚钻石，用墓/小鬼、第一次补装和大招状态区分早期接线与后续施压。",
+        "分推段承认队友需求可能要求自己参团；格温答复明确说一年未碰过该对位。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "判断英雄强势窗口要包含可用召唤物、被动储备和补装状态，并允许同一对位随这些状态改变计划。",
+          "conditions": [
+            "小鬼/墓/大招等可用状态有证据",
+            "队友是否需要本人到场及边路威胁可以判断"
+          ],
+          "counterexample": "只有英雄等级与装备标签，却没有小鬼或可用大招；一打多设想无法兑现，正面也可能无法拖住。",
+          "next_check": "列出实际可用战斗资源及缺失字段，确认边线压力生效时队友正在做什么。"
+        }
+      ],
+      "objections": [
+        "不采用无敌分推、必上钻、无条件六级前不能推线等保证。",
+        "固定目标前35–45秒到边路不能替代本局路线/兵线计算。",
+        "对格温的建议作者自承缺乏近期对位经验，应降权。"
+      ],
+      "patch_scope": "2023年；作者自述国服电一艾欧尼亚钻石，不是平台认证。旧神话装备及交互需版本核验。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "香港IP和繁体平台不妨碍原文明确谈国服，但地区/段位不做额外推断。",
+        "Krykey、Quinncidence、slogdog是作者致谢来源，不能算本批另读三位作者。",
+        "页面最后编辑日期2023-07-16，published_at保留原发帖时间。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1686449875.A.C2A.html",
+      "merged_ids": [
+        "CL11"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K19"
+      ]
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL12",
+      "title": "分享一波最全的电竞UP汇总盘点",
+      "url": "https://m.hupu.com/bbs/39021500.html",
+      "platform": "虎扑",
+      "author": "到处吸溜",
+      "published_at": "2020-11-05 18:57",
+      "topics": [
+        "作者索引",
+        "复盘频道"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读整篇目录，重点读干货类10位作者介绍与可见纠正评论。未因此观看所列视频。",
+      "content_notes": [
+        "列出上单老祖、LOL丶诺诺、尹天、GFlamingo等复盘/文字作者，适合作后续追溯。",
+        "目录作者对风格、身份与更新频率的判断有主观性且时间久远。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "粉丝数、自称教练、有人评论等不作为资历认证。",
+        "此目录不含可直接采纳的对局决策推理。"
+      ],
+      "patch_scope": "2020年作者入口索引，不代表当前更新状态。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "只将该文章算一次入口，不把提到的每个频道算看过一个来源。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/39021500.html"
+      ],
+      "canonical_key": "hupu:39021500",
+      "merged_ids": [
+        "CL12"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL13",
+      "title": "[LPL群访]Daeny教练谈上单维鲁斯：在训练赛和排位得到了一些验证（楼内长短手对线讨论）",
+      "url": "https://bbs.hupu.com/638826555.html",
+      "platform": "虎扑",
+      "author": "虎扑游戏电竞资讯（主帖）；Reinka（相关回帖）",
+      "published_at": "2026-04-27 11:00:00",
+      "topics": [
+        "长短手对位",
+        "升级窗口",
+        "版本迁移"
+      ],
+      "access_level": "primary_excerpt",
+      "read_scope": "读访谈主帖及第一页完整可见Reinka相关回帖；其身份由页面引用署名确认。其余分页仅检索摘要。",
+      "content_notes": [
+        "Reinka讨论到达三技能等级前已损失太多生命，会令原先设计的反打窗口消失。",
+        "主帖是LPL群访转述；本条候选仅来自独立可读论坛回复，不把新闻编辑当对线观点作者。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "到达等级强势点不自动意味着能反打，还需检查为等到该等级已经付出的血量与召唤师技能。",
+          "conditions": [
+            "预期关键等级刚到或即将到",
+            "此前消耗已改变双方斩杀关系"
+          ],
+          "counterexample": "计划中三级有全套技能，但三级时已经残血、对手保留虚弱或队友不在，强行执行原计划会死。",
+          "next_check": "到达升级时重算生命、技能、召唤师技能与兵线阻挡；不沿用加载阶段结论。"
+        }
+      ],
+      "objections": [
+        "评论对炮车波次和版本强弱的陈述未用官方补丁验证，不能写成已证当前规则。",
+        "没有原局回放，不验证其列举对位一定输赢。"
+      ],
+      "patch_scope": "2026-04-27讨论；补丁号未给，不把发帖年份当机制验证。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "只接受回复提出的条件问题，具体机制仍交给当前版本数据。",
+        "分页合并同帖，不以多个重复引文扩大来源数。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/638826555-2.html",
+        "https://bbs.hupu.com/638826555-3.html",
+        "https://bbs.hupu.com/638826555-4.html"
+      ],
+      "canonical_key": "hupu:638826555",
+      "merged_ids": [
+        "CL13"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "form": "forum_thread",
+      "checked_on": "2026-11-19",
+      "id": "CL14",
+      "title": "左手的对线从去年开始到现在是不是完全回不去的感觉了",
+      "url": "https://bbs.hupu.com/636936297.html",
+      "platform": "虎扑",
+      "author": "鱼遇雨欲语愉",
+      "published_at": "2026-01-16 01:45:23",
+      "topics": [
+        "来源筛选",
+        "赛后归因争议"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "读主帖和第一页可见争论；搜索摘要出现版本影响段，但页面find未找到该段，因此不将那段算正文读证。",
+      "content_notes": [
+        "关于对线表现的评论互相争辩英雄选择、一级团影响和游走换取其他位置收益。",
+        "本次没有原比赛支持，争论主要围绕选手评价，不能直接转成对线规则。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "对人格、年龄、固定选手强弱的无证据推断不进入知识手册。",
+        "搜索快照与本次打开的页面内容不完全一致，尤其版本变化段不可当已核验规则。"
+      ],
+      "patch_scope": "2026年争议帖，涉及多年前比赛，没有统一可验证补丁。",
+      "adoption": "rejected",
+      "verification_notes": [
+        "保留筛选记录避免后续把高热度争论当知识事实。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:636936297",
+      "merged_ids": [
+        "CL14"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL15",
+      "title": "Re: [問題] 新手TOP-嘉文四世對線請益",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1706579292.A.BA5.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "嘉文四世",
+        "对位"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "检索摘要提及对位熟练度与连招区别，正文连续打开为 Cache miss。",
+      "content_notes": [
+        "摘要可作为对位教学线索，未据其生成经验规则。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1706579292.A.BA5.html",
+      "merged_ids": [
+        "CL15"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL16",
+      "title": "〖攻略贴〗吾所成之事，不可逆也——影流之主〖艾欧尼亚吧〗",
+      "url": "https://tieba.baidu.com/p/5468299653",
+      "platform": "百度贴吧",
+      "form": "forum_thread",
+      "author": "是很漂亮",
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "劫",
+        "国服英雄吧",
+        "技能窗口"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "读取搜索结果摘录；c.tieba公开页与主域正文均无法访问，主域报 is not accessible。",
+      "content_notes": [
+        "摘要提及W使用后的回撤及对位处理，只保留追溯入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [
+        "https://c.tieba.baidu.com/p/5468299653?fr=good"
+      ],
+      "canonical_key": "tieba.baidu.com/p/5468299653",
+      "merged_ids": [
+        "CL16"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL17",
+      "title": "〖图片〗大鼻子露珠！〖仙灵女巫攻略贴〗〖lol吧〗",
+      "url": "https://tieba.baidu.com/p/6676698617",
+      "platform": "百度贴吧",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "璐璐",
+        "下路换血"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "仅搜索结果；主帖直开 is not accessible。",
+      "content_notes": [
+        "摘要出现硬辅技能空档与换血内容，未读到完整适用条件。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [
+        "https://tieba.baidu.com/p/6676698617?fr=good"
+      ],
+      "canonical_key": "tieba.baidu.com/p/6676698617",
+      "merged_ids": [
+        "CL17"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL18",
+      "title": "〖观赛科普〗EU流分路的前世今生〖lol吧〗",
+      "url": "https://c.tieba.baidu.com/p/7185620054?fr=good",
+      "platform": "百度贴吧",
+      "form": "forum_thread",
+      "author": "树穴家老扑克",
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "分路",
+        "历史战术"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索结果摘录可见，公开正文打开 Timeout fetching。",
+      "content_notes": [
+        "历史分路与资源配置线索，不能当现版本各路职责定论。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [
+        "https://tieba.baidu.com/p/7185620054"
+      ],
+      "canonical_key": "c.tieba.baidu.com/p/7185620054?fr=good",
+      "merged_ids": [
+        "CL18"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL19",
+      "title": "[心得] 上路坦飛斯",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1462288552.A.42C.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "上路",
+        "历史出装"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索索引可见，正文 Cache miss。",
+      "content_notes": [
+        "旧版本上路坦克小鱼人攻略入口；未读正文，不采用其玩法结论。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1462288552.A.42C.html",
+      "merged_ids": [
+        "CL19"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL20",
+      "title": "Re: [問題] 怎麼打才能上金牌啊",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1593367241.A.63C.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "中路",
+        "蓝量",
+        "回城与支援"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "检索可见较长摘录；两次正文打开均 Cache miss，不算完整帖阅读。",
+      "content_notes": [
+        "摘要描述过度用技能耗蓝被迫回城，进而丢线权的复盘；需正文和原局再判。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1593367241.A.63C.html",
+      "merged_ids": [
+        "CL20"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL21",
+      "title": "[外絮] Chovy的CS秘訣:吃到每支兵然後不讓對面吃",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1634193969.A.20F.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "补刀",
+        "压制",
+        "采访转述"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索摘要可见少量回复；正文打开403 Forbidden，未绕过。",
+      "content_notes": [
+        "只保留采访及相关评论索引；未读取原始采访，不以标题概括方法。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1634193969.A.20F.html",
+      "merged_ids": [
+        "CL21"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL22",
+      "title": "拉扯、拆招与飞檐走壁的艺术——留白分享玩青钢影的心得",
+      "url": "https://m.wanplus.cn/article/333471.html",
+      "platform": "玩加电竞",
+      "form": "article",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "青钢影",
+        "换血与持续对拼",
+        "主播经验"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索摘要；移动版Timeout fetching、常规桌面版is not accessible，未读正文。",
+      "content_notes": [
+        "摘要自称由留白Camille提供核心观点、撰稿者整理；是值得追溯的具名采访合作线索。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [
+        "https://www.wanplus.cn/article/333471.html"
+      ],
+      "canonical_key": "m.wanplus.cn/article/333471.html",
+      "merged_ids": [
+        "CL22"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL23",
+      "title": "上单细节教学·前期单杀后的兵线处理",
+      "url": "https://www.chaofan.com/news/ejks5s6s9n86cqv.html",
+      "platform": "超凡电竞",
+      "form": "article",
+      "author": "瓦罗兰文艺复兴联合会",
+      "published_at": "2020-05-11 12:02",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "击杀后兵线",
+        "回城",
+        "换血碰兵"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索返回长摘录和署名日期；直接正文Timeout fetching，不将长摘要算已打开原文。",
+      "content_notes": [
+        "摘要讨论一级单杀后回线与兵线方向，并给出可被反制的情境；需追溯正文/原始图示。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "来源显示2020年，具体机制和补丁未核验。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [],
+      "canonical_key": "www.chaofan.com/news/ejks5s6s9n86cqv.html",
+      "merged_ids": [
+        "CL23"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CL24",
+      "title": "虚心求教，怎么上分（第6页对线与兵线回复）",
+      "url": "https://bbs.hupu.com/641913747.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "对线规划",
+        "对局加载",
+        "兵线交互"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索命中第6页较长回复；该页直开is not accessible，仅索引。",
+      "content_notes": [
+        "摘要内自称韩服宗师/国服钻石者讨论对位、兵线和队友，但含大量保证上分和ELO断言，不可整段采纳。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有成功读取正文或完整相关楼层，暂不评判正文结论。"
+      ],
+      "patch_scope": "具体补丁未核验；不套用当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问结果按工具实际返回记录；搜索摘要、标题与索引不是全文阅读证据。",
+        "未认证作者自述资历，未绕过登录/权限。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/641913747-5.html",
+        "https://bbs.hupu.com/641913747-6.html"
+      ],
+      "canonical_key": "hupu:641913747",
+      "merged_ids": [
+        "CL24",
+        "CM10"
+      ],
+      "additional_access_reports": [
+        {
+          "id": "CM10",
+          "access_level": "search_snippet",
+          "read_scope": "实际搜索读到第5/6页长回复摘录；直接根帖与第6页未能打开。",
+          "verification_notes": [
+            "仅索引，分页不另算资源。"
+          ],
+          "adoption": "index_only",
+          "content_notes": [
+            "有回复讨论开局看阵容、资源团先消耗关键状态和边线推过河再选动向；也有互相冲突的帮队友与自我发育意见。"
+          ],
+          "conditional_insights": [],
+          "objections": [
+            "未拿到完整楼层上下文与作者；自述段位、保证击杀等均不当事实。"
+          ]
+        }
+      ],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM01",
+      "title": "LOL打野经验分享第二期：开野的选择以及刷线路线的制定",
+      "url": "https://m.hupu.com/bbs/54379222.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "用户2136489190",
+      "published_at": "2022-06-22",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "开野方向",
+        "第一波目标",
+        "反蹲",
+        "阵容联动"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "实际打开主楼；重点核读开野选择三条件、狗头/德莱文阵容例子与不能套公式段；未把示意图片当地图数据。",
+      "content_notes": [
+        "主楼把自身与敌野强度、目标等级、第一波帮哪一路并列考虑。以被压狗头未必能跟伤害、下路可能更能兑现为例，反对只按压线位置决定抓人。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "开野前先比较第一轮能够兑现的目标，再确定刷野终点；到点后重新看真实线形。",
+          "conditions": [
+            "本人的作战等级和当前版本路线已核实",
+            "比较双方该路组合、队友能否离开兵线和敌野可能到场",
+            "预留目标消失后的继续发育路线"
+          ],
+          "counterexample": "队友被压不等于他能放弃进塔兵接战；只打掉对手技能却失去过多野区，可能没有换来后续机会。",
+          "next_check": "刷完下一营地或线上换血后，复查队友状态、敌野最新可见线索和下一目标。"
+        }
+      ],
+      "objections": [
+        "主楼的高概率描述、固定刷野时长与开局入侵近乎必赚说法均不采纳。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "已核正文；作者显示名与搜索缓存不同，采用本轮直接页面名，未独立核验身份或段位。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:54379222",
+      "merged_ids": [
+        "CM01"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K21"
+      ]
+    },
+    {
+      "id": "CM02",
+      "title": "黄金白金打野上分攻略",
+      "url": "https://m.hupu.com/bbs/38271584.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "juggap",
+      "published_at": "2020-09-30",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "抓人后续",
+        "反野止损",
+        "符文条件"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "实际打开主楼与可见高亮回复；ref1rain 对咖啡小夜曲的反驳已直接核读。",
+      "content_notes": [
+        "主楼强调抓完人继续规划经验路线；被入侵又无力争夺时不要原地耗时。回复争论说明照搬另一个固定符文也不等于按阵容选择。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "抓人计划应连同结束后的营地/回补安排评估，而不是只统计有无击杀。",
+          "conditions": [
+            "本人仍可行动且回野路线有信息支持",
+            "把抓人耗时和后续等级需求纳入比较"
+          ],
+          "counterexample": "拿到人头但随后无野可刷、状态不足且无法回补，收益不能由击杀单独证明。",
+          "next_check": "抓人结束立即重新确认自身状态、可争营地和购买窗口。"
+        }
+      ],
+      "objections": [
+        "ref1rain 反驳无脑征服者，强调当局抓人目标与阵容。",
+        "主楼的敌野去向百分比、固定路线和英雄永久强弱判断不采。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "个人帖不是分段整体统计；回复不是全站共识。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:38271584",
+      "merged_ids": [
+        "CM02"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K21"
+      ]
+    },
+    {
+      "id": "CM03",
+      "title": "终于轮到我了，我是斗鱼打野绝活一哥格局，JRs有什么想问的？",
+      "url": "https://m.hupu.com/bbs/38103510.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "格局太小OoO",
+      "published_at": "2020-09-22",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "入侵",
+        "刷野与抓人",
+        "负面采纳案例"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "实际打开主楼和展示的高亮回复。",
+      "content_notes": [
+        "主楼宣传主动入侵和顺路抓人，但大量表达不列阵容、视野与可支援条件。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "不采一级入侵必赚、换打野总不亏、所有分段一套打法的泛化。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "rejected",
+      "verification_notes": [
+        "作者身份与登顶自述未独立核验；用作需要拒绝的无条件经验例子。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:38103510",
+      "merged_ids": [
+        "CM03"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM04",
+      "title": "世界赛经典回顾：Faker沙皇神之一推",
+      "url": "https://m.hupu.com/bbs/628664238.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "虎扑JR1615876787",
+      "published_at": "2024-10-31",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "劣势主动性",
+        "团战跟进",
+        "事后偏差"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "实际打开主楼及高亮回复；未另核该局录像。",
+      "content_notes": [
+        "作者讨论敌方关键先手未命中后反开，以及队伍是否同步跟进。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "一百个选手都会撤、一次操作决定后续冠军等事后评价不能充当动作概率或最优性证明。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "rejected",
+      "verification_notes": [
+        "不是选手/教练本人复盘；未经同局时间线验证，保留为研究案例。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:628664238",
+      "merged_ids": [
+        "CM04"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM05",
+      "title": "根据doinb得bp思路盘点老头杯各队弱点",
+      "url": "https://m.hupu.com/bbs/626548113.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "懒胖纸爱睡懒觉",
+      "published_at": "2024-05-26",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "单带与团战",
+        "阵容职责",
+        "事后归因"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "实际打开主楼五段和展示的高亮回复。",
+      "content_notes": [
+        "主楼尝试从团战阵容处理边带的能力、主要输出点和反手配置解释选择。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "没有核验讲者本人原始BP解释；选手能力、心理变化与全部队伍适用等说法不可作事实。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "rejected",
+      "verification_notes": [
+        "读到的是网友赛事解读；不冒充Doinb原话或经过验证的战术规律。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:626548113",
+      "merged_ids": [
+        "CM05"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM06",
+      "title": "LPL群访：再战TT自己有哪些进步点，Bin：上一场有点忘记了，不知道",
+      "url": "https://voice.hupu.com/bbs/630768272",
+      "platform": "虎扑",
+      "form": "article",
+      "author": "虎扑游戏电竞资讯",
+      "published_at": "2025-02-25",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "换线",
+        "对位重分配",
+        "团战预案",
+        "沟通"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "实际打开虎扑署名来源的群访正文；核读 ON 的换线解释、Maokai 关于换线时机与团战画面的回答。",
+      "content_notes": [
+        "ON 说明在对手回城后与上单沟通换线以改善至少一条被克制的线；教练提到先厘清团战优先级与各线接战回合。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "当原对位持续不利时，可比较重新分配接线位置；这需要两个受影响玩家共同确认。",
+          "conditions": [
+            "本局版本允许该时点换线且塔/兵线代价已经计入",
+            "对手回补或其他空档确实存在",
+            "换过去后至少改善一个可执行目标且不让另一线付出更大无法承担的损失"
+          ],
+          "counterexample": "只让自己舒服却把队友送入更危险对位，或双方未确认导致两人抢同一路，不是合格换线方案。",
+          "next_check": "换线前确认接线人、目标兵线、对手是否跟换与下一资源位置。"
+        },
+        {
+          "principle": "团战前写清本人首要职责与队友可跟进的条件，再讨论开团。",
+          "conditions": [
+            "具体阵容和关键状态可知",
+            "本人能说明要保护谁、先处理谁或等待哪个关键技能"
+          ],
+          "counterexample": "人数相等不代表队友当前距离、血量和技能允许跟上。",
+          "next_check": "开团窗口出现时检查队友实际到场状态，未满足则保留技能或改为消耗。"
+        }
+      ],
+      "objections": [
+        "采访发生于2025赛事；不把当时换线版本偏好当作所有排位的默认打法。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "页面明示来源虎扑，采访文字直接可读；未观看群访视频。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:630768272",
+      "merged_ids": [
+        "CM06"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K22",
+        "K23"
+      ]
+    },
+    {
+      "id": "CM07",
+      "title": "【LPL选手故事】少年来到海边—SN.huanfeng",
+      "url": "https://www.weibo.com/ttarticle/p/show?id=2309404537953979334777",
+      "platform": "微博／英雄联盟赛事",
+      "form": "article",
+      "author": "丹尼二狗；发布账号：英雄联盟赛事",
+      "published_at": "2020-08-14",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "沟通契约",
+        "信号含义",
+        "角色分工"
+      ],
+      "access_level": "primary_excerpt",
+      "read_scope": "先读虎扑转载，后沿主楼链接打开原作者发布页；核读原文“欢迎来到LPL”段中辅助串联、双向反馈、双排信号引起误解的几段（网页显示行315—346）。",
+      "content_notes": [
+        "采访对比了比赛中给新人方向与熟悉搭档排位减少话语；同样的沉默被双方解释不同。SwordArt 也强调交流应允许对方反馈，而非单方面灌输。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "沟通建议应包含当下需共同确认的行动与限制；不能从信号或沉默直接推断对方意图。",
+          "conditions": [
+            "当前事件确实需要本人和队友同步",
+            "表达的是本人的计划或已知限制而非替队友下决定"
+          ],
+          "counterexample": "安静补刀或已经有配合默契时持续广播全部地图信息，会占用本人对线注意力；未回应也不证明拒绝配合。",
+          "next_check": "需要承诺的节点检查队友位置、回应与动作；没有确认则按未跟进方案行动。"
+        }
+      ],
+      "objections": [
+        "这是沟通个案，不提供一般化的固定发信号频率。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "原发布页相关段直接可读；底部有关注阅读提示，未尝试登录、关注或绕过；不声称读完所有粉丝内容。",
+        "虎扑转载用户名为njj751，不能代替原作者。"
+      ],
+      "aliases": [
+        "https://m.hupu.com/bbs/37208234.html"
+      ],
+      "canonical_key": "www.weibo.com/ttarticle/p/show?id=2309404537953979334777",
+      "merged_ids": [
+        "CM07"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K15"
+      ]
+    },
+    {
+      "id": "CM08",
+      "title": "关于打野的一些个人经验",
+      "url": "https://m.hupu.com/bbs/36089074.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "我是奇叠",
+      "published_at": "2020-06-20",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "反蹲",
+        "入侵",
+        "线上支援"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索返回长段主楼摘录；直接页面 timeout/不可访问，未取得完整正文。",
+      "content_notes": [
+        "索引提及推线时的反蹲、线上劣势时不宜强行入侵；是否有后续反例未核。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "抓人无脑帮控制路、见队友打架一定停刷等绝对表述不采。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "只保留待核读入口；不进入机器卡。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/36089074.html"
+      ],
+      "canonical_key": "hupu:36089074",
+      "merged_ids": [
+        "CM08"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM09",
+      "title": "打野打了三千把才想通，不会取舍操作再秀也白给",
+      "url": "https://bbs.hupu.com/642644471.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "BG丶饼干",
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "资源交换",
+        "选择代价"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索返回主楼片段；原页cache miss，移动页不可访问。",
+      "content_notes": [
+        "索引讨论河蟹、抓人和后续发育都想要导致两头落空；中期带线与大龙如何取舍。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "片段中的先锋优先于首龙不能作为跨版本规则。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "待核正文与回复，未验证作者场次自述。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:642644471",
+      "merged_ids": [
+        "CM09"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM11",
+      "title": "国服第一巨魔，万字攻略！",
+      "url": "https://m.hupu.com/bbs/46977297.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "巨魔大大（正文自述）",
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "单带转团",
+        "劣势团战",
+        "目标选择"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索返回技能、出装和后期团战多个连续片段；直接移动页timeout、桌面页不可访问。",
+      "content_notes": [
+        "索引在劣势下讨论用柱子抓落单、单带后观察队伍压力；同文优势段却把追杀后排写成唯一目标。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "国服第一未独立验证；旧装备与无条件追C不采。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "价值在于后续核验相反团战职责的成立条件；目前不入卡。"
+      ],
+      "aliases": [
+        "https://bbs.hupu.com/46977297.html"
+      ],
+      "canonical_key": "hupu:46977297",
+      "merged_ids": [
+        "CM11"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM12",
+      "title": "对poke阵容要重视起来blg才",
+      "url": "https://m.hupu.com/bbs/626389197.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "消耗阵容",
+        "团前站位"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索只返回赛事分析片段；移动页cache miss、桌面页不可访问，标题可能被截断。",
+      "content_notes": [
+        "片段对比抱团爆发与分散消耗拉扯的站位需求。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "未核同局录像；不可将网友解释当作队伍真实意图。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "短索引线索，暂不采用。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:626389197",
+      "merged_ids": [
+        "CM12"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM13",
+      "title": "【問題】打野一些基本問題",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=682648",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": "赤色的獨角獸（提问）；dogecoin（所见2楼）",
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "反蹲",
+        "等待成本",
+        "视野目的"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索索引显示提问及2楼 dogecoin（2022-05-18编辑）连续段；直接原帖403，未继续绕过。",
+      "content_notes": [
+        "2楼提醒反蹲等待会拖延自身发育，并把眼位选择联系到下一行动目的。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "索引中的低分段不要反蹲不适合作永久禁令；需要查原帖其余反例。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "公开搜索摘录不是已核原帖正文；不计入已读全文。"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:682648",
+      "merged_ids": [
+        "CM13"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM14",
+      "title": "【心得】(更新 後篇) 20個 season6 的打野觀念 by到底在by三小",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=562373",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": "蔚藍的天空",
+      "published_at": "2016-04-24",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "机会成本",
+        "敌野线索",
+        "抓人收益"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索索引包含前六条连续段；原帖403，未绕过。",
+      "content_notes": [
+        "索引明确用机会成本比较刷野、抓人与反蹲；也把未击杀的抓人笼统称为亏损。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "不采旧打野刀、野怪金币、固定等级差和抓不死就全亏的绝对化。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "待核完整上下文；S5前篇为同作者前版，不当独立支持票。"
+      ],
+      "aliases": [
+        "https://forum.gamer.com.tw/Co.php?bPage=0&bsn=17532&sn=4788186&subbsn=4"
+      ],
+      "canonical_key": "baha:17532:562373",
+      "merged_ids": [
+        "CM14"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM15",
+      "title": "【心得】五分鐘教會你一個LOL必備觀念 把把都用的到",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=708165",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": "毛球(毛球糰子)",
+      "published_at": "2026-08-07",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "资源交换",
+        "劣势补偿"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索索引显示主楼前半连续段及不同参数页；原帖403，未核到后半与回帖。",
+      "content_notes": [
+        "索引介绍不能正面接战时去另一半区交换抓人、塔、野怪或视野。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "交换必须核实对侧真的可拿、来得及且不会丢失更关键目标，不能机械对着做。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "日期来自索引带完整时间的参数页；多个参数URL按同帖计一次。"
+      ],
+      "aliases": [
+        "https://forum.gamer.com.tw/C.php?bsn=17532&snA=708165&tnum=8"
+      ],
+      "canonical_key": "baha:17532:708165",
+      "merged_ids": [
+        "CM15"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM16",
+      "title": "【問題】躺著也中槍!?各自打野觀念心得",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=648168",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "刷野与抓人",
+        "入侵沟通",
+        "队友不能支援"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索返回7—9楼一部分，其中9楼羽为2019-04-18；原帖403。",
+      "content_notes": [
+        "9楼索引把入侵与提前信号、队友状态联系起来，提醒线上的换血和技能会限制支援。其他楼支持不同发育取向。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "以大招使用频率判定只刷野、以专精直接决定帮谁，都不作判责标准。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "主楼作者与完整争论未核，保留待核入口。"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:648168",
+      "merged_ids": [
+        "CM16"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM17",
+      "title": "【心得】(大師)20個 season5 的打野觀念 by到底在by三小",
+      "url": "https://forum.gamer.com.tw/G2.php?bsn=17532&lorder=5&parent=841&sn=6296",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": "蔚藍的天空",
+      "published_at": "2015-04-30",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "止损",
+        "反野",
+        "历史经验演变"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索索引含前几条与被入侵时犹豫例子；直接原页cache miss。",
+      "content_notes": [
+        "索引提到没惩戒又不敢继续打时，恋战会额外损失血量与时间。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "高度依赖2015野区机制；不采全部秒数、等级差和装备阈值。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "CM14同作者旧版，目录可保留但不计为独立相互印证。"
+      ],
+      "aliases": [],
+      "canonical_key": "forum.gamer.com.tw/G2.php?bsn=17532&lorder=5&parent=841&sn=6296",
+      "merged_ids": [
+        "CM17"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM18",
+      "title": "JR整理：大型社区英雄攻略集合贴，欢迎大家补充 8.20 更新",
+      "url": "https://m.hupu.com/bbs/36686300.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "呜啦啦啦啦8",
+      "published_at": "2020-07-22",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "论坛资料导航",
+        "打野教学入口"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "索引能读到攻略分类与标题清单；移动页timeout、桌面页不可访问，未逐一核到链接正文。",
+      "content_notes": [
+        "可继续追查开野、敌野位置、千珏与艾克等作者帖子。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "导航目录不是多篇已读资料，所列每个标题未独立计数。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:36686300",
+      "merged_ids": [
+        "CM18"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM19",
+      "title": "今日精品如何围绕打野选英雄。",
+      "url": "https://bbs.hupu.com/637291110.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": "贰拾叁画生小号",
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "阵容联动",
+        "打野角色"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索得到题目和部分正文；直接移动页不可访问。",
+      "content_notes": [
+        "线索是围绕打野选择线上配合角色，尚未确认原帖详细条件。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "保留待核入口，不把标题扩写成结论。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:637291110",
+      "merged_ids": [
+        "CM19"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CM20",
+      "title": "说一下blg的游戏问题吧",
+      "url": "https://bbs.hupu.com/641151901.html",
+      "platform": "虎扑",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "资源优先级",
+        "开团跟进"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索得到主楼片段；直接移动页不可访问。",
+      "content_notes": [
+        "片段讨论资源压力与蔚先手后队伍跟伤害的衔接。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "赛事观众事后解读，未独立核该局数据或教练说法。"
+      ],
+      "patch_scope": "历史个人经验或采访；不采旧版数值、固定清野时钟、段位保证或经验百分比；本局须用当前版本与可知证据复核。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "仅索引，不用于评价本局操作。"
+      ],
+      "aliases": [],
+      "canonical_key": "hupu:641151901",
+      "merged_ids": [
+        "CM20"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR01",
+      "title": "[心得] Jungle/打野 由淺入深",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1394375014.A.7E2.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": "luigiyang",
+      "published_at": "2014-03-09",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "打野",
+        "补位",
+        "阵容配合",
+        "入侵"
+      ],
+      "access_level": "primary_text",
+      "read_scope": "主楼入门、补位、反野及问答正文；可见楼下留言，未观看所链直播",
+      "content_notes": [
+        "作者按线上伤害控制、野区投入与支援成本解释打野选择，并讨论打野补中释放中单游走。",
+        "帖子包含大量S4英雄、道具和地图内容及对队友的主观归因。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "打野补位可以服务队友回补或游走，须确认原线的空缺和双方可兑现动作。",
+          "conditions": [
+            "自己能及时到位且不能丢掉更紧急任务",
+            "队友确实要离开，沟通或动作有可知依据"
+          ],
+          "counterexample": "不能因为队友被单杀就给其能力贴标签，也不能无视队友控线意图强推。",
+          "next_check": "队友回线、波进塔或自己原定目标变化时再评是否离开。"
+        }
+      ],
+      "objections": [
+        "拒绝必然放弃某队友、无视其信号强推等绝对化处理",
+        "旧营地开局、英雄连招、固定补刀和眼价不作现行数据"
+      ],
+      "patch_scope": "S4历史经验；仅可用于条件问题，当前数值和英雄状态另核",
+      "adoption": "candidate",
+      "verification_notes": [
+        "web open成功，正文71行",
+        "中文社区，不代表国服当前样本；作者资历未独立核实"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1394375014.A.7E2.html",
+      "merged_ids": [
+        "CR01"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR02",
+      "title": "【心得】上路的心得",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=668765",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": "非常不惑；相关回复肥貓 臭",
+      "published_at": "2020-11-18 (主楼编辑)",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "控线",
+        "推线",
+        "解线",
+        "观点争议"
+      ],
+      "access_level": "primary_excerpt",
+      "read_scope": "主楼、2楼解释、3楼具体反驳及其可见回复；未遍历全部1268行",
+      "content_notes": [
+        "主楼把控线与推线分别连到个人压制与地图行动，3楼质疑把控线承伤描述成必然高风险，并提出控后囤线再推进的步骤。",
+        "主楼将被控线后游走、控线安全等说得过于绝对；争论中大量内容是资历之争，不作为战术证据。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "控线、囤线和推线可以按目标先后转换，是否改变操作应看当前线形与实际任务。",
+          "conditions": [
+            "自己能维持控线并承担相应承伤",
+            "准备离线或协同行动确有机会"
+          ],
+          "counterexample": "不能从控线推出安全无敌，也不能被控就一律离线游走。",
+          "next_check": "控线维持失败、准备回补或队友实际形成推进窗口时重看。"
+        }
+      ],
+      "objections": [
+        "3楼认为控线承伤受操作影响，不宜概括为高风险；不采其示例固定承伤/亏兵数",
+        "拒绝以赞踩或段位之争代替条件证据"
+      ],
+      "patch_scope": "2020/S11历史讨论，旧镀层价格和等级换金币不采用",
+      "adoption": "candidate",
+      "verification_notes": [
+        "web open成功，主楼与3楼可读",
+        "巴哈中文社区，不标成国服；文本转述不是全文认可"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:668765",
+      "merged_ids": [
+        "CR02"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K05"
+      ]
+    },
+    {
+      "id": "CR03",
+      "title": "[心得] 關於打野",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1555320770.A.C47.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "打野",
+        "抓人后兵线",
+        "镜像行动"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索返回较长相关片段，直接打开Cache miss",
+      "content_notes": [
+        "索引线索涉及抓人后推线、反蹲和镜像行动，待核原文及作者。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "索引中的一律送塔与能越就越不可直接采用"
+      ],
+      "patch_scope": "历史内容，未核版本",
+      "adoption": "index_only",
+      "verification_notes": [
+        "没有成功打开原文，不计正文已读"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1555320770.A.C47.html",
+      "merged_ids": [
+        "CR03"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR04",
+      "title": "Re: [閒聊] 打野該做什麼才算及格？",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1503543397.A.37A.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": "iverson7761 (搜索片段)",
+      "published_at": "2017-08-24 (搜索片段)",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "反蹲",
+        "塔下兵",
+        "支援"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索片段有作者对原楼反讽的认真答复，直开不可访问",
+      "content_notes": [
+        "候选关注大波进塔时线上队友能否跟进。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "须区分原楼反讽与回复观点"
+      ],
+      "patch_scope": "2017历史线索，未核现行适用",
+      "adoption": "index_only",
+      "verification_notes": [
+        "直开失败，不能把索引里的回复算完整核读"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1503543397.A.37A.html",
+      "merged_ids": [
+        "CR04"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR05",
+      "title": "[心得] 上鑽心得－兵線學",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1439193100.A.8B0.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "兵线",
+        "囤线",
+        "强势期"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索相关片段；直开fetch error",
+      "content_notes": [
+        "可作为研究囤兵与优势兑现的入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "片段含固定兵数、优势胜率和自动拔塔类断言，不采用"
+      ],
+      "patch_scope": "历史帖，版本未核",
+      "adoption": "index_only",
+      "verification_notes": [
+        "未取得可核原文正文"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1439193100.A.8B0.html",
+      "merged_ids": [
+        "CR05"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR06",
+      "title": "[心得] 白金 專打提摩心得",
+      "url": "https://www.ptt.cc/bbs/LoL/M.1631982810.A.DAF.html",
+      "platform": "PTT",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "塞恩对提莫",
+        "对位",
+        "保存血量",
+        "强势节点"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索较长片段；原URL打开失败",
+      "content_notes": [
+        "是英雄对位与等待能力节点的潜在研究入口，非当前推荐。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "含旧装备与符文、必杀断言和泛化胜负比例；不采纳攻击队友或英雄玩家的语言"
+      ],
+      "patch_scope": "旧版本对位，现行机制未核",
+      "adoption": "index_only",
+      "verification_notes": [
+        "标题段位为作者自述，不证明能力；未算正文已读"
+      ],
+      "aliases": [],
+      "canonical_key": "www.ptt.cc/bbs/LoL/M.1631982810.A.DAF.html",
+      "merged_ids": [
+        "CR06"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR07",
+      "title": "所有上路玩家都該知道的對線秘密－進攻型開局",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=675261",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "换血",
+        "兵线仇恨",
+        "开局"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索相关片段；直开403",
+      "content_notes": [
+        "候选主题是攻击英雄与兵线输出重分配的联系。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "伤害/仇恨规则必须按当前版本单独核实"
+      ],
+      "patch_scope": "历史教程，版本未核",
+      "adoption": "index_only",
+      "verification_notes": [
+        "访问403，无字幕或视频核验"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:675261",
+      "merged_ids": [
+        "CR07"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR08",
+      "title": "【心得】操作不到位?不到位的是你的意識!(對線篇)",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=650722",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "对线",
+        "阵容",
+        "防抓"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索相关片段，直开403",
+      "content_notes": [
+        "阵容分析与对线决策的待核入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "不继承固定打野到达时间"
+      ],
+      "patch_scope": "历史教程，未核现行适用",
+      "adoption": "index_only",
+      "verification_notes": [
+        "未读到原始正文"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:650722",
+      "merged_ids": [
+        "CR08"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR09",
+      "title": "【心得】分推篇－一把由觀念淬煉而成的利刃",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=654084",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "分带",
+        "多路同步",
+        "视野"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索片段包含多路压力主题，直开403",
+      "content_notes": [
+        "可用于后续研究分推与主团的同时施压，当前只作入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "看见两路推进不自动证明同步形成压力"
+      ],
+      "patch_scope": "历史教程，未核版本",
+      "adoption": "index_only",
+      "verification_notes": [
+        "没有观看附带参考影片"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:654084",
+      "merged_ids": [
+        "CR09"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR10",
+      "title": "【問題】新手想詢問兵線的問題",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=695346",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": "夜飄水 (搜索中的2楼)",
+      "published_at": "2023-10-28 (搜索中的2楼编辑)",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "击杀后",
+        "回城",
+        "帮推",
+        "补线"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索片段列出2楼的多个回补选项，直开403",
+      "content_notes": [
+        "与用户问题高度相关，待核少量削薄、请求帮推、放线补位三个候选的成立条件。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "帖子中通常都愿意帮或某方案收益最大不能替代本局到场证据"
+      ],
+      "patch_scope": "2023讨论；未核完整上下文",
+      "adoption": "index_only",
+      "verification_notes": [
+        "未打开原帖，未作为新知识卡依据"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:695346",
+      "merged_ids": [
+        "CR10"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR11",
+      "title": "【心得】S14 米里歐暨輔助觀念文－從0經驗到61%勝率上大師",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=698726",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": null,
+      "published_at": null,
+      "checked_on": "2026-11-19",
+      "topics": [
+        "米利欧",
+        "辅助",
+        "阵容",
+        "资源团"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索摘要与章节线索；直开403",
+      "content_notes": [
+        "可作为辅助对位、支援和资源团的后续长文入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "标题胜率/段位是作者宣称，不是本局预测或验证过资历"
+      ],
+      "patch_scope": "S14，不能套当前机制和目标优先级",
+      "adoption": "index_only",
+      "verification_notes": [
+        "未核正文、录像或对位章节完成情况"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:698726",
+      "merged_ids": [
+        "CR11"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "id": "CR12",
+      "title": "【心得】兵線控制",
+      "url": "https://forum.gamer.com.tw/C.php?bsn=17532&snA=705171",
+      "platform": "巴哈姆特",
+      "form": "forum_thread",
+      "author": "希爾菲德；3楼野貓-Chaotic neutral (搜索片段)",
+      "published_at": "2025-10-03 (搜索主楼日期)",
+      "checked_on": "2026-11-19",
+      "topics": [
+        "控线",
+        "集火",
+        "固定留兵规则争议"
+      ],
+      "access_level": "search_snippet",
+      "read_scope": "搜索返回主楼和3楼相关片段；直开403",
+      "content_notes": [
+        "候选研究固定留兵法与按集中输出、增援调整两种解释。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "永久控线、固定两只或四只兵均不作为定律；作者亦提出大优势等前提"
+      ],
+      "patch_scope": "2025讨论，未核场景/补丁",
+      "adoption": "index_only",
+      "verification_notes": [
+        "本轮未算正文已读，不直接纳入Agent"
+      ],
+      "aliases": [],
+      "canonical_key": "baha:17532:705171",
+      "merged_ids": [
+        "CR12"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2021-03-05",
+      "author": "射手夸夸",
+      "topics": [
+        "ADC",
+        "英雄输出节奏",
+        "对位",
+        "团战职责",
+        "组合分析"
+      ],
+      "read_scope": "直接打开作者专栏；核读英雄优劣势、Q与第四发顺序、转线、团前预估、女警/霞/厄斐琉斯等对位段。图片和图片内示例未逐帧核验。",
+      "content_notes": [
+        "作者把烬的间歇爆发与持续输出分开；团前预判限制自己的敌人和技能。",
+        "Q与第四发先后有伤害和出手机会的权衡；对位不只比较英雄名称。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "先判断一轮能打完什么，再决定持续追击还是拉开。",
+          "conditions": [
+            "弹药/技能状态已知",
+            "双方双人组合和可参与者纳入"
+          ],
+          "counterexample": "短连招更高面板伤害，但目标可能先离开攻击范围。",
+          "next_check": "检查攻击可达性、下一轮空档和退出路线。"
+        },
+        {
+          "principle": "团前为本人安排职责，并列出最先限制本人的技能。",
+          "conditions": [
+            "即将进入交战范围",
+            "只用当时可知的敌人/技能"
+          ],
+          "counterexample": "己方缺开团时输出位可能协助留人，但不能默认随后可安全输出。",
+          "next_check": "比较本人先手与保留输出两个分支。"
+        }
+      ],
+      "objections": [
+        "作者为简化部分ADC对位主动排除了辅助和熟练度；项目不能采用这一简化。",
+        "不采‘中期一定强于某英雄’作为跨版本断言。"
+      ],
+      "patch_scope": "正文明确11.2–11.3；狂风之力、贪欲猎手、具体射程、伤害及购买顺序不写入当前规则。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "作者段位自述未独立验证。",
+        "访问成功不等于机制正确或当前兼容。"
+      ],
+      "aliases": [],
+      "id": "CV01",
+      "title": "【射手夸夸】戏命师·烬教程-全方位大型攻略",
+      "url": "https://www.bilibili.com/opus/498509226188297883",
+      "platform": "哔哩哔哩",
+      "form": "article",
+      "access_level": "primary_excerpt",
+      "canonical_key": "www.bilibili.com/opus/498509226188297883",
+      "merged_ids": [
+        "CV01"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K23"
+      ]
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": null,
+      "author": "挚爱饭炒丁",
+      "topics": [
+        "上单",
+        "中单",
+        "克烈",
+        "出装目的",
+        "队伍职责"
+      ],
+      "read_scope": "直接核读贪欲/挺进的适用场景及作者来源说明；未把全文装备表或主播实战当成已复核。",
+      "content_notes": [
+        "作者按单带续航、对手灵活性与队伍是否缺伤害区分装备目的。",
+        "作者说中路线短，回复与回线条件会改变续航装备价值。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "出装先填要解决的阻碍，再衡量伤害、接近和续航的取舍。",
+          "conditions": [
+            "对位英雄、队伍伤害职责已知",
+            "成装能否赶上下次行动已检查"
+          ],
+          "counterexample": "补留人但队伍因此缺伤害，可能仍无法完成击杀。",
+          "next_check": "对照目标版本装备，计算买完后的连招和回线窗口。"
+        }
+      ],
+      "objections": [
+        "标题S15，但页面显示编辑于2026-05-19；没有锁定当前适用补丁。",
+        "作者整合其他主播并结合本人澳服经历；不能称国服独立实测。"
+      ],
+      "patch_scope": "赛季/修改时间矛盾；只保留选择依据，不采固定首件、符文胜率和‘无脑’推荐。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "页面编辑日期2026-05-19不是已证明的原始发布日期。",
+        "自述段位/胜率与引用主播经验未独立核验。"
+      ],
+      "aliases": [],
+      "id": "CV02",
+      "title": "S15克烈现版本出装符文教学",
+      "url": "https://www.bilibili.com/opus/1110890873096241174",
+      "platform": "哔哩哔哩",
+      "form": "article",
+      "access_level": "primary_excerpt",
+      "canonical_key": "www.bilibili.com/opus/1110890873096241174",
+      "merged_ids": [
+        "CV02"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K24"
+      ]
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2024-06-28",
+      "author": "智酱tomo",
+      "topics": [
+        "中单",
+        "炼金",
+        "开局换血",
+        "线权成本",
+        "游走"
+      ],
+      "read_scope": "直接读取80行页面的文字正文；符文/出装图片未辨读，不声称复核对应装备组合。",
+      "content_notes": [
+        "作者把能低成本推线与推线掉血过多分为两条开局。",
+        "前者尝试血量换推进，后者放线等配合。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "把拿线权所需血量计入支援方案，不能只看清线速度。",
+          "conditions": [
+            "可估计对线消耗",
+            "离线目的地确有可达机会"
+          ],
+          "counterexample": "推得出线但残余状态不足以参战，先推后游不成立。",
+          "next_check": "检查离线后血蓝、目标到位时间和返回会损失的兵。"
+        }
+      ],
+      "objections": [
+        "原文‘二级直接抓下’、‘四级叫打野抓死’省略了目标位置、视野和队友响应。",
+        "固定ban位、无脑召唤师技能、永远出装均不采。"
+      ],
+      "patch_scope": "2024-06旧经验；具体等级路线只作案例，不写成2026规则。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "作者自述当季大师未独立核验。"
+      ],
+      "aliases": [
+        "https://www.bilibili.com/read/cv35823703/"
+      ],
+      "id": "CV03",
+      "title": "公式流中单启封炼金发明人！中单炼金最正确打法！",
+      "url": "https://www.bilibili.com/opus/948056375215259654",
+      "platform": "哔哩哔哩",
+      "form": "article",
+      "access_level": "primary_text",
+      "canonical_key": "www.bilibili.com/opus/948056375215259654",
+      "merged_ids": [
+        "CV03"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K17"
+      ]
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2019-12-24",
+      "author": "机智的索长",
+      "topics": [
+        "上单",
+        "打野",
+        "腕豪",
+        "开团",
+        "团战职责"
+      ],
+      "read_scope": "直接核读234行页面正文，尤其六、七节的先手与跟进；未验证配图或作者实际测试。",
+      "content_notes": [
+        "文章区分己方已有先手时侧面跟进、本人承担先手时打乱阵型。",
+        "高蓄力技能仍可能被位移或控制反制。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "同一英雄的进场职责取决于谁先制造可跟进窗口。",
+          "conditions": [
+            "队友先手能力与位置可用",
+            "本人进场后有人能跟"
+          ],
+          "counterexample": "本人抱入敌群但队友隔墙或被控，机制能放出也未必形成收益。",
+          "next_check": "先列触发者、跟进者、反制技能和本人退路。"
+        }
+      ],
+      "objections": [
+        "新英雄上线前推演，不能作为已实战验证攻略。",
+        "‘不交闪必死’、‘2v2不会吃亏’与固定抓下、固定刷野路线均拒绝。"
+      ],
+      "patch_scope": "9.24B附近、腕豪上线前；所有机制数值/野区时间/旧打野刀/符文排除，仅职责分支作候选。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "保留其低证据等级；不能证明当前腕豪适合打野。"
+      ],
+      "aliases": [
+        "https://www.bilibili.com/read/cv4217008/"
+      ],
+      "id": "CV04",
+      "title": "新英雄瑟提打野上手攻略：简单粗暴，野区之王黑虎阿福请求出战！",
+      "url": "https://www.bilibili.com/opus/336329633297022617",
+      "platform": "哔哩哔哩",
+      "form": "article",
+      "access_level": "primary_text",
+      "canonical_key": "www.bilibili.com/opus/336329633297022617",
+      "merged_ids": [
+        "CV04"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2019-08-19",
+      "author": "嗨得on不席",
+      "topics": [
+        "ADC",
+        "女枪",
+        "旧版本",
+        "转述风险"
+      ],
+      "read_scope": "直接读取72行作者正文；作者明确是观看夏天直播后整理，不是夏天原声/字幕。",
+      "content_notes": [
+        "讨论旧行窃预兆女枪的装备形成与输出环境。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "大量依据旧符文和装备体系；不能支撑当前女枪强势期。",
+        "主播段位和打法的二手归纳未取得对应原片。"
+      ],
+      "patch_scope": "2019旧行窃预兆体系；具体出装、吸血比例和技能数值均拒绝采纳。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "计入可读正文，不计原主播已看数量。"
+      ],
+      "aliases": [
+        "https://www.bilibili.com/read/cv3396504/"
+      ],
+      "id": "CV05",
+      "title": "揭秘峡谷之巅第一，终极赏金king上分思路",
+      "url": "https://www.bilibili.com/opus/289434289850554773",
+      "platform": "哔哩哔哩",
+      "form": "article",
+      "access_level": "primary_text",
+      "canonical_key": "www.bilibili.com/opus/289434289850554773",
+      "merged_ids": [
+        "CV05"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": null,
+      "author": null,
+      "topics": [
+        "ADC",
+        "薇恩",
+        "对位",
+        "保留反制技能"
+      ],
+      "read_scope": "搜索返回长正文索引，读到VN对位卡莎/小炮/萨米拉与辅助配合段；直接打开超时。没有完整原页或图片核验。",
+      "content_notes": [
+        "索引文字讨论Q消耗与留Q躲先手的冲突，以及E时机受对面防御技能影响。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "原页访问未成功，长索引也不升级正式经验卡。",
+        "不采‘必选’符文、绝对最强技能和确定满血斩杀。"
+      ],
+      "patch_scope": "问题明确11.24；旧致命节奏射程和卡莎装备进化节点不采。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "作者和发布日期未能核定，均留null。",
+        "原页超时；不将索引长文计primary_text。"
+      ],
+      "aliases": [],
+      "id": "CV06",
+      "title": "《英雄联盟》11.24版本为什么薇恩和金克斯登场率和胜率这么高？下路发育AD要崛起了吗？",
+      "url": "https://www.zhihu.com/question/507415274/answer/2283332874",
+      "platform": "知乎",
+      "form": "qa",
+      "access_level": "search_snippet",
+      "canonical_key": "zhihu-answer:2283332874",
+      "merged_ids": [
+        "CV06"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": null,
+      "author": null,
+      "topics": [
+        "中单",
+        "龙王",
+        "对位",
+        "持续输出",
+        "控制反制"
+      ],
+      "read_scope": "搜索返回长正文索引，核读龙王对永恩/维克托段；直接原页跳安全验证，未越过验证。",
+      "content_notes": [
+        "索引把站桩输出、飞行被打断和对手交控制后的窗口放在一起讨论。"
+      ],
+      "conditional_insights": [],
+      "objections": [
+        "原页受限且机制补丁不明确，不生成条件卡。",
+        "‘最强后期’、固定被动层数及成装保证优势不采。"
+      ],
+      "patch_scope": "重做龙王早期旧装备体系；不能假定适配当前版本。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "安全验证导致原页不可读。"
+      ],
+      "aliases": [],
+      "id": "CV07",
+      "title": "请问LOL中铸星龙王该怎么用？",
+      "url": "https://www.zhihu.com/tardis/bd/ans/2931949858",
+      "platform": "知乎",
+      "form": "qa",
+      "access_level": "search_snippet",
+      "canonical_key": "zhihu-answer:2931949858",
+      "merged_ids": [
+        "CV07"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": null,
+      "author": null,
+      "topics": [
+        "中单",
+        "瑞兹",
+        "抗压"
+      ],
+      "read_scope": "仅搜索短摘要：对刺客补防装、放弃高风险补刀；直接打开cache miss。",
+      "content_notes": [
+        "入口涉及瑞兹被单杀的对线问题，适合后续核读。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "搜索显示约6年前；发布日期/补丁未知。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "没有阅读正文，不形成经验结论。"
+      ],
+      "aliases": [],
+      "id": "CV08",
+      "title": "ryze瑞兹细节教学",
+      "url": "https://www.zhihu.com/tardis/zm/art/93325495",
+      "platform": "知乎",
+      "form": "article",
+      "access_level": "search_snippet",
+      "canonical_key": "www.zhihu.com/tardis/zm/art/93325495",
+      "merged_ids": [
+        "CV08"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": null,
+      "author": null,
+      "topics": [
+        "上单",
+        "诺手",
+        "连招顺序",
+        "对位反制"
+      ],
+      "read_scope": "仅搜索摘要显示Q冷却与保留E保证命中的连招话题；原页安全验证。",
+      "content_notes": [
+        "可作为诺手反制技能和连招目的的后续核读入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "搜索显示约3年前；补丁未知。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "未取得原文，不把搜索摘要当实测。"
+      ],
+      "aliases": [],
+      "id": "CV09",
+      "title": "lol诺手怎么玩好？",
+      "url": "https://www.zhihu.com/tardis/bd/ans/2931934740",
+      "platform": "知乎",
+      "form": "qa",
+      "access_level": "search_snippet",
+      "canonical_key": "zhihu-answer:2931934740",
+      "merged_ids": [
+        "CV09"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2023-07-16",
+      "author": "麦片卡蜜尔",
+      "topics": [
+        "上单",
+        "卡蜜尔",
+        "鳄鱼",
+        "换血"
+      ],
+      "read_scope": "搜索可见标题/日期/作者；直接打开cache miss。未播放、未取得字幕。",
+      "content_notes": [
+        "标题对应具体对位，作为后续原片核读入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "版本未核；不能作为当前版本技能数值或胜率证明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "原标题不能证明具体换血顺序。"
+      ],
+      "aliases": [],
+      "id": "CV10",
+      "title": "边打边讲 教你卡蜜尔怎么在对线期跟鳄鱼换血！",
+      "url": "https://www.bilibili.com/video/BV1eh4y1j7Pw/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1eh4y1j7Pw",
+      "merged_ids": [
+        "CV10"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2026-03-18",
+      "author": "小霸王的上单",
+      "topics": [
+        "上单",
+        "劣势对位",
+        "抗压"
+      ],
+      "read_scope": "仅搜索标题/作者/日期；直接打开cache miss；未观看。",
+      "content_notes": [
+        "选为上单逆风对位的代表入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "版本未核；不能作为当前版本技能数值或胜率证明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "不采标题隐含效果保证。"
+      ],
+      "aliases": [],
+      "id": "CV11",
+      "title": "对线被克制如何抗压",
+      "url": "https://www.bilibili.com/video/BV1zYwizWETn/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1zYwizWETn",
+      "merged_ids": [
+        "CV11"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2023-10-16",
+      "author": "方宁奇亚娜",
+      "topics": [
+        "中单",
+        "奇亚娜",
+        "阿狸",
+        "对位"
+      ],
+      "read_scope": "仅标题/作者/日期；原页cache miss；无字幕或原声核读。",
+      "content_notes": [
+        "具体刺客对位法师的待读入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "版本未核；不能作为当前版本技能数值或胜率证明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "标题的教学保证不是验收证据。"
+      ],
+      "aliases": [],
+      "id": "CV12",
+      "title": "手把手教你如何对线阿狸，包教包会！",
+      "url": "https://www.bilibili.com/video/BV1Su411K7JH/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1Su411K7JH",
+      "merged_ids": [
+        "CV12"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2026-01-31",
+      "author": "轻狂书生贝蕾亚",
+      "topics": [
+        "打野",
+        "信息收集",
+        "路线调整"
+      ],
+      "read_scope": "搜索标题/作者/时长13:05可见；原页412；未观看或读取字幕。",
+      "content_notes": [
+        "保留信息收集型打野教学入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "版本未核；不能作为当前版本技能数值或胜率证明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "页面标题不支持任何具体打野路径推断。"
+      ],
+      "aliases": [],
+      "id": "CV13",
+      "title": "【打野核心教学】收集信息 + 策略布局才是王者秘诀，学会摆脱低操作瓶颈！",
+      "url": "https://www.bilibili.com/video/BV1vF61BHEKD/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1vF61BHEKD",
+      "merged_ids": [
+        "CV13"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2022-08-06",
+      "author": "ddu前职业选手",
+      "topics": [
+        "辅助",
+        "软辅",
+        "对线"
+      ],
+      "read_scope": "搜索标题与作者资料可见；原页412；未观看。",
+      "content_notes": [
+        "软辅对线的代表性待核入口。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "版本未核；不能作为当前版本技能数值或胜率证明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "前职业身份为页面自述，未独立核验。"
+      ],
+      "aliases": [],
+      "id": "CV14",
+      "title": "英雄联盟辅助玩家必看：软辅怎么赢线？",
+      "url": "https://www.bilibili.com/video/BV1FU4y1e7gW/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1FU4y1e7gW",
+      "merged_ids": [
+        "CV14"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2025-03-28",
+      "author": "英雄联盟赛事",
+      "topics": [
+        "辅助",
+        "机器人",
+        "技能命中"
+      ],
+      "read_scope": "搜索标题/发布账号/时长00:58可见；原页412；未播放。",
+      "content_notes": [
+        "官方赛事账号的短技巧入口，后续核读成本较低。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "版本未核；不能作为当前版本技能数值或胜率证明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "官方发布不代表本轮已验证技巧。"
+      ],
+      "aliases": [],
+      "id": "CV15",
+      "title": "LPL职业教学：Feather机器人技巧分享",
+      "url": "https://www.bilibili.com/video/BV1pjoeYJE6X/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1pjoeYJE6X",
+      "merged_ids": [
+        "CV15"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": null,
+      "author": "羽妹Sup",
+      "topics": [
+        "ADC",
+        "辅助",
+        "金克丝",
+        "璐璐",
+        "卢锡安",
+        "拉克丝",
+        "对位组合"
+      ],
+      "read_scope": "搜索标题和系列目录可见，标时长28:44；原页412，未看片、未读字幕。",
+      "content_notes": [
+        "完整双人组合的复盘入口，适合避免把辅助从ADC对位中删掉。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "版本未核；不能作为当前版本技能数值或胜率证明。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "只登记待核目标，不从标题推导打法。"
+      ],
+      "aliases": [],
+      "id": "CV16",
+      "title": "【AD复盘】玩大核AD需要做的心理建设？金克丝璐璐vs卢锡安拉克丝",
+      "url": "https://www.bilibili.com/video/BV1oT421U7Yv/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1oT421U7Yv",
+      "merged_ids": [
+        "CV16"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2024-03-02",
+      "author": "莽夫克烈",
+      "topics": [
+        "中单",
+        "克烈",
+        "英雄对位",
+        "完整对局"
+      ],
+      "read_scope": "搜索可读作者描述及27段目录，包括阿狸、鱼人、薇古丝等；原页412；未读任何一段字幕。",
+      "content_notes": [
+        "作者说明旧神话装备合集已过时，重新建立S14合集；按一个合集去重，不把27分P算27份已读资料。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "S14录像，不能以‘持续更新’代替目标补丁证据。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "段位标签为作者标注，未独立核验。"
+      ],
+      "aliases": [],
+      "id": "CV17",
+      "title": "S14中单克烈对线各英雄合集 全局录像学到就是赚到",
+      "url": "https://www.bilibili.com/video/BV1XJ4m1a7tv/",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "bilibili-video:BV1XJ4m1a7tv",
+      "merged_ids": [
+        "CV17"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2022-02-07",
+      "author": "我梦ZED",
+      "topics": [
+        "中单",
+        "劫",
+        "对线",
+        "游走",
+        "团战"
+      ],
+      "read_scope": "读到作者发布描述，含B站图文与WeGame镜像链接；图文页面只有空壳，腾讯链接工具无法访问；公开视频未观看。",
+      "content_notes": [
+        "保留原作者视频与其亲自提供的图文链接，待核正文。"
+      ],
+      "conditional_insights": [],
+      "objections": [],
+      "patch_scope": "2022资料；旧装备体系不可直接用于当前出装。",
+      "adoption": "index_only",
+      "verification_notes": [
+        "公开文章请求HTTP200仅返回页面壳，不算正文访问成功。",
+        "公开article/viewinfo返回code=-352，未绕过验证。"
+      ],
+      "aliases": [
+        "https://lol.qq.com/news/space-detail.shtml?docid=7311157108471445480",
+        "https://www.bilibili.com/read/cv15075164"
+      ],
+      "id": "CV18",
+      "title": "最强劫攻略没有之一！万字论文级劫高阶教学！",
+      "url": "https://www.bilibili.com/video/av808809716",
+      "platform": "哔哩哔哩",
+      "form": "video",
+      "access_level": "metadata_only",
+      "canonical_key": "www.bilibili.com/video/av808809716",
+      "merged_ids": [
+        "CV18"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": []
+    },
+    {
+      "checked_on": "2026-11-19",
+      "published_at": "2020-09-15",
+      "author": "射手夸夸（发布账号：瓦罗兰文艺复兴联合会）",
+      "topics": [
+        "ADC",
+        "转线",
+        "队友协同",
+        "单排执行",
+        "对手支援"
+      ],
+      "read_scope": "直接读取页面署名、正文转线/队友不跟/劣势应对段及15条评论；页面声明为受权转载，不等于知乎原页已读。",
+      "content_notes": [
+        "作者区分队友需要接管与本就能自行扩大优势；没有掩护时可以停止硬推。",
+        "多条评论反对默认队友换线，指出单排常出现中单不去边路的执行困难。"
+      ],
+      "conditional_insights": [
+        {
+          "principle": "转线要同时确认接管旧线的人和陪同推进的人。",
+          "conditions": [
+            "换线会改变其他人资源和安全",
+            "只把已响应队友当可执行配合"
+          ],
+          "counterexample": "队友不换或辅助没到，理论转线会变成独自深入。",
+          "next_check": "查看队友响应；必要时继续安全发育或改到另一条可用路线。"
+        }
+      ],
+      "objections": [
+        "不采‘双人组最终一律中路’、固定20分钟前换线和‘劣势没得选’。",
+        "评论只是执行反例，不能证明各段位普遍比例。"
+      ],
+      "patch_scope": "2020背景；小龙/先锋/镀层时刻与厄斐琉斯单龙例子均不采。",
+      "adoption": "candidate",
+      "verification_notes": [
+        "受权转载为页面声明；本项目无复制全文或再发布许可。",
+        "读取了署名作者文本的转载页，统计时与B站原作者正文分开。"
+      ],
+      "aliases": [],
+      "id": "CV19",
+      "title": "中期转线——如何玩好ADC？",
+      "url": "https://wanplus.cn/article/313610.html",
+      "platform": "玩加电竞",
+      "form": "article",
+      "access_level": "primary_excerpt",
+      "canonical_key": "wanplus.cn/article/313610.html",
+      "merged_ids": [
+        "CV19"
+      ],
+      "additional_access_reports": [],
+      "already_in_handbook_v1_1": false,
+      "adopted_card_ids": [
+        "K22"
+      ]
+    }
+  ]
+}

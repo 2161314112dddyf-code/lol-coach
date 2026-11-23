@@ -1,5 +1,5 @@
 from lol_coach.review_pings import assist_distances
-from scripts.prepare_personal_match import review_times
+from scripts.prepare_personal_match import add_signal_checkpoints, own_action_signals, review_times
 from scripts.audit_native_match_events import public_event
 from scripts.run_review_agent import match_sequence_paths
 import json
@@ -14,6 +14,38 @@ def test_assist_schedule_ignores_future_requests_and_other_senders():
     assert [r['at'] for r in rows] == [0, 150, 300, 450, 451, 466, 600]
     assert all('own_assist' not in r['selected_by'] for r in rows if r['at'] <= 450)
     assert rows[-1]['selected_by'] == ['last_game_second', 'regular']
+
+
+def test_event_mode_selects_only_novel_personal_action_pings_and_reuses_assist_checkpoints():
+    def event(t, kind, actor='self', team=200, point=None):
+        return dict(time_seconds=t, sender_entity_id=actor, sender_champion='Pantheon', team_id=team,
+                    kind=kind, source={'packet_record': int(t)}, marker_xz=point)
+    events = [event(10.2, 'assist_me'), event(10.7, 'assist_me'), event(25, 'enemy_missing'),
+              event(27, 'need_vision'), event(28, 'command'), event(29, 'enemy_vision'),
+              event(30, 'on_my_way', actor='ally'), event(31, 'on_my_way', team=100),
+              event(40.2, 'on_my_way', point=[100, 100]), event(41, 'push'),
+              event(41.3, 'on_my_way', point=[110, 100]), event(42, 'push'),
+              event(55.2, 'retreat'), event(101, 'retreat')]
+    selected = own_action_signals(reversed(events), 'self', 200, 100)
+    assert [e['time_seconds'] for e in selected] == [10.2, 40.2, 41, 55.2]
+    base = review_times(100, 50, selected, 'Pantheon', 200)
+    base.append(dict(at=41.5, selected_by=['own_command_reversed']))
+    schedule = add_signal_checkpoints(base, selected, 100)
+    assert [r['at'] for r in schedule] == [0, 13, 28, 41.5, 50, 58, 100]
+    rows = {r['at']: r for r in schedule}
+    assert rows[13]['selected_by'] == ['own_action_signal', 'own_assist']
+    assert rows[28]['selected_by'] == ['follow_up_own_assist']
+    assert rows[41.5]['selected_by'] == ['own_action_signal', 'own_command_reversed']
+    assert [x['kind'] for x in rows[41.5]['triggers']] == ['on_my_way', 'push']
+    assert rows[58]['triggers'][0]['sender_entity_id'] == 'self'
+
+
+def test_schedule_cannot_use_a_marker_observed_only_after_send_to_reopen_a_duplicate():
+    event = dict(time_seconds=10, sender_entity_id='self', team_id=200, kind='on_my_way',
+                 source={'packet_record': 10}, marker_xz=[0, 0])
+    repeated = {**event, 'time_seconds': 11, 'marker_xz': None, 'marker_region': dict(
+        xz_rounded_to_100=[5000, 0], observed_through_seconds=15)}
+    assert own_action_signals([event, repeated], 'self', 200, 20) == [event]
 
 
 def test_marker_distance_excludes_stale_invisible_and_missing_positions():

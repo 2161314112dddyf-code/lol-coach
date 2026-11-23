@@ -69,6 +69,8 @@ def test_status_from_native_replay_is_bound_to_player_clock_and_team(tmp_path):
     def load(at):
         return load_own_observations(index,team,eid,at,tmp_path)
     assert load(299.99)==[] and load(301.01)==[]
+    assert not load_own_observations(index, team, eid, 299.99, tmp_path, include_build_history=True)
+    assert load_own_observations(index, team, eid, 301.01, tmp_path, include_build_history=True)[0]['time'] == 300
     assert load(300)[0]['value']['is_dead'] is True
     assert load_own_observations(index,100,'0x400000ae',300,tmp_path)==[]
     receipt['samples'][0]['value']['is_dead']=False

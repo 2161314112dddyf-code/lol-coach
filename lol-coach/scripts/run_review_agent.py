@@ -8,6 +8,8 @@ import sys
 import urllib.request
 
 from lol_coach.combat_inputs import attach_combat_inputs
+from lol_coach.coaching_knowledge import attach_handbook
+from lol_coach.personal_episode import PersonalPathIndex, attach_personal_history, bind_personal_checkpoint
 from lol_coach.combat_catalog import preload_combat
 from lol_coach.replay_runes import attach_player_runes, read_replay_rune_pages
 from lol_coach.decision_contract import MACRO_INTENTS, MACRO_TRANSITIONS, ROAM_DESTINATIONS, render_decision, review_scope
@@ -196,8 +198,15 @@ def render_map_review(steps, *, end_seconds=None):
     lines = [f'# {name}的地图回合', '', scope, '',
              '时间为复盘暂停点。每项记录所选玩家当时可以怎样选。']
     for index, step in enumerate(steps, 1):
-        seconds = int(step['at_seconds'])
-        when = f'{seconds//60:02}:{seconds%60:02}'
+        seconds = step['at_seconds']
+        when = (f'{int(seconds)//60:02}:{int(seconds)%60:02}' if seconds == int(seconds)
+                else f'{int(seconds//60):02}:{seconds%60:06.3f}')
+        if step.get('coordination_trigger', {}).get('active') is False and (choice := step.get('player_choice')):
+            lines.extend(['', f'**{when}**　'+choice['first_step']])
+            if choice['switch_conditions']:
+                lines.extend(['', '**何时改选**　'+choice['switch_conditions'][0]])
+            lines.extend(['', f'[查看这一步的依据]({index:02}/answer.md)'])
+            continue
         entry = step.get('macro_round')
         if entry is None:
             lines.extend(['', f'**{when}**　本帧未生成通过校验的判断。'])
@@ -209,6 +218,10 @@ def render_map_review(steps, *, end_seconds=None):
             if choice['costs']:
                 lines.extend(['', '**要付的代价**　' + '；'.join(choice['costs'])])
             lines.extend(['', '**何时改选**　' + '；'.join(choice['switch_conditions'])])
+        if coord := step.get('team_coordination'):
+            lines.extend(['', '**这时怎么沟通**　' + (coord['message'] or coord['trigger']),
+                          '', '**看队友哪一步**　' + coord['response_cue'],
+                          '', '**没等到怎么办**　' + coord['fallback']])
         lane = step.get('lane_plan')
         if lane:
             if choice := lane.get('destination_choice'):
@@ -240,6 +253,7 @@ async def run(args):
     previous = read_bundle(args.previous_bundle) if args.previous_bundle else None
     answer = read_json(args.previous_answer) if args.previous_answer else None
     inputs = list(scoped_sequence(args.bundle))
+    sequence = read_json(args.sequence) if getattr(args, 'sequence', None) else None
     subject = bind_session_subject(args, inputs + ([previous] if previous is not None else []))
     origin = dict(perspective=args.perspective, replay_sha256=_source(inputs[0]),
                   match_id=subject['match_id'] if subject else None)
@@ -252,6 +266,10 @@ async def run(args):
     if args.subject_replay or args.lane_replay:
         replay_bytes = raw if raw is not None else args.subject_replay.read_bytes()
         rune_pages = read_replay_rune_pages(replay_bytes)
+    personal_actions = getattr(args, 'personal_actions', False)
+    if personal_actions and not (args.subject_replay or args.lane_replay):
+        raise ValueError('personal action review needs the original replay')
+    path_index = PersonalPathIndex.from_replay(replay_bytes) if personal_actions else None
     if rune_pages is not None:
         inputs = [attach_player_runes(base, rune_pages) for base in inputs]
     inputs = [attach_combat_inputs(base) for base in inputs]
@@ -260,6 +278,8 @@ async def run(args):
     damage_profiles = session_damage_profiles(inputs, previous)
     frames = []
     for base in inputs:
+        if path_index is not None:
+            base = attach_personal_history(base, path_index)
         if raw is not None:
             base = attach_round_lanes(base, raw)
         lane = args.lane
@@ -274,10 +294,14 @@ async def run(args):
                                  require_objective_credit=True, review_origin=origin, bottom_lane_actors=duos,
                                  damage_profiles=damage_profiles,
                                  roam_actors=(roam_actors(base['frame'], subject) or None) if duos else None))
+        if personal_actions:
+            prior_frame = frames[-2] if len(frames) > 1 else previous
+            frames[-1] = bind_personal_checkpoint(frames[-1], prior_frame)
     frames = bind_session_external_data(
         frames, getattr(args, 'external_data_dir', DEFAULT_ROOT),
         cutoff=subject.get('match_information_cutoff_utc') if subject else None,
         subject=subject, previous=previous, disabled=getattr(args, 'no_external_data', False))
+    frames = [attach_handbook(bundle) for bundle in frames]
     if previous is not None:
         frames[0] = attach_previous_plan(frames[0], previous, answer, max_chars=300000)
         if frames[0]['frame']['task']['continuity_status']['status'] != 'linked':
@@ -329,10 +353,25 @@ async def run(args):
         if frame.get('recent_public_combat_ids'):
             question += ('逐条核对公开击杀的击杀者和死者。两个队友各杀一人要分别写明。'
                          '提到个人双杀等连杀称号时需有对应的连杀证据。')
+        if personal_actions:
+            question = (f"{purpose}。用本人近期轨迹核对你已经走到哪一步。"
+                        "比较继续当前行动 continue_action 与改变行动 change_action，"
+                        + frame['task']['question'])
         detail = dict(frame_id=bundle['frame']['frame_id'], at_seconds=bundle['frame']['decision']['at_seconds'],
                       input_sha256=file_sha256(path), source_sha256=_source(bundle),
                       player_entity_id=player['entity_id'], champion=player['champion'])
         detail['review_scope'] = purpose + ' · ' + review_scope(bundle, source_label)
+        if sequence is not None:
+            selection = sequence['selections'][i]
+            for key in ('selection_reason', 'review_mode'):
+                if key in selection:
+                    detail[key] = selection[key]
+            if personal_actions and selection.get('review_mode') == 'brief_update':
+                question += (' 这里是同一次接触里的短暂停顿。用本帧事实指出刚刚多了什么，'
+                             '原来的第一步还成立吗？把 immediate_action 写成现在能执行的一手，'
+                             '需要等下一眼再动时就写明等什么。')
+        if personal_actions:
+            detail['coordination_trigger'] = frame['task']['team_coordination_trigger']
         ref = frame['task'].get('external_data_reference')
         detail['external_data_snapshot_id'] = frame['references'][ref]['snapshot_id'] if ref else None
         combat_ref = frame['task'].get('combat_reference')
@@ -345,14 +384,23 @@ async def run(args):
             return file_generate(directory/'exchange', timeout_seconds=args.timeout,
                 on_request=lambda e:print(json.dumps(e),flush=True))
         answer = None
+        answer_review = None
+        if personal_actions and args.backend != 'probe':
+            from lol_coach.execution_review import evidence_review, review_generator
+            reviewer = review_generator(directory/'claim_exchange', args)
+            answer_review = lambda result: evidence_review(bundle, result, reviewer)
         if args.baseline:
-            result = await asyncio.to_thread(run_reasoning, bundle, generator(), max_calls=args.max_calls, question=question)
+            result = await asyncio.to_thread(run_reasoning, bundle, generator(), max_calls=args.max_calls,
+                                            question=question, answer_review=answer_review)
         else:
             async with round_client(path, detail['input_sha256']) as (client, protocol):
                 detail['mcp_protocol'] = protocol
                 if args.backend == 'probe':
                     reports = {}
-                    for name in ('compare_round_options','review_round_plan','enemy_sightings'):
+                    names = ['compare_round_options','review_round_plan','enemy_sightings']
+                    if personal_actions:
+                        names.append('review_personal_action')
+                    for name in names:
                         reports[name] = await query(client, name, {})
                         if reports[name] != round_call(bundle, name, {}):
                             raise ValueError('MCP_and_direct_results_differ')
@@ -369,13 +417,23 @@ async def run(args):
                 def call_tool(name, arguments):
                     return asyncio.run_coroutine_threadsafe(query(client, name, arguments),loop).result(timeout=45)
                 result = await asyncio.to_thread(run_reasoning, bundle, generator(), max_calls=args.max_calls,
-                    round_tool_call=call_tool, catalog_history=args.catalog_history, question=question)
+                    round_tool_call=call_tool, catalog_history=args.catalog_history, question=question,
+                    answer_review=answer_review)
         detail.update(status=result['status'],model_calls=result['model_calls'],usage=usage,error=result['error'])
+        audits = [e['result'] for e in result['trace'] if e['event'] == 'evidence_review']
+        if audits:
+            atomic_json(directory/'claim-reviews.json', audits)
+            if result['status'] == 'completed':
+                atomic_json(directory/'claim-review.json', audits[-1])
         atomic_json(directory/'result.json',result)
         if result['status']=='completed':
+            from lol_coach.calculation_receipts import damage_receipts, render_damage_receipts
             answer = result['answer']
             atomic_json(directory/'answer.json',answer)
+            receipts = damage_receipts(bundle, result)
+            atomic_json(directory/'damage-receipts.json', receipts)
             card = render_decision(answer, result['validation'], review_scope_label=detail['review_scope'])
+            card += render_damage_receipts(receipts)
             (directory/'answer.md').write_text(card, encoding='utf-8')
             detail['macro_round'] = answer['macro_round']
             rec = answer['recommendation']
@@ -385,15 +443,37 @@ async def run(args):
                                            switch_conditions=rec['switch_conditions'])
             if 'lane_plan' in answer:
                 detail['lane_plan'] = answer['lane_plan']
+            if 'team_coordination' in answer:
+                detail['team_coordination'] = answer['team_coordination']
             detail['previous_frame_id'] = (frame['task'].get('previous_plan') or {}).get('previous_frame_id')
         previous = bundle if answer else None
         manifest['steps'].append(detail)
+        if personal_actions and result['status'] != 'completed':
+            break
     if any(step['status'] == 'completed' for step in manifest['steps']):
-        end = read_json(args.sequence)['end_seconds'] if getattr(args, 'sequence', None) else None
+        end = sequence['end_seconds'] if sequence is not None else None
         (output/'review.md').write_text(render_map_review(manifest['steps'], end_seconds=end), encoding='utf-8')
         manifest['map_review'] = 'review.md'
     atomic_json(output/'manifest.json',manifest)
-    print(json.dumps({'output':str(output),'statuses':[s['status'] for s in manifest['steps']]}))
+    if personal_actions and args.backend != 'probe' and all(s['status'] == 'completed' for s in manifest['steps']):
+        from lol_coach.execution_review import finish_execution_review
+        from lol_coach.hero_sight import reviewed_heroes
+        from lol_coach.personal_episode import personal_contact_index
+        from lol_coach.replay_pings import build_ping_index
+        from scripts.export_vision_channels import export
+        ping_index = await asyncio.to_thread(build_ping_index, replay_bytes)
+        contact_index = None
+        decision = frames[0]['frame']['decision']
+        if reviewed_heroes(path_index.source):
+            vision = await asyncio.to_thread(export, replay_bytes)
+            contact_index = personal_contact_index(path_index, vision, decision['player_entity_id'],
+                                                   decision['observer_team_id'])
+        await asyncio.to_thread(finish_execution_review, output, path_index, args, ping_index=ping_index,
+                                contact_index=contact_index)
+    summary = {'output': str(output), 'statuses': [s['status'] for s in manifest['steps']]}
+    if (output/'player-review.md').is_file():
+        summary['player_review'] = str(output/'player-review.md')
+    print(json.dumps(summary))
     return 0 if all(s['status'] in ('evidence_only','completed') for s in manifest['steps']) else 2
 
 
@@ -421,6 +501,8 @@ def main():
     parser.add_argument('--previous-bundle', type=Path)
     parser.add_argument('--previous-answer', type=Path)
     parser.add_argument('--backend', choices=['probe','file','ollama'], default='probe')
+    parser.add_argument('--personal-actions', action='store_true',
+                        help='Compare continuing/changing the current action, then review actual execution')
     parser.add_argument('--model', default='llama3.2:1b')
     parser.add_argument('--port', type=int, default=11434)
     parser.add_argument('--catalog-history', action='store_true')

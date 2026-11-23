@@ -119,11 +119,12 @@ def _allied_position_samples(units, total, at):
                 older_count=len(times)-recent, unsampled_count=total-len(times))
 
 
-def _allied_birth_cohorts(units, clock, at):
+def _allied_birth_cohorts(units, clock, at, *, include_geometry=False):
     """Group still-registered allies by observed spawner starts, independently of their map position."""
     starts = clock['observed_starts']
     intervals = clock['sample_intervals_seconds']
     groups = {}
+    samples = {}
     unassigned = 0
     for unit in units:
         born = unit.get('born_at')
@@ -142,7 +143,20 @@ def _allied_birth_cohorts(units, clock, at):
         group['registered_siege'] += int(unit.get('kind') == 'siege')
         sampled = unit.get('sampled_at')
         group['recent_position_count'] += int(sampled is not None and sampled >= at - 1)
-    return dict(basis='registered_allies_by_observed_birth_marker', cohorts=[groups[t] for t in sorted(groups)],
+        if include_geometry and sampled is not None:
+            samples.setdefault(start, []).append((unit['last_xz'], at - sampled))
+    cohorts = [groups[t] for t in sorted(groups)]
+    if include_geometry:
+        for row in cohorts:
+            group_samples = samples.get(row['first_melee_born_at'], [])
+            row['position_count'] = len(group_samples)
+            row['sample_centroid_xz'] = None
+            row['sample_age_seconds'] = None
+            if group_samples:
+                points, ages = zip(*group_samples)
+                row['sample_centroid_xz'] = [sum(axis)/len(points) for axis in zip(*points)]
+                row['sample_age_seconds'] = [min(ages), max(ages)]
+    return dict(basis='registered_allies_by_observed_birth_marker', cohorts=cohorts,
                 unassigned_count=unassigned)
 
 
@@ -328,4 +342,91 @@ def compare_round_options(frame, *, lane, target, help_seconds, actor_id=None):
         additional_objective_contribution=contribution, exact_minions_forgone=None)
     if jungle:
         result['jungle_observation'] = _jungle_observation(frame, actor)
+    return result
+
+
+def _coordination_wave(frame, lane):
+    obs = _lane_observation(frame, lane)
+    if obs is None:
+        return None
+    clock = obs.get('wave_spawn_clock', {})
+    result = dict(lane=lane, fact_id=obs['fact_id'], visible_counts=obs['counts'],
+                  enemy_coverage=obs['enemy_minions']['status'],
+                  next_allied_birth_at_base=clock.get('next_birth_window'),
+                  next_clash_at=None, crash_at=None)
+    if 'allied_birth_cohorts' in obs:
+        units = frame['facts'][obs['fact_id']]['value']['units']
+        cohorts = _allied_birth_cohorts(units, clock, frame['decision']['at_seconds'], include_geometry=True)
+        result['registered_cohorts'] = cohorts['cohorts']
+        result['unassigned_count'] = cohorts['unassigned_count']
+        for older, later in zip(cohorts['cohorts'], cohorts['cohorts'][1:]):
+            a, b = older['sample_centroid_xz'], later['sample_centroid_xz']
+            later['sampled_gap_from_older_cohort_world_units'] = round(dist(a, b), 1) if a and b else None
+    return result
+
+
+def resource_window(frame, comparison, *, self_state=None):
+    """Facts for communicating the cost of leaving lane/camp on this frame's named route."""
+    at = frame['decision']['at_seconds']
+    if (comparison['frame_id'] != frame['frame_id'] or comparison['at_seconds'] != at
+            or comparison['actor_id'] != frame['decision']['player_entity_id']
+            or comparison['observer_team_id'] != frame['decision']['observer_team_id']):
+        raise ValueError('coordination_resource_scope_mismatch')
+    lane, clocks = comparison['lane'], comparison['clocks']
+    deadline = clocks.get('target_deadline')
+    own = self_state or {}
+    result = dict(origin=lane, timing_target=comparison['target'], target_arrival_deadline=deadline,
+                  timing_recipient_id=None,
+                  timing_scope='时限只适用于所列目的地；队友能等多久、是否愿意配合需另有证据。',
+                  timing_fact_ids=comparison['clock_evidence_ids'],
+                  arrival_options=[{k:row[k] for k in ('action', 'depart_at', 'arrive_at', 'target_window',
+                                                         'return_to_lane_at', 'next_wave_window')}
+                                   for row in comparison['options'] if row['action'] != 'help_then_leave'],
+                  observed_self_at_sample={k:own[k] for k in ('health', 'max_health', 'resource', 'max_resource',
+                                                               'personal_hud_state') if k in own},
+                  arrival_health_resource=None)
+    result['target_work_comparison'] = dict(
+        finish_with_this_help=clocks.get('target_finish_with_help'),
+        finish_without_this_help=clocks.get('target_finish_without_help'),
+        conditional_effect=comparison['additional_objective_contribution'])
+    # An objective deadline only applies to its named destination. Reaching it never proves ally readiness.
+    destination_lane = comparison['target'] if comparison['target'] in LANES else None
+    lanes = ([lane] if lane in LANES else [])
+    if destination_lane and destination_lane not in lanes:
+        lanes.append(destination_lane)
+    if not lanes:
+        lanes = ['top', 'mid', 'bot']
+    result['timing_target_lane'] = destination_lane
+    result['lane_scope'] = '限时未绑定线上接应，三路线况仅供选人。' if lane == 'jungle' and not destination_lane else '兵线观测不产生到场时限。'
+    result['lanes'] = [wave for name in lanes if (wave := _coordination_wave(frame, name)) is not None]
+    if result['lanes']:
+        result['wave_actions_to_compare'] = {
+            'leave_untouched': '先看双方都不碰兵时前后波何时接上。若本人先走，另看对手留下截线或清线。',
+            'last_hit': '本人只收残血兵。能否安全补、对手额外打兵量与援兵先后决定会推还是会被推。',
+            'slow_push': '只削薄到前波能存活至援兵接上，观察对手能否提前削薄。出生时刻只计在基地。',
+            'fast_push': '清完后还须让兵在敌方增援前进塔。单人送不进去才请求帮推；己方塔下能接但有越塔风险时请保护。',
+        }
+    if lane == 'jungle':
+        camp = comparison['jungle_observation']
+        result['camp'] = dict(name=camp['current_camp'], status=camp['camp_presence'], smite_ready=None,
+                              last_personal_observations=camp['last_personal_observations'],
+                              clear_at_constant_rate=None)
+        native = own.get('personal_client_state')
+        if native:
+            result['camp']['equipped_summoners_at_sample'] = dict(
+                values=native['value']['summoner_spells'], fact_id=native['fact_id'],
+                observed_at_seconds=native['observed_at_seconds'])
+        rate = camp['constant_damage_rate_scenario']
+        if rate:
+            # The published two-decimal estimate is for display. Keep the original
+            # precision when comparing the scenario to an absolute deadline.
+            hp = frame['facts'][rate['evidence_id']]['value']['monster_hp']
+            finish = at + hp * rate['elapsed_seconds'] / rate['damage_since_full']
+            departure = [finish, finish]
+            arrival = _sum_windows(departure, clocks.get('route_duration'))
+            result['camp']['clear_at_constant_rate'] = dict(
+                **rate, depart_at_if_rate_holds=round(finish, 2), arrive_at_if_rate_holds=arrival,
+                target_window_if_rate_holds=_by_deadline(arrival, deadline, departure[0]),
+                seconds_left_for_travel_if_rate_holds=(
+                    [t - departure[0] for t in deadline] if deadline is not None else None))
     return result

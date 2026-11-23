@@ -10,11 +10,13 @@ import math
 import re
 
 from .objective_credit import DRAGON_DISPLAY_NAMES, dragon_kill_events
+from .review_pings import PING_TYPES
 
 
 SCHEMA = 'round-decision/v1'
 MACRO_REVIEW = 'macro-round/v1'
 SUPPORT_LANE_REVIEW = 'support-lane/v1'
+TEAM_COORDINATION_REVIEW = 'team-coordination/v1'
 ROAM_DESTINATIONS = {'hold_bot': '照应下路', 'river_jungle': '接应打野', 'mid_lane': '支援中路', 'top_lane': '支援上路'}
 MACRO_TRANSITIONS = {'start': '提出本轮计划', 'continue': '延续上一轮',
                      'close': '结束上一轮，重新部署', 'unknown': '回合交接待定'}
@@ -33,6 +35,11 @@ TIME_FIELDS = ('travel_seconds', 'execution_seconds', 'exit_seconds', 'window_se
 def _object(properties):
     return {'type': 'object', 'properties': properties,
             'required': list(properties), 'additionalProperties': False}
+
+
+def quiet_personal_frame(task):
+    trigger = task.get('team_coordination_trigger')
+    return isinstance(trigger, dict) and trigger.get('active') is False
 
 
 def output_schema(frame=None):
@@ -96,6 +103,31 @@ def output_schema(frame=None):
     if personal:
         root['properties']['immediate_action'] = deepcopy(_TEXT)
         root['required'].append('immediate_action')
+    if isinstance(task, dict) and task.get('knowledge_handbook', {}).get('schema') == 'coaching-handbook/v1':
+        root['properties']['follow_through'] = _object({
+            'option_id': {'type': ['string', 'null'], 'minLength': 1},
+            'baseline_if_unchanged': _TEXT,
+            'steps': {'type': 'array', 'maxItems': 3, 'items': _object({
+                'after_step': {'type': 'integer', 'minimum': 0, 'maximum': 2},
+                'action': _TEXT, 'expected_state': _TEXT,
+                'state_basis': {'enum': ['conditional_projection']},
+                'check_when': _TEXT, 'if_confirmed': _TEXT, 'if_not_confirmed': _TEXT,
+                'fact_refs': nonempty_refs, 'knowledge_refs': {**refs, 'maxItems': 3},
+            })},
+            'limits': _TEXTS,
+        })
+        root['required'].append('follow_through')
+    if isinstance(task, dict) and task.get('team_coordination_review') == TEAM_COORDINATION_REVIEW:
+        coordination = _object({
+            'mode': {'enum': ['communicate', 'already_signaled', 'no_signal']},
+            'recipient_id': {'type': ['string', 'null'], 'minLength': 1},
+            'trigger': _TEXT, 'known_information': _TEXT, 'intended_action': _TEXT,
+            'message': {'type': 'string'}, 'response_cue': {'type': 'string'},
+            'fallback': _TEXT, 'fact_ids': nonempty_refs,
+        })
+        coordination['properties']['ping_kind'] = {'enum': list(PING_TYPES)}
+        root['properties']['team_coordination'] = coordination
+        root['required'].append('team_coordination')
     if isinstance(task, dict) and task.get('bottom_lane_review') == SUPPORT_LANE_REVIEW:
         root['properties']['lane_plan'] = _object({
             'pressure': _TEXT, 'if_open': _TEXT, 'if_denied': _TEXT, 'fact_refs': nonempty_refs,
@@ -257,6 +289,7 @@ def _validate_shape(value, schema, path, errors):
     kinds = [kinds] if isinstance(kinds, str) else kinds
     types = {'object': isinstance(value, dict), 'array': isinstance(value, list),
              'string': isinstance(value, str), 'number': _number(value),
+             'integer': type(value) is int,
              'null': value is None}
     if kinds and not any(types.get(k, False) for k in kinds):
         fail('类型错误，要求 ' + '/'.join(kinds))
@@ -269,6 +302,8 @@ def _validate_shape(value, schema, path, errors):
         fail('文本不得为空白。')
     if _number(value) and 'minimum' in schema and value < schema['minimum']:
         fail('数值不能小于 ' + str(schema['minimum']))
+    if _number(value) and 'maximum' in schema and value > schema['maximum']:
+        fail('数值不能大于 ' + str(schema['maximum']))
     if isinstance(value, list):
         if len(value) < schema.get('minItems', 0):
             fail('数组元素不足。')
@@ -302,7 +337,7 @@ def _check_lane_plan(answer, frame, facts, actors, player, fail):
         fail('frame.task.bottom_lane_actors', '下路计划需要已核实的本人、己方射手和敌方双人组。')
         return
     role_actors = {row['actor_id'] for row in answer['role_assignments']}
-    if not set(quartet.values()).issubset(role_actors):
+    if not quiet_personal_frame(frame['task']) and not set(quartet.values()).issubset(role_actors):
         fail('$.role_assignments', '请说明双方下路四人的职责或仍待确认的配合与反制。')
     if len({lane[k].strip().casefold() for k in ('pressure', 'if_open', 'if_denied')}) != 3:
         fail('$.lane_plan', '施压思路、对手给机会时的行动和不给机会时的行动需分别说明。')
@@ -409,15 +444,19 @@ def validate_decision(answer, frame):
             fail('frame.task.player_perspective', '复盘对象须是当前观察方阵容中的指定玩家。')
         else:
             reader = dict(player_entity_id=player, champion=hero.get('champion'), observer_team_id=team, at_seconds=at)
+            if quiet_personal_frame(task):
+                reader['quiet_personal_frame'] = True
             comparison = task.get('round_comparison')
             if 'macro_round' in answer and isinstance(comparison, dict) and isinstance(comparison.get('target'), str):
                 reader['route_target'] = comparison['target']
     if 'round_comparison' in frame.get('task', {}):
-        if {o['id'] for o in answer['options']} != {'leave_now','help_then_leave','clear_then_leave'}:
-            fail('$.options', '本次回合需逐项比较立即走、协助后走、清线后走。')
+        expected_options = ({'continue_action', 'change_action'} if task.get('personal_action_review')
+                            else {'leave_now','help_then_leave','clear_then_leave'})
+        if {o['id'] for o in answer['options']} != expected_options:
+            fail('$.options', '本次回合的选项 ID 与当前行动比较模式不符。')
         actions = [o['action'].strip() for o in answer['options']]
         if len(set(actions)) != len(actions):
-            fail('$.options', '三种走法需分别说明玩家可以执行的第一步。')
+            fail('$.options', '每个选项需分别说明玩家可以执行的第一步。')
         prose = [('objective', answer['objective']), ('recommendation.why', answer['recommendation']['why'])]
         if 'macro_round' in answer:
             prose.extend(('macro_round.' + key, answer['macro_round'][key])
@@ -514,6 +553,32 @@ def validate_decision(answer, frame):
             if change.get('current_fact_id') not in current_refs:
                 fail(f'{path}.change_refs[{i}]', f'引用变化对应的 current_fact_id 必须列入 {evidence_key}。')
 
+    if 'team_coordination' in answer:
+        plan = answer['team_coordination']
+        path = '$.team_coordination'
+        cited_transition(plan['fact_ids'], [], path, 'fact_ids')
+        mode, recipient = plan['mode'], plan['recipient_id']
+        if mode == 'no_signal':
+            if recipient is not None or 'ping_kind' in plan:
+                fail(path, '不发信号时请将收件人留空，并省略信号类型。')
+        else:
+            if recipient == player or actors.get(recipient, {}).get('relation') != 'ally':
+                fail(path + '.recipient_id', '沟通对象须是本局同队的另一位玩家。')
+            elif reader is not None:
+                reader['coordination_recipient'] = actors[recipient].get('champion') or recipient
+            if not plan['response_cue'].strip():
+                fail(path + '.response_cue', '请说明等到哪一步、看队友做什么才继续。')
+        if bool(plan['message'].strip()) != (mode == 'communicate'):
+            fail(path + '.message', '仅建议现在沟通时填写一句可发给队友的短话。')
+        if mode == 'already_signaled' and not any(
+            kind == plan.get('ping_kind') for fid, kind in own_ping_kinds(frame).items()
+            if fid in plan['fact_ids']
+        ):
+            fail(path + '.ping_kind', '请指定信号类型并引用本帧窗口内本人实际发过的同类信号。')
+        for key in ('trigger', 'known_information', 'intended_action', 'fallback'):
+            if not any(c.isalnum() for c in plan[key]):
+                fail(path + '.' + key, '需要可读的具体说明。')
+
     if 'lane_plan' in answer:
         lane_refs = answer['lane_plan']['fact_refs']
         cited_transition(lane_refs, [], '$.lane_plan', 'fact_refs')
@@ -596,7 +661,7 @@ def validate_decision(answer, frame):
     for relation, label in [('ally', '队友'), ('enemy', '对手')]:
         ids = {key for key, actor in actors.items()
                if actor.get('relation') == relation and key != player}
-        if ids and not ids.intersection(role_actors):
+        if not quiet_personal_frame(task) and ids and not ids.intersection(role_actors):
             fail('$.role_assignments', f'至少需要结合一名{label}的职责/威胁。')
 
     options = {}
@@ -666,6 +731,27 @@ def validate_decision(answer, frame):
 
     rec = answer['recommendation']
     preferred, fallback = rec['preferred_option_id'], rec['fallback_option_id']
+    if 'follow_through' in answer:
+        chain = answer['follow_through']
+        if chain['option_id'] != preferred:
+            fail('$.follow_through.option_id', '后续方案必须承接本次首选。')
+        if preferred is None and chain['steps']:
+            fail('$.follow_through.steps', '没有首选时不能安排执行链。')
+        if preferred is not None and not chain['steps']:
+            if 'decision_guidance' not in task.get('knowledge_handbook', {}):
+                fail('$.follow_through.steps', '此历史帧的首选须给出至少一步条件后续。')
+            elif not chain['limits']:
+                fail('$.follow_through.limits', '请说明为什么推演在当前行动收束，并在改选条件中指出下次观察信号。')
+        for i, step in enumerate(chain['steps']):
+            path = f'$.follow_through.steps[{i}]'
+            if step['after_step'] != i:
+                fail(path + '.after_step', '后续步骤依次承接当前首选及上一条件步骤。')
+            fact_refs(step['fact_refs'], path + '.fact_refs')
+            if any(fid not in seen_facts for fid in step['fact_refs']):
+                fail(path + '.fact_refs', '后续步骤的当前依据也须列入 facts_used。')
+            for j, rid in enumerate(step['knowledge_refs']):
+                if references.get(rid, {}).get('kind') != 'conditional_coaching_knowledge':
+                    fail(f'{path}.knowledge_refs[{j}]', '后续经验须引用本帧冻结的知识卡。')
     if reader and 'round_comparison' in task and preferred in options:
         # This index contains sampled start positions, including each ally's.
         # A teammate's sample does not locate the player choosing a route.
@@ -700,6 +786,46 @@ def validate_decision(answer, frame):
                 or any(n['status'] != 'observed' for n in option['ally_requirements'])):
             fail('$.recommendation.confidence', '存在未知时间或条件依赖，只能给条件推荐。')
     return result()
+
+
+def own_ping_kinds(frame):
+    """Only verified own sends inside this POV's recorded signal window qualify."""
+    scope = frame.get('recent_team_pings', {})
+    decision = frame['decision']
+    start, at = scope.get('window_start_seconds'), decision['at_seconds']
+    if scope.get('coverage') != 'verified_events_only' or not _number(start):
+        return {}
+    result = {}
+    for fid in scope.get('fact_ids', []):
+        fact = frame['facts'].get(fid, {})
+        v = fact.get('value')
+        sent = fact.get('observed_at_seconds')
+        if (fact.get('field') == 'map_ping_sent' and fact.get('temporal_scope') == 'communication_event'
+                and fact.get('entity_id') == decision['player_entity_id'] and isinstance(v, dict)
+                and v.get('known_as') == 'own_sent' and v.get('observer_team_id') == decision['observer_team_id']
+                and v.get('kind') in PING_TYPES and _number(sent) and _number(v.get('available_at_seconds'))
+                and start <= sent <= v['available_at_seconds'] <= at):
+            result[fid] = v['kind']
+    return result
+
+
+def _coordination_lines(answer, reader):
+    plan = answer.get('team_coordination')
+    if plan is None:
+        return []
+    if plan['mode'] == 'no_signal':
+        return ['**这时可以不发信号**　' + plan['trigger'], '',
+                '**你的走法**　' + plan['intended_action'], '', '**局势变化时**　' + plan['fallback'], '']
+    recipient = reader.get('coordination_recipient') or plan['recipient_id']
+    lines = [f'## 和 {recipient} 怎么配合', '', '**何时沟通**　' + plan['trigger'], '',
+             '**当时的依据**　' + plan['known_information'], '',
+             '**你准备怎么做**　' + plan['intended_action'], '']
+    if plan['mode'] == 'communicate':
+        lines += ['**可以这样提醒**　' + plan['message'], '']
+    else:
+        lines += ['**已发过的信号**　' + PING_TYPES[plan['ping_kind']] + '，此时可以先观察。', '']
+    return lines + ['**看队友如何接应**　' + plan['response_cue'], '',
+                    '**等不到接应时**　' + plan['fallback'], '']
 
 
 def _macro_lines(answer):
@@ -757,17 +883,31 @@ def review_scope(bundle, source_name=None):
 
 
 def _render_player_card(answer, reader, review_scope_label=None):
+    from .coaching_knowledge import follow_through_lines
     options = {option['id']: option for option in answer['options']}
     rec = answer['recommendation']
     best = options.get(rec['preferred_option_id'])
     fallback = options.get(rec['fallback_option_id'])
     clock = int(reader['at_seconds'])
     route_heading = '小龙在场时怎么选' if reader.get('live_dragon_context') else '接下来怎么选'
-    lines = [f"# {clock//60:02}:{clock%60:02} · 你的 {reader['champion'] or reader['player_entity_id']} 复盘", '',
+    exact = reader['at_seconds']
+    stamp = f'{clock//60:02}:{clock%60:02}' if exact == clock else f'{int(exact//60):02}:{exact%60:06.3f}'
+    lines = [f"# {stamp} · 你的 {reader['champion'] or reader['player_entity_id']} 复盘", '',
              *([review_scope_label, ''] if review_scope_label else []),
              *reader.get('objective_credit_lines', []), *([''] if reader.get('objective_credit_lines') else []),
-             answer['objective'], '', '## 你现在的第一步', '', answer['immediate_action'], '',
-             *_lane_lines(answer, options), *_macro_lines(answer), '## ' + route_heading, '']
+             answer['objective'], '', '## 你现在的第一步', '', answer['immediate_action'], '']
+    if reader.get('quiet_personal_frame'):
+        lines += [rec['why'], '']
+        if best and best['preconditions']:
+            lines += ['**动手前先确认**　' + ' '.join(best['preconditions']), '']
+        signals = [*(best['abort_signals'] if best else []), *rec['switch_conditions']]
+        lines += ['**何时改选**　' + ' '.join(dict.fromkeys(signals)), '']
+        if fallback:
+            lines += ['**你的备选**　' + fallback['action'], '']
+        lines += follow_through_lines(answer)
+        return '\n'.join(lines)
+    lines += [*_coordination_lines(answer, reader), *_lane_lines(answer, options), *_macro_lines(answer),
+              '## ' + route_heading, '']
     if best:
         lines += [best['action'], '', rec['why'], '']
         if best['preconditions']:
@@ -783,6 +923,7 @@ def _render_player_card(answer, reader, review_scope_label=None):
                   '**如果这一步做成**　' + best['end_state'], '']
     else:
         lines += ['现有信息不足以为你选定首选。', '', rec['why'], '']
+    lines += follow_through_lines(answer)
     if fallback:
         lines += ['## 你的备选', '', fallback['action'], '']
         if fallback['preconditions']:
@@ -854,6 +995,8 @@ def render_decision(answer, validation, *, review_scope_label=None):
                   '完成后状态：' + option['end_state'],
                   '停止信号：' + '；'.join(option['abort_signals']),
                   '事实引用：' + '、'.join(option['fact_refs']), '']
+    from .coaching_knowledge import follow_through_lines
+    lines += follow_through_lines(answer)
     lines += ['## 何时改计划', ''] + ['- ' + s for s in rec['switch_conditions']]
     if answer['open_questions']:
         lines += ['', '## 尚需判断的条件', ''] + ['- ' + s for s in answer['open_questions']]

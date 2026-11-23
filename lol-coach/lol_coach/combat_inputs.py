@@ -90,6 +90,12 @@ def attach_combat_inputs(bundle, root=PANEL_ROOT):
     frame = result['frame']
     owner, = [hero for hero in frame['lineup'] if hero['entity_id'] == actor]
     value = dict(ranks=ranks, stats=stats, environment=row['environment'])
+    if 'remaining_cooldowns' in row:
+        cooldowns = row['remaining_cooldowns']
+        if (not isinstance(cooldowns, dict) or cooldowns.keys() - set('QWER')
+                or any(not number(v) or v < 0 for v in cooldowns.values())):
+            raise ValueError('invalid observed cooldowns')
+        value['remaining_cooldowns_at_sample'] = dict(cooldowns)
     estimate = _bonus_ad_estimate(frame, owner, value)
     if estimate is not None:
         value['estimates'] = {'bonus_attack_damage': estimate}
