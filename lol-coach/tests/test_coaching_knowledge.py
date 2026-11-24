@@ -80,6 +80,41 @@ def test_attach_is_frozen_idempotent_and_does_not_promote_future_or_references_t
     assert 'AUDIT_NOT_MODEL_INPUT' not in prompt
 
 
+@pytest.mark.parametrize(('source', 'offered', 'withheld'), [
+    ('cf9bd72a98818d85f6ccf800c929142579831713d9e0c6e9c6194eac20f98e4f', 'K23', 'K18'),
+    ('02fe29bdcd74eb69d182d5f22f2f2175f07a37a89df2cb44c83c6a5d3e0c744c', 'K18', 'K23'),
+])
+def test_worked_pairs_use_other_games_and_stay_inside_verified_lookups(source, offered, withheld):
+    base = bundle_at(10)
+    base['audit']['source_replay_sha256'] = source
+    base['frame']['decision']['build'] = '16.22.836.1077'
+    freeze(base)
+    bundle = attach_handbook(base)
+    frame = bundle['frame']
+    offered_id, withheld_id = ('knowledge:' + key for key in (offered, withheld))
+    pair = lookup_reference(bundle, offered_id)['worked_pair']
+    assert pair['source_replay_sha256'] != source
+    assert len({case['frame_id'] for case in pair['examples']}) == 2
+    assert frame['references'][offered_id]['example_question'] == pair['question']
+    assert 'worked_pair' not in lookup_reference(bundle, withheld_id)
+    assert 'example_question' not in frame['references'][withheld_id]
+    assert pair['examples'][0]['observed'] not in json.dumps(frame, ensure_ascii=False)
+    assert frame['facts'] == base['frame']['facts']
+    bundle['reference_library'][offered_id]['worked_pair']['difference'] = 'changed'
+    with pytest.raises(ValueError, match='changed'):
+        lookup_reference(bundle, offered_id)
+
+
+@pytest.mark.parametrize(('source', 'build'), [(None, '16.22.836.1077'), ('f' * 64, 'older-build')])
+def test_missing_source_or_other_patch_withholds_all_match_examples(source, build):
+    base = bundle_at(10)
+    base['audit']['source_replay_sha256'] = source
+    base['frame']['decision']['build'] = build
+    freeze(base)
+    bundle = attach_handbook(base)
+    assert all('worked_pair' not in body for body in bundle['reference_library'].values())
+
+
 def test_attach_rejects_an_unfrozen_or_changed_input_frame():
     broken = bundle_at(10)
     broken['frame']['facts']['gold']['value'] = 999

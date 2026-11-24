@@ -4,6 +4,7 @@ import math
 from pathlib import Path
 
 from lol_coach.coaching_checkpoints import select_coaching_checkpoints
+from lol_coach.lane_opportunities import add_lane_candidates, attach_lane_change, lane_opportunities
 from lol_coach.file_model_bridge import atomic_json
 from lol_coach.hero_sight import native_vision_snapshot
 from lol_coach.reasoning_frame import compile_frame
@@ -86,7 +87,7 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--at', type=float, nargs='+', help='Explicit increasing development clocks')
     parser.add_argument('--event-checkpoints', action='store_true',
-                        help='Select coaching stops from personal signals, commands, sightings and public kills')
+                        help='Select coaching stops from personal signals, commands, sightings, public kills and local allied minions')
     parser.add_argument('--all-event-candidates', action='store_true',
                         help='With --event-checkpoints, prepare frames at every raw candidate for inspection')
     parser.add_argument('--schedule-only', action='store_true',help='Write candidate clocks without preparing model frames')
@@ -120,6 +121,9 @@ def main():
         threats=nearby_threat_observations(path_index,index,actor,team,index['end_seconds'])
         selections = event_review_times(selections, path_index, actor, index['end_seconds'], events,nearby_events=threats)
         selections = add_signal_checkpoints(selections, signals, index['end_seconds'])
+        if args.at is None:
+            lane_changes = lane_opportunities(raw, path_index, team, actor, index['end_seconds'])
+            selections = add_lane_candidates(selections, lane_changes)
     if args.at is not None:
         if (any(not math.isfinite(t) or not 0 <= t <= index['end_seconds'] for t in args.at)
                 or any(a >= b for a,b in zip(args.at,args.at[1:]))):
@@ -153,6 +157,8 @@ def main():
         bundle = attach_round_lanes(bundle, raw)
         bundle = attach_player_runes(bundle, rune_pages)
         bundle = attach_personal_history(bundle, path_index)
+        if selection.get('triggers'):
+            bundle = attach_lane_change(bundle, selection['triggers'])
         file = out / (str(at).replace('.', '_')+'.json')
         atomic_json(file, bundle)
         selection.update(bundle=file.name, frame_id=bundle['frame']['frame_id'])

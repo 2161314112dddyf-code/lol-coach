@@ -282,6 +282,21 @@ def _next_tools(request, frame):
 
 def prepare_round_request(request, *, remaining_calls=None):
     """Return a copy of the model-facing messages and the Ollama format object."""
+    from .brief_update import BRIEF_REPLY_INSTRUCTIONS, SCHEMA as BRIEF_SCHEMA
+    if request['response_schema']['properties']['schema'].get('const') == BRIEF_SCHEMA:
+        messages = deepcopy(request['messages'])
+        packet = json.loads(messages[1]['content'])
+        aliases = {fid:f'E{i}' for i, fid in enumerate(packet['facts'], 1)}
+        packet['facts'] = {aliases[fid]: value for fid, value in packet['facts'].items()}
+        packet['trigger_fact_ids'] = [aliases[fid] for fid in packet['trigger_fact_ids']]
+        messages[1]['content'] = canonical(packet)
+        messages.append(dict(role='user', content=''.join(BRIEF_REPLY_INSTRUCTIONS)))
+        props = request['response_schema']['properties']
+        fields = dict(本人第一步=props['immediate_action'], 何时换手=props['switch_if'], 计划关系=props['disposition'],
+                      证据编号=_list(_choice(aliases.values()), 1, min(5,len(aliases))))
+        if 'const' not in props['change']:
+            fields['当前观察'] = props['change']
+        return messages, _object(fields)
     frame = _payload(request)
     tools, missing = _next_tools(request, frame)
     if remaining_calls is not None and (type(remaining_calls) is not int or remaining_calls < 1):
@@ -350,6 +365,20 @@ def prepare_round_request(request, *, remaining_calls=None):
 
 def expand_round_response(request, envelope):
     """Only copy facts/time budgets the model selected. Invalid IDs are errors."""
+    from .brief_update import SCHEMA as BRIEF_SCHEMA
+    props = request['response_schema']['properties']
+    if props['schema'].get('const') == BRIEF_SCHEMA:
+        packet = json.loads(request['messages'][1]['content'])
+        ids = {f'E{i}': fid for i, fid in enumerate(packet['facts'], 1)}
+        required = {'本人第一步', '何时换手', '计划关系', '证据编号'}
+        if 'const' not in props['change']:
+            required.add('当前观察')
+        if not isinstance(envelope, dict) or set(envelope) != required:
+            raise ValueError('invalid_brief_wire_answer')
+        change = props['change']['const'] if 'const' in props['change'] else envelope['当前观察']
+        return dict(answer=dict(schema=BRIEF_SCHEMA, frame_id=packet['frame_id'], change=change,
+            immediate_action=envelope['本人第一步'], switch_if=envelope['何时换手'], disposition=envelope['计划关系'],
+            fact_refs=[ids[label] for label in envelope['证据编号']]))
     if not isinstance(envelope,dict) or set(envelope) not in ({'tool_requests'},{'answer'}):
         raise ValueError('invalid_round_envelope')
     if 'tool_requests' in envelope:

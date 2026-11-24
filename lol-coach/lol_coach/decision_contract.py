@@ -44,6 +44,9 @@ def quiet_personal_frame(task):
 
 def output_schema(frame=None):
     """Return a fresh JSON Schema; semantic cross-field checks run separately."""
+    from .brief_update import brief_schema, is_brief
+    if is_brief(frame):
+        return brief_schema(frame)
     refs = deepcopy(_TEXTS)
     nonempty_refs = {**deepcopy(_TEXTS), 'minItems': 1}
     role = _object({'actor_id': _TEXT, 'role': _TEXT, 'fact_refs': refs,
@@ -381,6 +384,9 @@ def validate_decision(answer, frame):
     host-provided range. An arbitrary reference ID alone never licenses numbers.
     Round-specific records are bound to the corresponding action as well.
     """
+    from .brief_update import is_brief, validate_brief
+    if is_brief(frame):
+        return validate_brief(answer, frame)
     errors = []
     reader = None
 
@@ -960,6 +966,10 @@ def render_decision(answer, validation, *, review_scope_label=None):
             if isinstance(error, dict):
                 lines.append(f"- {error.get('path', '?')}：{error.get('message', '检查失败')}")
         return '\n'.join(lines) + '\n'
+    from .brief_update import SCHEMA as BRIEF_SCHEMA
+    if answer.get('schema') == BRIEF_SCHEMA:
+        return '\n\n'.join([review_scope_label or '个人短更新', answer['change'],
+                             answer['immediate_action'], answer['switch_if']]) + '\n'
     if 'player_perspective' in validation:
         return _render_player_card(answer, validation['player_perspective'], review_scope_label)
     rec = answer['recommendation']

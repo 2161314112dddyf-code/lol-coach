@@ -133,8 +133,15 @@ def attach_previous_plan(current_bundle, previous_bundle=None, previous_answer=N
                 historical[hid] = old
             return hid
 
-        card = {key: deepcopy(previous_answer[key]) for key in (
-            'objective', 'role_assignments', 'options', 'recommendation', 'open_questions')}
+        if previous_answer.get('schema') == 'personal-brief/v1':
+            older = ((prior['task'].get('previous_plan') or {}).get('decision_card') or {})
+            card = {key: previous_answer[key] for key in ('change', 'immediate_action', 'disposition', 'switch_if')}
+            card['objective'] = older.get('objective') or previous_answer['immediate_action']
+        else:
+            card = {key: deepcopy(previous_answer[key]) for key in (
+                'objective', 'role_assignments', 'options', 'recommendation', 'open_questions')}
+            if 'immediate_action' in previous_answer:
+                card['immediate_action'] = previous_answer['immediate_action']
         if 'follow_through' in previous_answer:
             card['follow_through'] = deepcopy(previous_answer['follow_through'])
         if 'macro_round' in previous_answer:
@@ -163,8 +170,10 @@ def attach_previous_plan(current_bundle, previous_bundle=None, previous_answer=N
             return node
 
         card = remap(card)
-        for used in previous_answer['facts_used']:
+        for used in previous_answer.get('facts_used', []):
             bind(used['fact_id'])
+        for fid in previous_answer.get('fact_refs', []):
+            bind(fid)
         old_by_key, new_by_key = _latest(prior['facts']), _latest(frame['facts'])
         changes = {}
         for key in sorted(old_by_key.keys() & new_by_key.keys()):

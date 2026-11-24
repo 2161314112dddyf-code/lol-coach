@@ -85,6 +85,53 @@ def test_follow_through_connects_the_action_to_the_observation_and_both_exits(tm
     assert text.index('绕草过去') < text.index('提前占住河口') < text.index('对线搭档少人')
 
 
+def test_registered_question_must_survive_unchanged(tmp_path):
+    from lol_coach.lesson_threads import register_question
+
+    step = sealed_step(tmp_path, 1, 20, 'change_action')
+    d = tmp_path/'01'
+    question = register_question(read(d/'bundle.json'), read(d/'answer.json'))
+    step['lesson_question_sha256'] = digest(question)
+    put(tmp_path/'manifest.json', dict(steps=[step]))
+    with pytest.raises(ValueError, match='teaching question'):
+        write_player_review(tmp_path)
+    put(d/'lesson-question.json', dict(question, watch_text='事后改题'))
+    with pytest.raises(ValueError, match='teaching question'):
+        write_player_review(tmp_path)
+    put(d/'lesson-question.json', question)
+    output = write_player_review(tmp_path)
+    entry = read(output.with_suffix('.lessons.json'))['threads'][0][0]
+    assert entry['registration'] == 'registered_at_seal' and entry['question'] == question
+
+
+def test_native_brief_has_no_full_options_or_recommendation(tmp_path):
+    d = tmp_path/'01'
+    step = sealed_step(tmp_path, 1, 20, 'change_action', review_mode='brief_update')
+    answer = dict(schema='personal-brief/v1', frame_id=step['frame_id'], change='看见第二个人了。',
+                  immediate_action='往回靠一步。', switch_if='他走开时再上前。', disposition='unanchored', fact_refs=[])
+    put(d/'answer.json', answer)
+    seal = digest(answer)
+    put(d/'claim-review.json', dict(answer_sha256=seal, accepted=True))
+    put(d/'execution-answer.json', dict(read(d/'execution-answer.json'), answer_sha256=seal))
+    put(d/'execution.json', dict(read(d/'execution.json'), sealed_answer_sha256=seal))
+    put(tmp_path/'manifest.json', dict(steps=[step]))
+    text = write_player_review(tmp_path).read_text(encoding='utf-8')
+    assert text.index(answer['change']) < text.index(answer['immediate_action']) < text.index('后来往河口走')
+    assert '另一条路的得失' not in text
+
+
+def test_brief_hindsight_sampler_preserves_origin_and_limits_citable_rows():
+    from lol_coach.execution_review import _short_execution
+
+    rows = {str(i): dict(kind='own_position_and_command', at=i, source={'offset': i},
+                         command_xz=[[1, 0], [2, 0], [i+3, 0]]) for i in range(10)}
+    actual = dict(actual=rows)
+    shown = _short_execution(actual)
+    assert set(shown['actual']) == {'0', '5', '9'}
+    assert shown['actual']['9']['command_xz'] == [[12, 0]]
+    assert rows['9']['source'] == {'offset': 9} and len(rows['9']['command_xz']) == 3
+
+
 def test_execution_stage_publishes_the_player_readout(tmp_path):
     from lol_coach.execution_review import finish_execution_review
     from lol_coach.personal_episode import PersonalPathIndex

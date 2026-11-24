@@ -77,6 +77,8 @@ def attach_handbook(bundle, *, max_chars=300000):
     catalog, guidance = [], []
     events = _guidance_events(frame)
     prompts = profile['decision_prompts']
+    replay = result['audit'].get('source_replay_sha256')
+    known_replay = isinstance(replay, str) and len(replay) == 64 and all(c in '0123456789abcdef' for c in replay)
     for card in profile['cards']:
         rid = 'knowledge:' + card['id']
         if rid in frame['references']:
@@ -90,8 +92,15 @@ def attach_handbook(bundle, *, max_chars=300000):
             evidence_type='conditional_experience_not_match_observation',
             interpretation='project_synthesis_not_verbatim_source_or_current_patch_validation',
             training_permission='not_obtained_or_verified')
+        pair = profile.get('worked_pairs', {}).get(card['id'])
+        if (pair and known_replay and replay != pair['source_replay_sha256']
+                and frame['decision'].get('build') == pair['build']):
+            # Another match may illustrate the choice; this match's own examples could disclose its future.
+            detail['worked_pair'] = deepcopy(pair)
         frame['references'][rid] = dict(kind=KIND, title=card['title'], topics=card['topics'],
             read_when=card['read_when'], use_mode=mode, content_sha256=digest(detail))
+        if 'worked_pair' in detail:
+            frame['references'][rid]['example_question'] = pair['question']
         if prompt:
             for event in prompt['events']:
                 if event in events:

@@ -6,35 +6,17 @@ schema. Tests use scripted callbacks, not real language model intelligence.
 """
 from copy import deepcopy
 
+from .brief_update import brief_context, is_brief
+
 from .decision_contract import (MACRO_REVIEW, SUPPORT_LANE_REVIEW, TEAM_COORDINATION_REVIEW,
                                 output_schema, quiet_personal_frame, validate_decision)
 from .reasoning_frame import TOOLS, canonical, lookup_reference, model_messages, number
 
 
-def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
-                  round_tool_call=None, catalog_history=False, question=None, answer_review=None):
-    """Run a finite reference/answer/repair loop against a frozen frame.
-
-    The host callback returns exactly one envelope:
-    ``{'answer': <decision object>}``, or
-    ``{'tool_requests': [{'id': ..., 'name': 'get_reference',
-                         'arguments': {'reference_id': ...}}]}``.
-
-    Tools are local read-only lookups. A returned PASS concerns the output
-    contract only; it is never a tactical-quality or model-quality score.
-    """
-    if type(max_calls) is not int or max_calls < 1:
-        raise ValueError('max_calls must be a positive integer')
-    if type(max_repairs) is not int or max_repairs not in (0, 1):
-        raise ValueError('max_repairs must be zero or one')
-    if not callable(generate):
-        raise ValueError('generate must be a host-provided callable')
-
-    frozen = deepcopy(bundle)
+def _full_messages(frozen, schema, round_tool_call, catalog_history, question, max_calls, max_repairs):
     task = frozen['frame'].get('task', {})
     quiet = quiet_personal_frame(task)
     macro_review = task.get('macro_round_review') == MACRO_REVIEW
-    schema = output_schema(frozen['frame'])
     tools = TOOLS
     initial = frozen
     if round_tool_call is not None:
@@ -132,6 +114,45 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
             '只有看到队友已靠近、仍在清兵或撤退等游戏证据才能描述动作；队伍可见、已发信号或正在路上都不能证明对方同意。'
             '给出下一眼看得见的回应、等待截止的事件和没等到时本人能执行的备选；只有已核准的时间才用秒数。'
             '发送过相同意图且情况未变时避免重复，危险对象或计划变了可以更正；上一张卡的拟议消息只能当作旧计划。'})
+    return messages, tools
+
+
+def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
+                  round_tool_call=None, catalog_history=False, question=None, answer_review=None):
+    """Run a finite reference/answer/repair loop against a frozen frame.
+
+    The host callback returns exactly one envelope:
+    ``{'answer': <decision object>}``, or
+    ``{'tool_requests': [{'id': ..., 'name': 'get_reference',
+                         'arguments': {'reference_id': ...}}]}``.
+
+    Tools are local read-only lookups. A returned PASS concerns the output
+    contract only; it is never a tactical-quality or model-quality score.
+    """
+    if type(max_calls) is not int or max_calls < 1:
+        raise ValueError('max_calls must be a positive integer')
+    if type(max_repairs) is not int or max_repairs not in (0, 1):
+        raise ValueError('max_repairs must be zero or one')
+    if not callable(generate):
+        raise ValueError('generate must be a host-provided callable')
+
+    frozen = deepcopy(bundle)
+    task = frozen['frame'].get('task', {})
+    quiet = quiet_personal_frame(task)
+    macro_review = task.get('macro_round_review') == MACRO_REVIEW
+    schema = output_schema(frozen['frame'])
+    brief = is_brief(frozen['frame'])
+    if brief:
+        context = brief_context(frozen['frame'])
+        tools = []
+        messages = [{'role':'system', 'content': '你是陪本人看录像的老师。只用这一个冻结证据包，旧建议未必实际执行。'
+                     '用中文向学生解释下一手怎么走、看到什么再改。若有 verified_contact_observation，'
+                     'change 原样使用这句经回放证实的新观测。immediate_action 解释你怎样回应眼前这个对手及原因。'
+                     'switch_if 另写将来可辨认的改选条件。fact_refs 须包含触发证据。'
+                     '不推断未见的敌人、精准伤害、技能就绪或后来的结果。回复 {"answer":规定对象}。'},
+                    {'role':'user', 'content':canonical(context)}]
+    else:
+        messages, tools = _full_messages(frozen, schema, round_tool_call, catalog_history, question, max_calls, max_repairs)
     trace = []
     completed_tools = set()
     reference_reads = []
@@ -144,6 +165,15 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
                          'model_calls': calls, 'reference_reads': reference_reads,
                          'error': error, 'trace': trace})
 
+    if brief and round_tool_call is not None:
+        try:
+            packet = round_tool_call('review_personal_action', {})
+            if packet != context:
+                return result('failed', 'Brief MCP evidence differs from the frozen teaching packet')
+        except Exception as exc:
+            return result('failed', f'Brief MCP evidence unavailable: {type(exc).__name__}: {exc}')
+        trace.append(dict(event='tool_results', call=0, origin='host_prefetch',
+                          results=[dict(name='review_personal_action', content=deepcopy(packet))]))
     while calls < max_calls:
         request = {'messages': deepcopy(messages), 'tools': deepcopy(tools),
                    'response_schema': deepcopy(schema)}
@@ -176,7 +206,7 @@ def run_reasoning(bundle, generate, *, max_calls=6, max_repairs=1,
                         'message': '引用前须用 get_reference 读取知识卡正文：' + missing})
                 if validation['errors']:
                     validation['status'] = 'FAIL'
-            if round_tool_call is not None:
+            if round_tool_call is not None and not brief:
                 required_tools = ({'review_personal_action'} if task.get('personal_action_review')
                                   else {'compare_round_options'})
                 if not quiet and (task.get('previous_plan') or macro_review or task.get('bottom_lane_review') == SUPPORT_LANE_REVIEW

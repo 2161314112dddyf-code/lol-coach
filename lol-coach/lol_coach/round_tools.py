@@ -203,6 +203,9 @@ def round_call(bundle, name, arguments):
     if arguments:
         raise ValueError('round_scope_is_locked')
     if name == 'review_personal_action':
+        from .brief_update import brief_context, is_brief
+        if is_brief(frame):
+            return brief_context(frame)
         from .personal_episode import personal_context
         return personal_context(frame)
     if name == 'compare_round_options':

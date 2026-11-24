@@ -1,6 +1,30 @@
 {
   "schema": "coaching-handbook/v1",
-  "version": "2026-11-22.1",
+  "version": "2026-11-23.1",
+  "worked_pairs": {
+    "K18": {
+      "question": "同样想压射手的下一刀，什么时候跟搭档前压，什么时候先回到搭档身边？",
+      "source_replay_sha256": "cf9bd72a98818d85f6ccf800c929142579831713d9e0c6e9c6194eac20f98e4f",
+      "source_report": "reports/辅助潘森整局复盘_20261122.md",
+      "build": "16.22.836.1077",
+      "examples": [
+        {"frame_id":"frame_1a49bccc5d94db573000d708","at_seconds":59.97054231262234,"observed":"蓝方辅助潘森的采样距女警约92、大嘴约1330。","choice":"可和女警一起前压半步，拿大嘴补刀的位置。","recheck":"大嘴若真上前，再看女警能否输出及敌辅站位；此刻不能确认可以跳到他。"},
+        {"frame_id":"frame_f23fee700d1cf571f7147e1b","at_seconds":167.59182031249446,"observed":"同一对线，潘森距塔姆约390，大嘴约909，女警落在后侧约628。","choice":"先横移找女警的输出角度，保留控制。","recheck":"女警跟近且大嘴与塔姆错开，再考虑继续前压。距离没有证明施法、命中或漏刀。"}
+      ],
+      "difference": "换的是谁能接第一手和对手谁能反打。未观察到玩家的意图、双方精确攻击范围或另一条路的结果。"
+    },
+    "K23": {
+      "question": "同样发了协助信号，大招图标也亮，哪一次值得准备进场，哪一次该先重新定位？",
+      "source_replay_sha256": "02fe29bdcd74eb69d182d5f22f2f2175f07a37a89df2cb44c83c6a5d3e0c744c",
+      "source_report": "reports/红方打野潘森逐回合复盘_20261116.md",
+      "build": "16.22.836.1077",
+      "examples": [
+        {"frame_id":"frame_529af59287827c138db8d8d8","at_seconds":448,"observed":"红方打野潘森已六级，R图标亮。下路标点距本人最近采样约4500，烬、卡尔玛在圈附近，泰坦比伊泽更近。","choice":"切镜头看泰坦能否留人和伊泽有没有输出角度；若两人能接，可准备飞到退路上。","recheck":"目标脱离队友控制、泰坦退走或落点只能独自进塔，就留大。射程内不能证明接得上。"},
+        {"frame_id":"frame_e444f2551c2a5c3fb8d1f32e","at_seconds":1335,"observed":"同局本人发龙坑附近的协助信号，R图标亮，最近本人位置已旧约4.67秒。","choice":"先从安全一侧找接应，重查自己的位置与河口敌人，再决定是否投入大招。","recheck":"队友能从入口接第二手、目标仍值得争时重新比较。一次信号不能证明队友同意或龙仍在。"}
+      ],
+      "difference": "发信和技能图标都类似，翻转判断的是目标与队友的位置证据，以及本人位置采样是否仍新鲜。"
+    }
+  },
   "decision_prompts": {
     "K01": {"mode":"both","events":["recent_personal_kill"],"question":"这次击杀给你腾出了什么时间？看剩余血量、敌人和兵线，有没有比立刻离开或继续追更合算的一手？"},
     "K10": {"mode":"process","events":["local_ally_death_became_known"],"question":"队友阵亡后，你原先要去解决的问题还在吗？从现在的位置出发，还能争取什么？"},

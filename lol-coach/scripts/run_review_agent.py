@@ -8,13 +8,14 @@ import sys
 import urllib.request
 
 from lol_coach.combat_inputs import attach_combat_inputs
+from lol_coach.brief_update import bind_brief, is_brief
 from lol_coach.coaching_knowledge import attach_handbook
 from lol_coach.personal_episode import PersonalPathIndex, attach_personal_history, bind_personal_checkpoint
 from lol_coach.combat_catalog import preload_combat
 from lol_coach.replay_runes import attach_player_runes, read_replay_rune_pages
 from lol_coach.decision_contract import MACRO_INTENTS, MACRO_TRANSITIONS, ROAM_DESTINATIONS, render_decision, review_scope
 from lol_coach.file_model_bridge import atomic_json, file_generate, file_sha256, new_directory
-from lol_coach.reasoning_frame import canonical
+from lol_coach.reasoning_frame import canonical, digest
 from lol_coach.reasoning_runner import run_reasoning
 from lol_coach.review_data_store import DEFAULT_ROOT
 from lol_coach.review_external_context import bind_session_external_data
@@ -201,7 +202,7 @@ def render_map_review(steps, *, end_seconds=None):
         seconds = step['at_seconds']
         when = (f'{int(seconds)//60:02}:{int(seconds)%60:02}' if seconds == int(seconds)
                 else f'{int(seconds//60):02}:{seconds%60:06.3f}')
-        if step.get('coordination_trigger', {}).get('active') is False and (choice := step.get('player_choice')):
+        if (step.get('review_mode') == 'brief_update' or step.get('coordination_trigger', {}).get('active') is False) and (choice := step.get('player_choice')):
             lines.extend(['', f'**{when}**　'+choice['first_step']])
             if choice['switch_conditions']:
                 lines.extend(['', '**何时改选**　'+choice['switch_conditions'][0]])
@@ -297,6 +298,8 @@ async def run(args):
         if personal_actions:
             prior_frame = frames[-2] if len(frames) > 1 else previous
             frames[-1] = bind_personal_checkpoint(frames[-1], prior_frame)
+            if sequence and sequence['selections'][len(frames)-1].get('review_mode') == 'brief_update':
+                frames[-1] = bind_brief(frames[-1], sequence['selections'][len(frames)-1])
     frames = bind_session_external_data(
         frames, getattr(args, 'external_data_dir', DEFAULT_ROOT),
         cutoff=subject.get('match_information_cutoff_utc') if subject else None,
@@ -370,6 +373,9 @@ async def run(args):
                 question += (' 这里是同一次接触里的短暂停顿。用本帧事实指出刚刚多了什么，'
                              '原来的第一步还成立吗？把 immediate_action 写成现在能执行的一手，'
                              '需要等下一眼再动时就写明等什么。')
+            if personal_actions and selection.get('selection_reason') in ('allied_wave_reached_player', 'local_wave_group_removed'):
+                question += (' 己方兵刚抵近你，或先前身边的一组兵已观测到移除。读本帧的兵线变化事实，'
+                             '用它解释你继续原走法会保住什么、放掉什么。对面兵量、整波是否进塔和漏刀数另需证据。')
         if personal_actions:
             detail['coordination_trigger'] = frame['task']['team_coordination_trigger']
         ref = frame['task'].get('external_data_reference')
@@ -398,7 +404,9 @@ async def run(args):
                 if args.backend == 'probe':
                     reports = {}
                     names = ['compare_round_options','review_round_plan','enemy_sightings']
-                    if personal_actions:
+                    if is_brief(frame):
+                        names = ['review_personal_action']
+                    elif personal_actions:
                         names.append('review_personal_action')
                     for name in names:
                         reports[name] = await query(client, name, {})
@@ -408,7 +416,9 @@ async def run(args):
                         if not (await client.call_tool(name, overrides)).isError:
                             raise ValueError('MCP_accepted_scope_override')
                     atomic_json(directory/'evidence.json',reports)
-                    (directory/'evidence.md').write_text(detail['review_scope']+'\n\n'+render_evidence(reports, player),encoding='utf-8')
+                    summary = (f"本次短更新读取 {len(reports['review_personal_action']['facts'])} 条冻结证据。"
+                               if is_brief(frame) else render_evidence(reports, player))
+                    (directory/'evidence.md').write_text(detail['review_scope']+'\n\n'+summary,encoding='utf-8')
                     detail.update(status='evidence_only', direct_equals_mcp=True, rejected_overrides=2)
                     manifest['steps'].append(detail)
                     previous = None
@@ -430,17 +440,26 @@ async def run(args):
             from lol_coach.calculation_receipts import damage_receipts, render_damage_receipts
             answer = result['answer']
             atomic_json(directory/'answer.json',answer)
+            if personal_actions:
+                from lol_coach.lesson_threads import register_question
+                lesson_question = register_question(bundle, answer)
+                atomic_json(directory/'lesson-question.json', lesson_question)
+                detail['lesson_question_sha256'] = digest(lesson_question)
             receipts = damage_receipts(bundle, result)
             atomic_json(directory/'damage-receipts.json', receipts)
             card = render_decision(answer, result['validation'], review_scope_label=detail['review_scope'])
             card += render_damage_receipts(receipts)
             (directory/'answer.md').write_text(card, encoding='utf-8')
-            detail['macro_round'] = answer['macro_round']
-            rec = answer['recommendation']
-            best = next((o for o in answer['options'] if o['id'] == rec['preferred_option_id']), None)
-            detail['player_choice'] = dict(first_step=answer['immediate_action'],
-                                           costs=best['costs'] if best else [],
-                                           switch_conditions=rec['switch_conditions'])
+            if is_brief(frame):
+                detail['player_choice'] = dict(first_step=answer['immediate_action'], costs=[],
+                                               switch_conditions=[answer['switch_if']])
+            else:
+                detail['macro_round'] = answer['macro_round']
+                rec = answer['recommendation']
+                best = next((o for o in answer['options'] if o['id'] == rec['preferred_option_id']), None)
+                detail['player_choice'] = dict(first_step=answer['immediate_action'],
+                                               costs=best['costs'] if best else [],
+                                               switch_conditions=rec['switch_conditions'])
             if 'lane_plan' in answer:
                 detail['lane_plan'] = answer['lane_plan']
             if 'team_coordination' in answer:

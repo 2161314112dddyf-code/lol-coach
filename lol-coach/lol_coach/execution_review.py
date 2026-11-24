@@ -10,6 +10,7 @@ from .native_kill_feed import FEED_ROOT
 from .decision_contract import validate_decision
 from .calculation_receipts import damage_receipts
 from .player_review import write_player_review
+from .brief_update import brief_context, is_brief
 
 
 def review_generator(directory, args):
@@ -77,6 +78,13 @@ def evidence_review(bundle, result, generate):
              '这是证据评阅，不评价战术唯一最优。返回符合 JSON 契约的对象。'),
         dict(role='user', content=canonical(dict(frame=bundle['frame'], answer=answer,
              answer_sha256=digest(answer), tool_receipts=receipts, damage_calculations=calculations)))])
+    if is_brief(bundle['frame']):
+        schema['properties']['answer_sha256'] = {'const': digest(answer)}
+        request['messages'] = [
+            dict(role='system', content='核对给一位玩家的短提醒。变化、走法与换手条件须由所引本方当时证据支持，'
+                 '或以条件表达。旧建议不能证明本人执行过。照抄 answer_sha256，依据充分则 accepted 为真且 issues 为空。'),
+            dict(role='user', content=canonical(dict(context=brief_context(bundle['frame']), answer=answer,
+                 answer_sha256=digest(answer), tool_receipts=[e for e in receipts if e.get('origin') != 'host_prefetch'])))]
     reply = generate(request)
     if (not isinstance(reply, dict) or set(reply) != {'answer_sha256','accepted','issues'}
             or reply['answer_sha256'] != digest(answer) or type(reply['accepted']) is not bool
@@ -85,6 +93,22 @@ def evidence_review(bundle, result, generate):
             or reply['accepted'] != (not reply['issues'])):
         raise ValueError('invalid evidence review response')
     return dict(**reply, method='model_evidence_review', request_sha256=digest(request))
+
+
+def _short_execution(actual):
+    """Keep original evidence IDs. A small selection cannot establish that no other action occurred."""
+    by_kind = {}
+    for fid, row in actual['actual'].items():
+        by_kind.setdefault(row['kind'], []).append((fid, row))
+    shown = {}
+    for rows in by_kind.values():
+        rows.sort(key=lambda pair: pair[1].get('available_at_seconds', pair[1].get('at')))
+        for idx in sorted({0, len(rows)//2, len(rows)-1}):
+            fid, row = rows[idx]
+            shown[fid] = {k: v for k, v in row.items() if k != 'source'}
+            if 'command_xz' in row:
+                shown[fid]['command_xz'] = [row['command_xz'][-1]]
+    return {**actual, 'actual': shown, 'coverage': '每类仅取首、中、末记录；指令只显示终点，省略的记录不能当作没有行动。'}
 
 
 def finish_execution_review(output, index, args, generator_factory=None, *, ping_index=None, contact_index=None):
@@ -125,6 +149,15 @@ def finish_execution_review(output, index, args, generator_factory=None, *, ping
                       properties={**{k:dict(type='string',minLength=1) for k in
                                      ('frame_id','answer_sha256','observed_actions','tradeoff','lesson')},
                                   **{k:dict(type='array',items=dict(type='string')) for k in ('unknowns','evidence_ids')}})
+        brief = is_brief(bundle['frame'])
+        before = brief_context(bundle['frame']) if brief else bundle['frame']
+        shown = _short_execution(actual) if brief else actual
+        if brief:
+            schema['properties']['frame_id'] = {'const': bundle['frame']['frame_id']}
+            schema['properties']['answer_sha256'] = {'const': digest(answer)}
+            refs = list(shown['actual'])
+            schema['properties']['evidence_ids'] = (dict(type='array', minItems=1, items={'enum': refs})
+                                                    if refs else dict(type='array', maxItems=0, items={'type':'string'}))
         request = dict(tools=[],response_schema=schema,messages=[
             dict(role='system',content='你在事前判断已封存后，为这个玩家回看实际经过。'
                  '说明已观察的动作、去留可能影响谁以及实际证实了哪些结果，给一条下局能用的判断。'
@@ -135,7 +168,7 @@ def finish_execution_review(output, index, args, generator_factory=None, *, ping
                  '如有联动计划，分别核对本人实际发过哪种信号、指定队友随后的位置。'
                  '队友靠近不证明听到信号或答应配合；缺少回放记录时，沟通效果保留未知。'
                  '引用实际记录的 evidence_ids，证据没有的损兵与替代收益保留未知。返回规定 JSON。'),
-            dict(role='user',content=canonical(dict(before=bundle['frame'],sealed_answer=answer,execution=actual)))])
+            dict(role='user',content=canonical(dict(before=before,sealed_answer=answer,execution=shown)))])
         generate = generator_factory(directory) if generator_factory else review_generator(directory/'execution_exchange',args)
         reply = generate(request)
         if (not isinstance(reply,dict) or set(reply) != set(schema['required'])
@@ -145,7 +178,7 @@ def finish_execution_review(output, index, args, generator_factory=None, *, ping
                        for k in ('observed_actions','tradeoff','lesson'))
                 or not isinstance(reply['unknowns'],list) or not all(isinstance(s,str) for s in reply['unknowns'])
                 or not isinstance(reply['evidence_ids'],list)
-                or any(fid not in actual['actual'] for fid in reply['evidence_ids'])
+                or any(fid not in shown['actual'] for fid in reply['evidence_ids'])
                 or (actual['actual'] and not reply['evidence_ids'])):
             raise ValueError('invalid execution review response')
         atomic_json(directory/'execution-answer.json',reply)

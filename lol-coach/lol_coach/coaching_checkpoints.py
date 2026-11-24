@@ -1,5 +1,6 @@
 """Select personal coaching stops from chronological POV candidates."""
 from math import dist
+from .lane_opportunities import KINDS
 
 
 # Editorial thresholds in seconds and world units; none represents a skill range.
@@ -55,6 +56,7 @@ def select_coaching_checkpoints(candidates):
     last_stop = last_noncontact_stop = last_contact = last_contact_anchor = last_signal_at = float('-inf')
     last_signal = None
     previous_at = float('-inf')
+    last_lane_stop = float('-inf')
     for candidate in candidates:
         at = candidate['at']
         if at <= previous_at:
@@ -78,6 +80,7 @@ def select_coaching_checkpoints(candidates):
                            and (contact_reason == 'closer_local_opponent'
                                 or (additions and len(additions_in_burst) >= 2)))
         reason = None
+        lane_changes = [t for t in candidate.get('triggers', []) if t.get('kind') in KINDS]
         if at == 0:
             reason = 'opening_plan'
         elif 'last_game_second' in reasons:
@@ -89,6 +92,9 @@ def select_coaching_checkpoints(candidates):
         elif signals and elapsed >= 1 and at - last_noncontact_stop >= (35 if signals[-1] == 'on_my_way' else 12):
             if signals[-1] != last_signal or at - last_signal_at >= 80:
                 reason = 'changed_personal_signal'
+        if (reason is None and lane_changes and elapsed >= 12 and at - last_contact >= CONTACT_BURST
+                and at - last_lane_stop >= 40):
+            reason = lane_changes[0]['kind']
         if reason is None:
             if 'own_command_reversed' in reasons and elapsed >= 100:
                 reason = 'recheck_personal_movement'
@@ -100,8 +106,10 @@ def select_coaching_checkpoints(candidates):
             review_mode = 'brief_update' if reason == contact_reason and elapsed <= 15 else 'decision'
             selected.append(at)
             last_stop = at
-            if reason != contact_reason:
+            if reason != contact_reason and reason not in KINDS:
                 last_noncontact_stop = at
+            if lane_changes:
+                last_lane_stop = at
             if observations:
                 last_contact_anchor = at
                 additions_in_burst.clear()
@@ -125,4 +133,8 @@ def select_coaching_checkpoints(candidates):
         rows.append(dict(at=at, selected=is_selected, selection_reason=reason, review_mode=review_mode,
                          covered_by_at=selected[-1] if selected else None, selected_by=reasons,
                          observable_signals=signals, nearby_observations=observations))
+        if lane_changes:
+            rows[-1]['local_allied_wave_changes'] = [dict(kind=t['kind'], lane=t['lane'],
+                unit_ids=sorted(t['units']), player_entity_id=t['player_entity_id'],
+                observer_team_id=t['observer_team_id']) for t in lane_changes]
     return dict(candidate_count=len(rows), selected_count=len(selected), selected_times=selected, rows=rows)

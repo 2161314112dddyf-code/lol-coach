@@ -202,7 +202,7 @@ def execution_evidence(bundle, answer, index, end, public_events=(), *, ping_ind
                 actual=evidence, unknown=['cast_and_hit', 'intent', 'counterfactual_outcome',
                                           'wave_loss_unless_independently_observed'])
     if frame['task'].get('team_coordination_review') == 'team-coordination/v1':
-        recipient = answer['team_coordination']['recipient_id']
+        recipient = (answer.get('team_coordination') or {}).get('recipient_id')
         recipients = [recipient] if recipient is not None else []
         observations, coverage = _coordination_followup(frame, index, recipients, end, ping_index)
         for row in observations:
